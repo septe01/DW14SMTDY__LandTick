@@ -4,6 +4,7 @@ import Landing from "./component/Landing";
 //dashboar
 
 import "./App.css";
+import "./mobile.css";
 //Router
 import {
   BrowserRouter as Router,

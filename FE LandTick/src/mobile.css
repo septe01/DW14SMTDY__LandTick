@@ -1,0 +1,32 @@
+/* // Small devices (landscape phones, 576px and up) */
+@media (max-width: 575.98px) {
+  .img-landing {
+    width: 308px;
+    height: 164px !important;
+  }
+  .img-landing::after {
+    width: 100%;
+    height: 100%;
+  }
+  .order-panel {
+    padding-bottom: 20px;
+  }
+
+  .mbl-btn-search,
+  .mbl-arrow {
+    text-align: center;
+  }
+
+  .mbl-arrow-icon {
+    margin-top: -0px !important;
+    -ms-transform: rotate(90deg); /* IE 9 */
+    transform: rotate(90deg);
+  }
+
+  /* .nav-desc {
+    display: none;
+  }
+  .nav-mbl {
+    display: block !important;
+  } */
+}

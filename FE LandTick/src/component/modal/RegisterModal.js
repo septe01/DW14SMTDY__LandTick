@@ -44,9 +44,9 @@ class RegisterModal extends Component {
     this.setState({ show: true });
   }
 
-  hideModal() {
+  hideModal = () => {
     this.setState({ show: false });
-  }
+  };
 
   componentDidMount() {
     this.props.getSpecies();
@@ -219,192 +219,134 @@ class RegisterModal extends Component {
           Register
         </Button>
 
-        <Modal show={this.state.show}>
+        {/* username, name hapus*/}
+
+        <Modal show={this.state.show} onHide={this.hideModal}>
           <Container fluid>
             <Row className="justify-content-md-center">
               <Col md="12" className="head-modal">
-                <h1>Register</h1>
-                <span className="close" onClick={() => this.hideModal()}>
+                <h1>Daftar</h1>
+                {/* <span className="close" onClick={() => this.hideModal()}>
                   X
-                </span>
+                </span> */}
               </Col>
             </Row>
           </Container>
 
           <Container>
-            <Row className="justify-content-md-center">
-              <Col md="11" className="body-modal">
-                <Form onSubmit={this.handleSubmit}>
-                  <Form.Group controlId="formBasicUser">
-                    <Form.Control
-                      type="text"
-                      name="breeder"
-                      placeholder="Breeder"
-                      onChange={this.handleChange}
-                    />
-                    <Form.Text className="text-danger">
-                      {this.state.errbreeder ? this.state.errbreeder : ""}
-                    </Form.Text>
-                  </Form.Group>
-
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Control
-                      name="email"
-                      type="text"
-                      placeholder="Email"
-                      onChange={this.handleChange}
-                    />
-                    <Form.Text className="text-danger">
-                      {this.state.erremail ? this.state.erremail : ""}
-                    </Form.Text>
-                  </Form.Group>
-
-                  <Form.Group controlId="formBasicPassword">
-                    <Form.Control
-                      name="password"
-                      type="password"
-                      placeholder="Password"
-                      onChange={this.handleChange}
-                    />
-                    <Form.Text className="text-danger">
-                      {this.state.errpassword ? this.state.errpassword : ""}
-                    </Form.Text>
-                  </Form.Group>
-
-                  <Form.Group controlId="formBasicPhone">
-                    <Form.Control
-                      name="phone"
-                      type="phone"
-                      placeholder="Phone Breeder"
-                      onChange={this.handleChange}
-                    />
-                    <Form.Text className="text-danger">
-                      {this.state.errphone ? this.state.errphone : ""}
-                    </Form.Text>
-                  </Form.Group>
-
-                  <Form.Group controlId="formBasicAddress">
-                    <Form.Control
-                      name="address"
-                      type="text"
-                      placeholder="Address Breeder"
-                      as="textarea"
-                      rows="3"
-                      onChange={this.handleChange}
-                    />
-                    <Form.Text className="text-danger">
-                      {this.state.erraddress ? this.state.erraddress : ""}
-                    </Form.Text>
-                  </Form.Group>
-
-                  <Form.Group controlId="formBasicName">
-                    <Form.Control
-                      name="name"
-                      type="text"
-                      placeholder="Name Pet"
-                      onChange={this.handleChange}
-                    />
-                    <Form.Text className="text-danger">
-                      {this.state.errname ? this.state.errname : ""}
-                    </Form.Text>
-                  </Form.Group>
-
-                  <Form.Group controlId="formBasicGender">
-                    <div className="form-group">
-                      <select
-                        className="form-control"
-                        name="gender"
-                        id="gender"
+            <div className="box-reg-pertama">
+              <Row className="justify-content-md-center box-reg-kedua">
+                <Col md="11" className="body-modal">
+                  <Form onSubmit={this.handleSubmit}>
+                    <Form.Group controlId="formBasicUser">
+                      <Form.Control
+                        className="input"
+                        type="text"
+                        name="breeder"
+                        placeholder="Nama Lengkap"
                         onChange={this.handleChange}
-                      >
-                        <option>Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
-                    </div>
-                    <Form.Text className="text-danger">
-                      {this.state.errgender ? this.state.errgender : ""}
-                    </Form.Text>
-                  </Form.Group>
-
-                  <Form.Group controlId="formBasicAbout">
-                    <Form.Control
-                      name="about"
-                      type="text"
-                      placeholder="About Pet"
-                      as="textarea"
-                      rows="3"
-                      onChange={this.handleChange}
-                    />
-                    <Form.Text className="text-danger">
-                      {this.state.errabout ? this.state.errabout : ""}
-                    </Form.Text>
-                  </Form.Group>
-
-                  <Form.Group controlId="formBasicPassword">
-                    <div className="form-group">
-                      <select
-                        className="form-control"
-                        name="idSpecies"
-                        id="idSpecies"
+                      />
+                      <Form.Text className="text-danger">
+                        {this.state.errbreeder ? this.state.errbreeder : ""}
+                      </Form.Text>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicUserName">
+                      <Form.Control
+                        className="input"
+                        type="text"
+                        name="username"
+                        placeholder="Username"
                         onChange={this.handleChange}
-                      >
-                        <option>Spesies Pet</option>
-                        {this.props.speciesR.getAll
-                          ? this.props.speciesR.getAll.map(species => (
-                              <option value={species.id} key={species.id}>
-                                {species.name}
-                              </option>
-                            ))
-                          : null}
-                      </select>
-                    </div>
-                    <Form.Text className="text-danger">
-                      {this.state.errspecies ? this.state.errspecies : ""}
-                    </Form.Text>
-                  </Form.Group>
+                      />
 
-                  <Form.Group controlId="formBasicAge">
-                    <div className="form-group">
-                      <select
-                        className="form-control"
-                        name="idAge"
-                        id="Age"
+                      <Form.Text className="text-danger">
+                        {this.state.errbreeder ? this.state.errbreeder : ""}
+                      </Form.Text>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicEmail">
+                      <Form.Control
+                        className="input"
+                        name="email"
+                        type="text"
+                        placeholder="Email"
                         onChange={this.handleChange}
-                      >
-                        <option>Age</option>
+                      />
+                      <Form.Text className="text-danger">
+                        {this.state.erremail ? this.state.erremail : ""}
+                      </Form.Text>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicPassword">
+                      <Form.Control
+                        className="input"
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        onChange={this.handleChange}
+                      />
+                      <Form.Text className="text-danger">
+                        {this.state.errpassword ? this.state.errpassword : ""}
+                      </Form.Text>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicGender">
+                      <div className="form-group">
+                        <select
+                          className="form-control input"
+                          name="gender"
+                          id="gender"
+                          onChange={this.handleChange}
+                        >
+                          <option>Pilih</option>
+                          <option value="male">Laki</option>
+                          <option value="female">perempuan</option>
+                        </select>
+                      </div>
+                      <Form.Text className="text-danger">
+                        {this.state.errgender ? this.state.errgender : ""}
+                      </Form.Text>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicPhone">
+                      <Form.Control
+                        className="input"
+                        name="phone"
+                        type="phone"
+                        placeholder="Telp"
+                        onChange={this.handleChange}
+                      />
+                      <Form.Text className="text-danger">
+                        {this.state.errphone ? this.state.errphone : ""}
+                      </Form.Text>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicAddress">
+                      <Form.Control
+                        className="input"
+                        name="address"
+                        type="text"
+                        placeholder="Address Breeder"
+                        as="textarea"
+                        rows="3"
+                        onChange={this.handleChange}
+                      />
+                      <Form.Text className="text-danger">
+                        {this.state.erraddress ? this.state.erraddress : ""}
+                      </Form.Text>
+                    </Form.Group>
 
-                        {this.props.ageR.data
-                          ? this.props.ageR.data.getAll.map(
-                              age => (
-                                <option value={age.id} key={age.id}>
-                                  {age.name}
-                                </option>
-                              )
-                              // console.log(age.id)
-                            )
-                          : null}
-                      </select>
+                    <div className="justify-content-center d-flex mt-2">
+                      <Button
+                        className=" btn-log color-bg color-white"
+                        style={{
+                          fontWeight: "1000",
+                          width: "100%",
+                          borderRadius: "25px"
+                        }}
+                      >
+                        Daftar
+                      </Button>
                     </div>
-                    <Form.Text className="text-danger">
-                      {this.state.errage ? this.state.errage : ""}
-                    </Form.Text>
-                  </Form.Group>
-                  <div className="justify-content-center d-flex mt-2">
-                    <Button
-                      className=" btn-log color-bg color-white"
-                      style={{
-                        fontWeight: "1000",
-                        width: "100%",
-                        borderRadius: "25px"
-                      }}
-                    >
-                      Register
-                    </Button>
-                  </div>
-                </Form>
-              </Col>
-            </Row>
+                  </Form>
+                </Col>
+              </Row>
+            </div>
           </Container>
         </Modal>
       </>

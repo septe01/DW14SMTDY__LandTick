@@ -20,10 +20,10 @@ class Landing extends Component {
         <HeaderPrimary />
         <Jumbotron />
 
-        <div style={{ position: "relative" }} className="container">
+        <div className="">
           <div className="container order-panel">
             <div className="row ">
-              <div className="col-3">
+              <div className="col-md-3">
                 <div className="mt-3 faSubway-orange">
                   <span className="clr-orange">
                     <FontAwesomeIcon
@@ -41,37 +41,38 @@ class Landing extends Component {
                   <span className="kreta">Tiket Kereta Api</span>
                 </div>
               </div>
-              <div className="col-4">
+              <div className="col-md-4">
                 <span className="kreta mt-2">Tiket Kereta Api</span>
-                <div class="form-group">
-                  <label for="inputEmail">Asal</label>
+                <div className="form-group">
+                  <label htmlFor="inputEmail">Asal</label>
                   <input
                     name="from"
                     type="text"
-                    class="form-control"
+                    className="form-control input"
                     id="inputtext"
                   />
                 </div>
                 <div className="row">
-                  <div className="col-6">
-                    <div class="form-group">
-                      <label for="inputEmail">Tanggal Berangkat</label>
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label htmlFor="inputEmail">Tanggal Berangkat</label>
                       <input
                         name="dataStart"
                         type="date"
-                        class="form-control"
+                        className="form-control input"
                         id="inputEmail"
                       />
                     </div>
                   </div>
                   <div
-                    className="col-6"
+                    className="col-md-6"
                     style={{
                       position: "relative"
                     }}
                   >
                     <Form.Group>
                       <Form.Check
+                        className="checkbox"
                         type="checkbox"
                         label="Pulang Pergi"
                         name="pp"
@@ -81,11 +82,11 @@ class Landing extends Component {
                 </div>
               </div>
               {/* ===== */}
-              <div className="col-1">
+              <div className="col-md-1 mbl-arrow">
                 <div>
                   <span className="clr-orange">
                     <FontAwesomeIcon
-                      className="clr-orange"
+                      className="clr-orange mbl-arrow-icon "
                       icon={faExchangeAlt}
                       style={{
                         marginLeft: "20",
@@ -100,34 +101,38 @@ class Landing extends Component {
                 </div>
               </div>
               {/* ===== */}
-              <div className="col-4">
+              <div className="col-md-4">
                 <span className="kreta mt-4"></span>
-                <div class="form-group mt-2">
-                  <label for="inputEmail">Tujuan</label>
-                  <input type="to" class="form-control" id="inputEmail" />
+                <div className="form-group mt-2">
+                  <label htmlFor="inputEmail">Tujuan</label>
+                  <input
+                    type="to"
+                    className="form-control input"
+                    id="inputEmail"
+                  />
                 </div>
                 <div className="row">
-                  <div className="col-4">
-                    <div class="form-group">
-                      <label for="inputEmail">dewasa</label>
-                      <select name="adult" class="form-control">
+                  <div className="col-md-4">
+                    <div className="form-group">
+                      <label htmlFor="inputEmail">dewasa</label>
+                      <select name="adult" className="form-control input">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
                       </select>
                     </div>
                   </div>
-                  <div className="col-4">
-                    <div class="form-group">
-                      <label for="inputEmail">child</label>
-                      <select name="child" class="form-control">
+                  <div className="col-md-4">
+                    <div className="form-group">
+                      <label htmlFor="inputEmail">child</label>
+                      <select name="child" className="form-control input">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
                       </select>
                     </div>
                   </div>
-                  <div className="col-4">
+                  <div className="col-md-4 mbl-btn-search">
                     <Button
                       className=" color-white mr-2 register cari-ticket"
                       // onClick={() => this.handleModal()}
@@ -141,14 +146,9 @@ class Landing extends Component {
           </div>
         </div>
         {/* list  */}
-        <div
-          className="container"
-          style={{
-            marginTop: "220px"
-          }}
-        >
+        <div className="container">
           {/* ============== */}
-          <div className="row justify-content-center">
+          <div className="row justify-content-center mt-4">
             <div className="col text-center">Nama Kereta</div>
             <div className="col text-center">Berangkat</div>
             <div className="col text-center"></div>

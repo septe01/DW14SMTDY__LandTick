@@ -96,14 +96,14 @@ class LoginModal extends Component {
           Login
         </Button>
 
-        <Modal show={this.state.show}>
+        <Modal show={this.state.show} onHide={this.handleClose}>
           <Container fluid>
             <Row className="justify-content-md-center">
               <Col md="12" className="head-modal">
                 <h1 className="color-pink">Login</h1>
-                <span className="close" onClick={this.handleClose}>
+                {/* <span className="close" onClick={this.handleClose}>
                   X
-                </span>
+                </span> */}
               </Col>
             </Row>
           </Container>
@@ -114,6 +114,7 @@ class LoginModal extends Component {
                 <Form onSubmit={this.handleSubmit}>
                   <Form.Group controlId="formBasicName">
                     <Form.Control
+                      className="input"
                       name="username"
                       type="text"
                       placeholder="Username"
@@ -126,6 +127,7 @@ class LoginModal extends Component {
 
                   <Form.Group controlId="formBasicPassword">
                     <Form.Control
+                      className="input"
                       name="password"
                       type="password"
                       placeholder="Password"
@@ -197,13 +199,7 @@ class LoginModal extends Component {
                       }}
                     >
                       Belum Punya Akun ?{" "}
-                      <span
-                        style={{
-                          cursor: "pointer"
-                        }}
-                      >
-                        Klik disini
-                      </span>
+                      <span className="klik-me">Klik disini</span>
                     </p>
                   </div>
                 </Form>
