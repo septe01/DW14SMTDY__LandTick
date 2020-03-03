@@ -7,40 +7,66 @@ const Ticket = models.ticket;
 const Train = models.train;
 
 // 5. Ticket MYTICKET
-// exports.index = async (req, res) => {
-//   try {
-//     const id = req.user.userId;
-//     var date = new Date().toJSON();
-//     // .slice(0, 10);
-//     // .replace(/-/g, "/");
-//     // [Op.like]:
-//     const myticket = await Order.findAll({
-//       where: {
-//         id_user: id
-//       }
-//     });
-//     if (myticket) {
-//       let data = [];
-//       for (let i = 0; i < myticket.length; i++) {
-//         data.push({
-//           id: myticket[i].id,
-//           id_ticket: myticket[i].id_ticket,
-//           id_user: myticket[i].id_user,
-//           qty: myticket[i].qty,
-//           // total_price: 10000,
-//           // status: true,
-//           // attachment: "https://i.imgur.com/Iqlugn5.jpg,",
-//           createdAt: myticket[i].createdAt
-//           // updatedAt: null
-//         });
-//       }
+exports.myticket = async (req, res) => {
+  try {
+    const id = req.user.userId;
+    var date = new Date().toJSON();
+    // .slice(0, 10);
+    // .replace(/-/g, "/");
+    // [Op.like]:
+    const myticket = await Order.findAll({
+      where: {
+        id_user: id
+      },
+      attributes: [
+        "id",
+        "qty",
+        "total_price",
+        "status",
+        "attachment",
+        "createdAt",
+        "updatedAt"
+      ],
+      include: [
+        {
+          model: User,
+          attributes: [
+            "id",
+            "name",
+            "user_name",
+            "email",
+            "password",
+            "gender",
+            "phone",
+            "address"
+          ]
+        },
+        {
+          model: Ticket,
+          attributes: [
+            "id",
+            "name_train",
+            "date_start",
+            "start_station",
+            "start_time",
+            "destination_station",
+            "arival_time",
+            "price"
+          ]
+        }
+      ]
+    });
 
-//       res.send(myticket[1].createdAt.match(/2020-03-03/g));
-//     }
-//   } catch (error) {
-//     res.send(error);
-//   }
-// };
+    res.status(200).send({
+      status: 200,
+      message: "success",
+      myticket
+    });
+    // }
+  } catch (error) {
+    res.send(error);
+  }
+};
 
 // 6. Payment
 exports.order = async (req, res) => {

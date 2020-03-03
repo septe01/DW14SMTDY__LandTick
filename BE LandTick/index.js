@@ -39,10 +39,10 @@ app.group("/api/v1", router => {
   router.post("/login", LoginController.store);
   router.post("/register", RegistrasiController.store);
   // Ticket
-  // router.get("/my_tickets", authenticated, OrderController.index);
   router.post("/ticket", authenticated, TicketController.store);
 
   //order
+  router.get("/my_tickets", authenticated, OrderController.myticket);
   router.post("/order", authenticated, OrderController.order);
   router.get("/order", authenticated, OrderController.index);
   router.get("/order/:id", authenticated, OrderController.show);

@@ -21,6 +21,26 @@ exports.store = async (req, res) => {
   }
 };
 
+// exports.index = async (req, res) => {
+//   try {
+//     const storeTicket = await Ticket.create(req.body);
+//     if (storeTicket) {
+//       res.status(200).send({
+//         status: 200,
+//         message: "success",
+//         storeTicket
+//       });
+//     } else {
+//       res.status(404).send({
+//         status: 404,
+//         message: "no data"
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 // ============================================
 // find all
 // -GET /tickets?start_time=2020-03-03
