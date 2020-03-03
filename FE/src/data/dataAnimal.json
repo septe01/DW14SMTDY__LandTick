@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "nama": "Abyssinian",
+    "imgSrc": "http://localhost:3000/assets/images/galery/2.jpeg"
+  },
+  {
+    "id": 2,
+    "nama": "Aegean",
+    "imgSrc": "http://localhost:3000/assets/images/galery/4.jpeg"
+  },
+  {
+    "id": 3,
+    "nama": "American Bobtail",
+    "imgSrc": "http://localhost:3000/assets/images/galery/2.jpeg"
+  },
+  {
+    "id": 4,
+    "nama": "American Curl",
+    "imgSrc": "http://localhost:3000/assets/images/galery/4.jpeg"
+  },
+  {
+    "id": 5,
+    "nama": "American Ringtail",
+    "imgSrc": "http://localhost:3000/assets/images/galery/5.jpeg"
+  },
+  {
+    "id": 6,
+    "nama": "American Shorthair",
+    "imgSrc": "http://localhost:3000/assets/images/galery/1.jpeg"
+  },
+  {
+    "id": 7,
+    "nama": "American Wirehair",
+    "imgSrc": "http://localhost:3000/assets/images/galery/3.jpeg"
+  },
+  {
+    "id": 8,
+    "nama": "Arabian Mau",
+    "imgSrc": "http://localhost:3000/assets/images/galery/4.jpeg"
+  },
+  {
+    "id": 9,
+    "nama": "Asian- Malayan",
+    "imgSrc": "http://localhost:3000/assets/images/galery/2.jpeg"
+  },
+  {
+    "id": 10,
+    "nama": "Asian Longhair-Tiffany",
+    "imgSrc": "http://localhost:3000/assets/images/galery/3.jpeg"
+  },
+  {
+    "id": 11,
+    "nama": "Australian Mist",
+    "imgSrc": "http://localhost:3000/assets/images/galery/4.jpeg"
+  }
+]

@@ -1,0 +1,108 @@
+/* * {
+  box-sizing: border-box;
+} */
+
+/* html,
+body {
+  overscroll-behavior-y: contain;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  user-select: none;
+  font-family: Raleway, sans-serif;
+  position: fixed;
+  overflow: hidden;
+} */
+
+.sweep {
+  /* background: rgb(27, 121, 145); */
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
+  height: 900%;
+  cursor: url("https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/Ad1_-cursor.png")
+      39 39,
+    auto;
+  /* background: brown; */
+}
+
+.sweep > div {
+  margin-top: -56px;
+  position: absolute;
+  width: 66vw;
+  height: 100vh;
+  will-change: transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sweep > div > div {
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.493);
+  background-size: auto 85%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 300px;
+  max-width: 300px;
+  height: 492px;
+  max-height: 492px;
+  will-change: transform;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.card-sweep {
+  overflow: hidden;
+}
+
+.card-sweep img {
+  height: 480px;
+}
+
+.slider-control-centerleft,
+.slider-control-centerright {
+  border-radius: 100px !important;
+  z-index: 2 !important;
+}
+
+.slider-control-bottomcenter {
+  margin-bottom: 90px;
+}
+
+h2 {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+h2:nth-of-type(2) {
+  opacity: 0.7;
+  font-size: 1.35rem;
+}
+
+h5 {
+  margin-top: -15px;
+  margin-left: 2px;
+  color: lightgray;
+}
+h5:last-of-type {
+  color: darkgray;
+}
+
+.card-sweep > div {
+  height: 480px !important;
+}
+
+.card-sweep {
+  height: 480px !important;
+}
+
+.slider-control-bottomcenter {
+  bottom: -15px !important;
+}
+
+.slider-control-bottomcenter > ul > li > button {
+  color: salmon !important;
+}
