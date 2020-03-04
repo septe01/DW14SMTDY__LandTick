@@ -14,10 +14,28 @@ import {
 // import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 class Landing extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      columnDefs: [
+        { headerName: "Make", field: "make" },
+        { headerName: "Model", field: "model" },
+        { headerName: "Price", field: "price" }
+      ],
+      rowData: [
+        { make: "Toyota", model: "Celica", price: 35000 },
+        { make: "Ford", model: "Mondeo", price: 32000 },
+        { make: "Porsche", model: "Boxter", price: 72000 }
+      ]
+    };
+  }
+  dataUser = data => {
+    // console.log(data);
+  };
   render() {
     return (
       <div>
-        <HeaderPrimary />
+        <HeaderPrimary dataUser={data => this.dataUser(data)} />
         <Jumbotron />
 
         <div className="">

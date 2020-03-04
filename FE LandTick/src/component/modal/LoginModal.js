@@ -9,8 +9,12 @@ class LoginModal extends Component {
     this.state = {
       show: false,
       username: "",
-      redirect: false,
       password: "",
+
+      redirect: false,
+      resUsername: "",
+      resstatus: "",
+
       errmail: "",
       errpassword: "",
       loader: true
@@ -47,19 +51,31 @@ class LoginModal extends Component {
         });
         await Axios.post("http://localhost:5004/api/v1/login", userLogin)
           .then(response => {
-            console.log(response);
             if (typeof response.data.token !== "undefined") {
               localStorage.setItem("token", response.data.token);
+              const { status, username } = response.data;
+              // console.log(status, username);
+
               this.setState({
+                resUsername: username,
+                resstatus: status,
                 redirect: true,
                 loader: !this.state.loader
               });
-              window.location.reload(false);
+
+              const data = {
+                status,
+                username
+              };
+
+              this.props.dataUser(data);
+              // window.location.reload(false);
             }
           })
           .catch(error => {
             if (error.response) {
-              if (error.response.data.message == "username Not Found") {
+              console.log(error.response);
+              if (error.response.data.message != "Password Not Found") {
                 this.setState({
                   errmail: error.response.data.message
                 });
@@ -134,9 +150,6 @@ class LoginModal extends Component {
                       onChange={this.handleChange}
                     />
                     <Form.Text className="text-danger">
-                      {/* {this.state.errpassword
-                        ? `${this.state.errpassword} `
-                        : ""} */}
                       {this.state.errpassword
                         ? `${this.state.errpassword} `
                         : ""}
@@ -146,6 +159,7 @@ class LoginModal extends Component {
                   <div className="justify-content-center d-flex">
                     {/* <Link to="index"> */}
                     <Button
+                      type="submit"
                       className=" btn-log color-bg color-white"
                       style={{
                         fontWeight: "1000",

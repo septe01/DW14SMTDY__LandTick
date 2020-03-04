@@ -11,6 +11,10 @@ class HeaderPrimary extends Component {
   }
   // navbar-toggler
 
+  dataUser = data => {
+    this.props.dataUser(data);
+  };
+
   onToggle = () => {
     const toggle = document.getElementById("navbarNavAltMarkup");
     alert(toggle);
@@ -27,45 +31,14 @@ class HeaderPrimary extends Component {
                 src="http://localhost:3000/assets/images/logolandtick.png"
               />
             </a>
-            {/* <button
-              onClick={() => {
-                this.setState({
-                  show: !this.state.show
-                });
-              }}
-              className="navbar-toggler"
-              onClick={this.onToggle}
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarNavAltMarkup"
-              aria-controls="navbarNavAltMarkup"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button> */}
-
             <div className="navbar-collapse nav-desc" id="navbarNavAltMarkup">
               <div className="navbar-nav  ml-auto">
                 <div className="nav-mbl-mt-2 text-center">
                   <RegisterModal />
-                  <LoginModal />
+                  <LoginModal dataUser={this.dataUser} />
                 </div>
               </div>
             </div>
-
-            {/* {this.state.show ? (
-              <div className="navbar-collapse nav-mbl" id="navbarNavAltMarkup">
-                <div className="navbar-nav  ml-auto">
-                  <div className="mt-2 text-center">
-                    <RegisterModal className="mb-5" />
-                    <LoginModal />
-                  </div>
-                </div>
-              </div>
-            ) : (
-              ""
-            )} */}
           </div>
         </nav>
       </div>
