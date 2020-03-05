@@ -23,10 +23,46 @@
     transform: rotate(90deg);
   }
 
+  .navbar-nav span {
+    /* text-align: center; */
+    display: none;
+  }
+  .icon-admin {
+    margin: auto;
+  }
+
+  .opsi-admin {
+    left: 0;
+    width: 100%;
+  }
+
+  .arrow-drop {
+    right: 47%;
+  }
+
+  .add-ticket-adm span {
+    display: inline-block;
+  }
+  .logout-adm span {
+    display: inline-block;
+  }
+
   /* .nav-desc {
     display: none;
   }
   .nav-mbl {
     display: block !important;
+  } */
+  /* .box-list-tr {
+    width: 100%;
+    overflow: scroll;
+  }
+  .tr {
+    width: 10px !important;
+  } */
+  /* .list-tr {
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 1140px;
+    overflow: scroll;
   } */
 }

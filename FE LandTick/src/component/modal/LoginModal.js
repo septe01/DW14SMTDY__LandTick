@@ -3,6 +3,9 @@ import { Button, Row, Col, Container, Form, Modal } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 
+import { login } from "../../_actions/userA";
+import { connect } from "react-redux";
+
 class LoginModal extends Component {
   constructor() {
     super();
@@ -19,6 +22,10 @@ class LoginModal extends Component {
       errpassword: "",
       loader: true
     };
+  }
+
+  componentDidMount() {
+    this.props.login();
   }
 
   handleClose = () => {
@@ -49,45 +56,47 @@ class LoginModal extends Component {
         this.setState({
           loader: false
         });
-        await Axios.post("http://localhost:5004/api/v1/login", userLogin)
-          .then(response => {
-            if (typeof response.data.token !== "undefined") {
-              localStorage.setItem("token", response.data.token);
-              const { status, username } = response.data;
-              // console.log(status, username);
 
-              this.setState({
-                resUsername: username,
-                resstatus: status,
-                redirect: true,
-                loader: !this.state.loader
-              });
+        this.props.login(userLogin);
+        // await Axios.post("http://localhost:5004/api/v1/login", userLogin)
+        //   .then(response => {
+        //     if (typeof response.data.token !== "undefined") {
+        //       localStorage.setItem("token", response.data.token);
+        //       const { status, username } = response.data;
+        //       // console.log(status, username);
 
-              const data = {
-                status,
-                username
-              };
+        //       this.setState({
+        //         resUsername: username,
+        //         resstatus: status,
+        //         redirect: true,
+        //         loader: !this.state.loader
+        //       });
 
-              this.props.dataUser(data);
-              // window.location.reload(false);
-            }
-          })
-          .catch(error => {
-            if (error.response) {
-              console.log(error.response);
-              if (error.response.data.message != "Password Not Found") {
-                this.setState({
-                  errmail: error.response.data.message
-                });
-              } else {
-                this.setState({
-                  errpassword: error.response.data.message
-                });
-              }
+        //       const data = {
+        //         status,
+        //         username
+        //       };
 
-              // console.log(error.response.data);
-            }
-          });
+        //       this.props.dataUser(data);
+        //       // window.location.reload(false);
+        //     }
+        //   })
+        //   .catch(error => {
+        //     if (error.response) {
+        //       console.log(error.response);
+        //       if (error.response.data.message != "Password Not Found") {
+        //         this.setState({
+        //           errmail: error.response.data.message
+        //         });
+        //       } else {
+        //         this.setState({
+        //           errpassword: error.response.data.message
+        //         });
+        //       }
+
+        //       // console.log(error.response.data);
+        //     }
+        //   });
       } else {
         this.setState({
           errpassword: "password required !"
@@ -169,36 +178,6 @@ class LoginModal extends Component {
                     >
                       Login
                     </Button>
-
-                    {/* <button
-                      className="discoveri-close color-bg mt-3"
-                      type="submit"
-                    >
-                      Login
-                      {this.state.loader ? (
-                        ""
-                      ) : (
-                        <img
-                          src={
-                            process.env.PUBLIC_URL +
-                            "/assets/images/loader3.png"
-                          }
-                          width="300"
-                          height="250"
-                          className="d-inline-block align-top loader-min"
-                          alt="MyLogo"
-                          style={{
-                            filter: "drop-shadow(0px 0px 2px black)",
-                            position: "fixed",
-                            right: "10px",
-                            width: "25px",
-                            height: "25px",
-                            margin: "auto"
-                          }}
-                        />
-                      )}
-                    </button> */}
-                    {/* </Link> */}
                   </div>
                   <div
                     className="text-center mt-4"
@@ -220,10 +199,23 @@ class LoginModal extends Component {
               </Col>
             </Row>
           </Container>
+          {console.log(this.props.userR)}
         </Modal>
       </>
     );
   }
 }
 
-export default LoginModal;
+const mapStateToProps = state => {
+  return {
+    userR: state.userR
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: data => dispatch(login(data))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginModal);

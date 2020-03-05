@@ -132,8 +132,9 @@ class Landing extends Component {
                 <div className="row">
                   <div className="col-md-4">
                     <div className="form-group">
-                      <label htmlFor="inputEmail">dewasa</label>
+                      <label htmlFor="inputEmail">Dewasa</label>
                       <select name="adult" className="form-control input">
+                        <option>Pilih</option>
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -142,8 +143,9 @@ class Landing extends Component {
                   </div>
                   <div className="col-md-4">
                     <div className="form-group">
-                      <label htmlFor="inputEmail">child</label>
+                      <label htmlFor="inputEmail">Anak-anak</label>
                       <select name="child" className="form-control input">
+                        <option>Pilih</option>
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -164,7 +166,7 @@ class Landing extends Component {
           </div>
         </div>
         {/* list  */}
-        <div className="container">
+        <div className="container mb-5">
           {/* ============== */}
           <div className="row justify-content-center mt-4">
             <div className="col text-center">Nama Kereta</div>
@@ -175,15 +177,15 @@ class Landing extends Component {
             <div className="col-md-4 text-center">Harga PerOrang</div>
           </div>
           {/* ================ */}
-          <div className="mb-5">
-            <div className="row justify-content-center mt-3 field-list">
+          <div className="">
+            <div className="row justify-content-center mt-3 field-list box-shadow-2">
               <div className="col text-center">
                 <h6 className="bold-8">Argo Mills</h6>
                 <p>Eksekutif (H)</p>
               </div>
               <div className="col text-center">
-                <h6 className="bold-8">Argo Mills</h6>
-                <p>Eksekutif (H)</p>
+                <h6 className="bold-8">05.00</h6>
+                <p>Gambir</p>
               </div>
               <div className="col text-center">
                 <span className="clr-orange">
@@ -201,19 +203,56 @@ class Landing extends Component {
                 </span>
               </div>
               <div className="col text-center">
+                <h6 className="bold-8">10.05</h6>
+                <p>Surabaya</p>
+              </div>
+              <div className="col text-center">
+                <h6 className="bold-8">5j 05m</h6>
+              </div>
+              <div className="col-md-4 text-center">
+                <h6 className="bold-8 clr-orange mt-3">Rp. 250.000 </h6>
+              </div>
+            </div>
+          </div>
+
+          <div className="">
+            <div className="row justify-content-center mt-3 field-list box-shadow-2">
+              <div className="col text-center">
                 <h6 className="bold-8">Argo Mills</h6>
                 <p>Eksekutif (H)</p>
               </div>
               <div className="col text-center">
-                <h6 className="bold-8">Argo Mills</h6>
+                <h6 className="bold-8">16.00</h6>
+                <p>Tn. Abang</p>
+              </div>
+              <div className="col text-center">
+                <span className="clr-orange">
+                  <FontAwesomeIcon
+                    className="clr-orange"
+                    icon={faLongArrowAltRight}
+                    style={{
+                      marginLeft: "20",
+                      marginRight: "20",
+                      fontSize: "36px",
+                      filter: "drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5))",
+                      boxSizing: "border-box"
+                    }}
+                  />
+                </span>
+              </div>
+              <div className="col text-center">
+                <h6 className="bold-8">19.05</h6>
+                <p>Bogor</p>
+              </div>
+              <div className="col text-center">
+                <h6 className="bold-8">3j 05m</h6>
               </div>
               <div className="col-md-4 text-center">
-                <h6 className="bold-8 clr-orange mt-3">Rp. 1000000 </h6>
+                <h6 className="bold-8 clr-orange mt-3">Rp. 50.000 </h6>
               </div>
             </div>
           </div>
         </div>
-
         <Footer />
       </div>
     );

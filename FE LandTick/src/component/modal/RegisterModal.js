@@ -2,10 +2,9 @@ import React, { Component } from "react"; //useState
 import { Button, Row, Col, Container, Form } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 // data
-import Spesies from "../../data/dataUser.json";
-import { connect } from "react-redux";
-import { getSpecies } from "./../../_actions/speciesA";
-import { getAge } from "../../_actions/ageA";
+
+// import { connect } from "react-redux";
+
 import Axios from "axios";
 import { Redirect } from "react-router-dom";
 
@@ -48,10 +47,9 @@ class RegisterModal extends Component {
     this.setState({ show: false });
   };
 
-  componentDidMount() {
-    this.props.getSpecies();
-    this.props.getAge();
-  }
+  // componentDidMount() {
+
+  // }
 
   handleChange = e => {
     this.setState({ [e.target.name]: [e.target.value] });
@@ -354,17 +352,11 @@ class RegisterModal extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    speciesR: state.speciesR.indexSpecies,
-    ageR: state.ageR.indexAge
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    getSpecies: () => dispatch(getSpecies()),
-    getAge: () => dispatch(getAge())
-  };
-};
+// const mapStateToProps = state => {
+//   return {};
+// };
+// const mapDispatchToProps = dispatch => {
+//   return {};
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterModal);
+export default RegisterModal;

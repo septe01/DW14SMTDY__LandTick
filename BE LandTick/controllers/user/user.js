@@ -27,7 +27,6 @@ exports.userAuth = async (req, res) => {
 
 // --- get data by id
 exports.show = (req, res) => {
-  // const token = req.headers.authorization;
   const userId = req.params.id; //get id user
   User.findOne({
     where: { id: userId },

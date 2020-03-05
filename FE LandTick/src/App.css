@@ -58,8 +58,11 @@ h1.fix-white {
   color: rgb(255, 255, 255) !important;
 }
 
-.color-black {
+.color-black-9 {
   color: rgba(0, 0, 0, 0.9) !important;
+}
+.color-black-7 {
+  color: rgba(14, 14, 14, 0.7) !important;
 }
 .color-white {
   color: rgba(255, 255, 255, 0.7) !important;
@@ -70,8 +73,19 @@ h1.fix-white {
 .head-modal h1 {
   color: rgba(236, 122, 183, 0.7) !important;
 }
+
+.head-modal h1.invoice {
+  color: rgba(14, 14, 14, 0.7) !important;
+}
+
 .clr-orange {
   color: #e67e22;
+}
+.clr-green {
+  color: #0acf83;
+}
+.clr-red {
+  color: #ff0742;
 }
 
 .color-bg-grey {
@@ -106,6 +120,16 @@ h1.fix-white {
 }
 .bold-8 {
   font-weight: 800;
+}
+
+.drop-shadow-2 {
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+}
+.box-shadow-5 {
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+.box-shadow-2 {
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 .center {
@@ -247,6 +271,11 @@ button.register {
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
 }
 
+.container-nav-pedding-0 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
 button.register {
   background-color: white !important;
   color: #ec7a7a !important;
@@ -266,11 +295,13 @@ button.register:hover {
 
 .img-landing {
   position: relative;
-  background-image: url("./assets/images/img-z0.jpeg");
+  /* F38120 */
+  /* background-image: url("./assets/images/img-z0.jpeg"); */
+  background-color: rgb(243, 129, 32);
   background-size: cover;
   width: 556px;
   height: 224px;
-  background-color: teal;
+  /* background-color: teal; */
   border-radius: 4px;
   border: 4px solid rgb(245, 245, 245);
 }
@@ -353,14 +384,262 @@ button.register:hover {
 .box-reg-kedua {
   overflow: auto;
   /* width: 104%; */
-  height: 300px;
+  height: 290px;
 }
 
-/* .nav-mbl {
-  display: none !important;
+/* admin page  */
+.dashAdmin {
+  position: relative;
+}
+.box-heigth-tr {
+  min-height: 74vh;
+}
+.nav-admin {
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.4);
+}
+.icon-admin {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid rgb(236, 122, 139);
+  background-image: url("./assets/images/icon/septe.png");
+  background-size: cover;
+  background-color: rgba(75, 75, 75, 0.7);
+}
+.name-icon-user-admin {
+  display: inline-block;
+  color: rgb(236, 122, 139);
+  font-weight: 900;
+  font-size: 26px;
+  margin-right: 20px;
+  margin-top: 7px;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+  background: -webkit-linear-gradient(90deg, #ec7a7a 0%, #ec7ab7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title-list-transaksi {
+  font-weight: 600;
+  color: #474747;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+}
+
+.list-tr {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+  padding-bottom: 5px;
+}
+
+.field-tr-list {
+  border-radius: 0px !important;
+  border-left: 0px solid rgba(255, 255, 255, 0.4) !important;
+  border-top: 0px solid rgba(255, 255, 255, 0.4) !important;
+  border-right: 0px solid rgba(255, 255, 255, 0.4) !important;
+}
+.field-tr-list:hover {
+  cursor: unset;
+}
+
+.opsi-admin-list {
+  margin-right: 20px;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+  box-sizing: border-box;
+}
+.opsi-admin-list:nth-child(3) {
+  margin-right: 0px;
+}
+.opsi-admin-list:nth-child(1):hover {
+  color: #e67e22;
+  cursor: pointer;
+}
+.opsi-admin-list:nth-child(2):hover {
+  color: #0acf83;
+  cursor: pointer;
+}
+.opsi-admin-list:nth-child(3):hover {
+  color: #ff0742;
+  cursor: pointer;
+}
+
+.admin-tools {
+  position: relative;
+}
+.admin-tools:hover {
+  cursor: pointer;
+}
+
+.opsi-admin {
+  position: absolute;
+  z-index: 1;
+  left: -30%;
+  top: 130%;
+  border-radius: 4px;
+  width: 130%;
+  height: 140px;
+  background-color: white;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+}
+.arrow-drop {
+  content: "";
+  transform: rotate(45deg);
+  position: absolute;
+  background-color: white;
+  top: -10px;
+  right: 16px;
+  width: 20px;
+  height: 20px;
+}
+
+.add-ticket-adm {
+  height: 70px;
+  color: black;
+  line-height: 70px;
+  border-bottom: 2px solid #ec7ab7;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+  box-sizing: border-box;
+}
+.logout-adm {
+  color: black;
+  height: 70px;
+  line-height: 70px;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+}
+.add-ticket-adm:hover {
+  text-decoration: none;
+  color: #0acf83;
+  cursor: pointer;
+}
+.decorate-none:hover {
+  text-decoration: none !important;
+}
+.logout-adm:hover {
+  color: #ff0742;
+  cursor: pointer;
+}
+
+/* admin invoice  */
+.logo-invoice {
+  padding-left: 20px;
+  margin-top: 10px;
+  width: 140px;
+  height: 20px;
+}
+.box-logo-invoice {
+  width: 26%;
+  overflow: hidden;
+  padding-bottom: 5px;
+  border-bottom-right-radius: 45px;
+}
+.box-logo-invoice-edit {
+  width: 38%;
+}
+
+.edit-inv-title {
+  margin-top: 2px !important;
+}
+.edit-inv-title h1 {
+  font-size: 24px;
+}
+/* .head-modal {
+  margin-top: -20px;
 } */
+.head-invoice {
+  margin-top: -30px;
+}
+.head-modal h1.invoice {
+  color: rgba(14, 14, 14, 0.7) !important;
+}
+.head-modal p {
+  font-size: 12px;
+  margin-top: -6px;
+  color: rgba(14, 14, 14, 0.7) !important;
+}
+
+.invoice-name p {
+  font-size: 12px;
+}
+.invoice-name p span {
+  font-weight: 800;
+}
+
+.img-code img {
+  width: 90px;
+  float: right;
+}
+
+.struct {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  text-align: right;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+}
+.struct img {
+  width: 220px;
+  height: 260px;
+  margin: auto !important;
+}
+.detail-invoice-adm {
+  border-top: 2px solid rgba(0, 0, 0, 0.8);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+}
+
+.i-detail-user p:nth-child(2) {
+  margin-top: 20px;
+  color: #0000005e;
+}
+.i-detail-user p:nth-child(1) {
+  font-weight: 700;
+}
+
+.detail-invoice-adm {
+  padding-top: 10px;
+  line-height: 10px !important;
+}
+
+.adm-i-total {
+  margin-top: 6px;
+  background: rgba(17, 17, 17, 0.2);
+  margin-bottom: 16px;
+  height: 40px;
+  overflow: hidden;
+  position: relative;
+}
+.adm-i-total span {
+  margin-top: -18px;
+  margin-left: 8px;
+  font-size: 24px;
+  font-weight: 700;
+}
+.adm-i-total span:nth-child(2) {
+  position: absolute;
+  right: 0;
+  margin-right: 16px;
+  color: #ff0742;
+}
+.form-adm-edit-inv {
+  margin-top: -40px;
+}
+/* disable blue when click image  */
+*::selection {
+  background-color: transparent;
+}
+*::-moz-selection {
+  background-color: transparent;
+}
+* {
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  /*IE10*/
+  -ms-user-select: none;
+  user-select: none;
+
+  /*You just need this if you are only concerned with android and not desktop browsers.*/
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 
 /* dashboard */
+/* z */
 /* textarea:hover, disable css bootraps
 input:hover,
 textarea:active,
