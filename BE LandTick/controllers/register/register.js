@@ -9,7 +9,7 @@ exports.store = async (req, res) => {
     if (rolereq) {
       role = rolereq;
     } else {
-      role = null;
+      role = "public";
     }
 
     const {

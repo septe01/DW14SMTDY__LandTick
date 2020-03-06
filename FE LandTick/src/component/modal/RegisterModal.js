@@ -293,7 +293,7 @@ class RegisterModal extends Component {
                           id="gender"
                           onChange={this.handleChange}
                         >
-                          <option>Pilih</option>
+                          <option>Pilih Jenis kelamin</option>
                           <option value="male">Laki</option>
                           <option value="female">perempuan</option>
                         </select>

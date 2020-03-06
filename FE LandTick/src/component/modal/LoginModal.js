@@ -110,6 +110,8 @@ class LoginModal extends Component {
   };
 
   render() {
+    // const { dataLogin } = this.props.userR;
+    // console.log(this.props.userR.dataLogin);
     return (
       <>
         {this.state.redirect ? <Redirect to="/home" /> : ""}
@@ -199,7 +201,6 @@ class LoginModal extends Component {
               </Col>
             </Row>
           </Container>
-          {console.log(this.props.userR)}
         </Modal>
       </>
     );
@@ -208,7 +209,7 @@ class LoginModal extends Component {
 
 const mapStateToProps = state => {
   return {
-    userR: state.userR
+    userR: state.userR.dataLogin
   };
 };
 

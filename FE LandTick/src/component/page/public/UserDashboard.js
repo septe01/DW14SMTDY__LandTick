@@ -10,11 +10,11 @@ import {
 import ModalInvoice from "../../modal/ModalInvoice";
 import ModalEditInvoice from "../../modal/ModalEditInvoice";
 
-class Dashboard extends Component {
+class UserDashboard extends Component {
   constructor(props) {
     super();
     this.state = {
-      status: "admin"
+      // status: null
     };
   }
   render() {
@@ -121,4 +121,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default UserDashboard;

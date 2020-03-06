@@ -61,6 +61,9 @@ h1.fix-white {
 .color-black-9 {
   color: rgba(0, 0, 0, 0.9) !important;
 }
+.color-black-8 {
+  color: rgba(14, 14, 14, 0.8) !important;
+}
 .color-black-7 {
   color: rgba(14, 14, 14, 0.7) !important;
 }
@@ -89,6 +92,12 @@ h1.fix-white {
 }
 
 .color-bg-grey {
+  background: #ededed;
+}
+.color-bg-grey-8 {
+  background: #bbbbbb;
+}
+.clr-bg-grey {
   background: #ededed;
 }
 .color-bg {
@@ -227,12 +236,13 @@ h1.fix-white {
 .form-control {
   background-color: #e6e6e6 !important;
 }
-.modal-content {
+
+/* 
+.modal-add-pay {
   width: 85% !important;
-  /* width: 524px !important; */
   margin: auto !important;
   min-height: 350px;
-}
+} */
 
 .head-modal {
   position: relative;
@@ -404,7 +414,18 @@ button.register:hover {
   border: 2px solid rgb(236, 122, 139);
   background-image: url("./assets/images/icon/septe.png");
   background-size: cover;
-  background-color: rgba(75, 75, 75, 0.7);
+  /* background-color: rgba(75, 75, 75, 0.7); */
+}
+.icon-user {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid rgb(236, 122, 139);
+  background-image: url("./assets/images/icon/boy-5.png");
+  background-position: 0px 8px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-color: rgba(75, 75, 75, 0.7); */
 }
 .name-icon-user-admin {
   display: inline-block;
@@ -620,10 +641,146 @@ button.register:hover {
 .form-adm-edit-inv {
   margin-top: -40px;
 }
-/* disable blue when click image  */
-*::selection {
-  background-color: transparent;
+
+.adm-add-ticket {
+  min-height: 82vh;
 }
+
+/* user */
+.opsi-user {
+  height: 180px;
+}
+
+.add-ticket-usr {
+  margin-bottom: -30px;
+  filter: drop-shadow(2px 2px 2px rgba(255, 255, 255, 0.5));
+  border-bottom: 2px solid #ffffff;
+}
+.add-ticket-usr span {
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+}
+
+.box-pay {
+  border-radius: 6px;
+  border: 2px solid #eaeaea;
+  overflow: hidden;
+  position: relative;
+}
+.logopay {
+  margin-left: -1.5%;
+}
+
+.payment {
+  margin-top: -28px;
+  padding-right: 24px;
+  width: 100%;
+  position: absolute;
+}
+
+.pay-title {
+  /* margin-top: -90px; */
+}
+.fill-detail-pay {
+  margin-top: 78px;
+}
+
+.foot-pay {
+  border-top: 2px solid #eaeaea;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+}
+.click-pay {
+  text-align: right !important;
+  padding-right: 0px !important;
+}
+
+.click-pay-btn {
+  display: inline-block !important;
+  margin-top: 14px;
+  line-height: inherit;
+}
+.box-pay-warning {
+  height: 100px;
+  line-height: 100px;
+}
+.box-pay-warning p {
+  margin-top: 6px;
+  line-height: 24px;
+}
+.box-pay-warning p:nth-child(2) {
+  margin-top: -4px;
+  font-weight: 800;
+}
+.box-heigth-pay-now {
+  min-height: 80vh;
+}
+
+.tbl-paynow-detail {
+  width: 100%;
+}
+.tbl-paynow-detail thead {
+  border-bottom: 2px solid #eaeaea;
+}
+.tbl-paynow-detail td,
+.tbl-paynow-detail th {
+  padding: 4px;
+  padding-left: 30px;
+}
+
+.total-paynow th {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.pay-click-now {
+  position: relative;
+}
+.btn-pay-now-mdl {
+  position: absolute;
+  width: 100%;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.detail-pay-click-now {
+  position: relative;
+}
+.prof-img-click-now {
+  position: absolute;
+  right: 0;
+  text-align: right;
+  overflow: hidden;
+  min-height: 205px;
+}
+
+.payment-prof-img {
+  position: absolute;
+  right: 4px;
+  height: 200px;
+}
+
+.code-pay-click-now {
+  position: relative;
+}
+.code-pay-click-now img {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  right: -10px;
+}
+
+.pay-now {
+  min-height: 0px !important;
+}
+
+.click-disini:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 800;
+}
+
+/* disable blue when click image  */
+/* *::selection {
+  background-color: transparent;
+} */
 *::-moz-selection {
   background-color: transparent;
 }

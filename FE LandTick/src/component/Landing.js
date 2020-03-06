@@ -10,6 +10,8 @@ import {
   faExchangeAlt,
   faLongArrowAltRight
 } from "@fortawesome/free-solid-svg-icons";
+import { connect } from "react-redux";
+import { login } from "../_actions/userA";
 
 // import { BrowserRouter as Router, Link } from 'react-router-dom';
 
@@ -29,13 +31,20 @@ class Landing extends Component {
       ]
     };
   }
-  dataUser = data => {
-    // console.log(data);
-  };
+
+  componentDidMount() {
+    this.props.login();
+  }
+
   render() {
+    // const { datauserLogin } = this.props.userR;
+    console.log(this.props.userR);
+
     return (
       <div>
-        <HeaderPrimary dataUser={data => this.dataUser(data)} />
+        {/* dataUser={data => this.dataUser(data) */}
+        <HeaderPrimary />
+
         <Jumbotron />
 
         <div className="">
@@ -259,4 +268,15 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+const mapStateToProps = state => {
+  return {
+    userR: state.userR
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: data => dispatch(login(data))
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

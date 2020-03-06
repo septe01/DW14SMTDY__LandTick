@@ -18,6 +18,7 @@ const userLogin = (state = initialState, action) => {
       return {
         ...state,
         datauserLogin: action.payload,
+        dataLogin: [...state.dataLogin, action.payload],
         loginLoading: false
       };
     case appContants.POST_USER_LOGIN_REJECTED:
