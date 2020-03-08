@@ -2,15 +2,15 @@ import { appContants } from "../config/AppConstants";
 import Axios from "axios";
 import { API } from "../config/api";
 
-export const login = data => {
-  // console.log(data);
+export const storeTiket = data => {
   try {
     return {
-      type: appContants.POST_USER_LOGIN,
+      type: appContants.POST_TICKET,
       payload: Axios({
         method: "POST",
-        url: `${API.baseURL}/login`,
-        data: data
+        url: `${API.baseURL}/ticket`,
+        data: data,
+        headers: API.headers
       })
     };
   } catch (error) {
@@ -18,14 +18,13 @@ export const login = data => {
   }
 };
 
-export const getUser = () => {
+export const getTiket = () => {
   try {
     return {
-      type: appContants.GET_USER,
+      type: appContants.GET_TICKET,
       payload: Axios({
         method: "GET",
-        url: `${API.baseURL}/userAuth`,
-        headers: API.headers
+        url: `${API.baseURL}/ticket`
       })
     };
   } catch (error) {

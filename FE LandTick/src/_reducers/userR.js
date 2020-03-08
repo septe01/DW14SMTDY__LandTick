@@ -4,7 +4,7 @@ const initialState = {
   datauserLogin: [],
   loginLoading: false,
   loginError: false,
-  dataLogin: []
+  getUser: []
 };
 
 const userLogin = (state = initialState, action) => {
@@ -18,12 +18,30 @@ const userLogin = (state = initialState, action) => {
       return {
         ...state,
         datauserLogin: action.payload,
-        dataLogin: [...state.dataLogin, action.payload],
-        loginLoading: false
+        loginLoading: false,
+        loginError: false
       };
     case appContants.POST_USER_LOGIN_REJECTED:
       return {
         datauserLogin: action.payload.data,
+        loginError: true
+      };
+    // get
+    case appContants.GET_USER_PENDING:
+      return {
+        ...state,
+        loginLoading: true
+      };
+    case appContants.GET_USER_FULFILLED:
+      return {
+        ...state,
+        getUser: [...state.getUser, action.payload],
+        loginLoading: false,
+        loginError: false
+      };
+    case appContants.GET_USER_REJECTED:
+      return {
+        getUser: action.payload.data,
         loginError: true
       };
     default:

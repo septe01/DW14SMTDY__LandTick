@@ -5,18 +5,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import ModalInvoice from "../../modal/ModalInvoice";
 import ModalEditInvoice from "../../modal/ModalEditInvoice";
+import { Link, Redirect } from "react-router-dom";
+
+//get order
+import { getOreder } from "../../../_actions/orderA";
+import { connect } from "react-redux";
 
 class DashboardAdm extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      status: "admin"
-    };
+  // constructor(props) {
+  //   super();
+  //   this.state = {};
+  // }
+
+  componentDidMount() {
+    this.props.getOreder();
   }
   render() {
+    console.log(this.props.orderR);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="dashAdmin">
-        <HeaderPrimary status={this.state.status} />
+        <HeaderPrimary />
 
         <div className="container box-heigth-tr mt-5">
           <div>
@@ -117,4 +129,14 @@ class DashboardAdm extends Component {
   }
 }
 
-export default DashboardAdm;
+const mapStateToProps = state => {
+  return {
+    orderR: state.orderR
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    getOreder: () => dispatch(getOreder())
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardAdm);

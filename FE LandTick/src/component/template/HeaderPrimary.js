@@ -7,10 +7,10 @@ import {
   faSignOutAlt,
   faMoneyCheckAlt
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import AdmAddTiket from "../modal/AdmAddTiket";
 import { connect } from "react-redux";
-import { login } from "../../_actions/userA";
+import { login, getUser } from "../../_actions/userA";
 
 class HeaderPrimary extends Component {
   constructor(props) {
@@ -18,34 +18,47 @@ class HeaderPrimary extends Component {
     this.state = {
       show: false,
       showAdmin: true,
-      showUser: true,
-
-      data: [],
-
-      username: "",
-      token: "",
-      status: "home"
+      showUser: true
     };
   }
   // navbar-toggler
 
-  onToggle = () => {
-    const toggle = document.getElementById("navbarNavAltMarkup");
-    alert(toggle);
+  // onToggle = () => {
+  //   const toggle = document.getElementById("navbarNavAltMarkup");
+  //   alert(toggle);
+  // };
+
+  componentDidMount() {
+    this.props.getUser();
+  }
+
+  onLogout = () => {
+    // window.localStorage.clear();
+    localStorage.removeItem("token");
+    document.location.reload(true);
+    return <Redirect to="/" />;
   };
 
   render() {
-    const { datauserLogin } = this.props.userR;
-    let statusLog, userLog;
-    if (datauserLogin.data) {
-      statusLog = datauserLogin.data.status;
-      userLog = datauserLogin.data.username;
+    const token = localStorage.getItem("token");
+    let status;
+    if (token) {
+      if (this.props.userR.getUser[0]) {
+        if (this.props.userR.getUser[0].data) {
+          status = this.props.userR.getUser[0].data.userAut.role;
+        }
+      }
     }
-    // if (this.props.dataUser.data) {
-    //   this.dataUser(this.props.dataUser.data);
+
+    console.log(status);
+
+    // const { datauserLogin } = this.props.userR;
+    // if (datauserLogin.data) {
+    //   statusLog = datauserLogin.data.status;
+    //   userLog = datauserLogin.data.username;
     // }
 
-    if (statusLog == "admin") {
+    if (status == "admin") {
       return (
         <div>
           <nav className="navbar  navbar-expand-lg navbar-light color-bg-white nav-admin">
@@ -70,7 +83,6 @@ class HeaderPrimary extends Component {
                   </div>
                   {!this.state.showAdmin ? (
                     <div className="opsi-admin">
-                      {console.log(this.state.username)}
                       {/* using page */}
                       <Link to="/addticket" className="decorate-none">
                         <div className="add-ticket-adm">
@@ -84,7 +96,7 @@ class HeaderPrimary extends Component {
                       {/* <AdmAddTiket showAdd={this.state.showAdd} /> */}
                       {/* ======================= */}
                       <Link to="/" className="decorate-none">
-                        <div className="logout-adm">
+                        <div className="logout-adm" onClick={this.onLogout}>
                           <span className="ml-4 mr-3">
                             {" "}
                             <FontAwesomeIcon icon={faSignOutAlt} />
@@ -103,7 +115,7 @@ class HeaderPrimary extends Component {
           </nav>
         </div>
       );
-    } else if (statusLog == "public") {
+    } else if (status == "public") {
       return (
         <div>
           <nav className="navbar  navbar-expand-lg navbar-light color-bg-white ">
@@ -122,7 +134,7 @@ class HeaderPrimary extends Component {
                     this.setState({ showUser: !this.state.showUser })
                   }
                 >
-                  <span className="name-icon-user-admin">{userLog}</span>
+                  <span className="name-icon-user-admin">Anton</span>
                   <div className="nav-mbl-mt-2 text-center">
                     <div className="icon-user"></div>
                   </div>
@@ -146,15 +158,15 @@ class HeaderPrimary extends Component {
                           <span>Payment</span>
                         </div>
                       </Link>
-                      <Link to="/" className="decorate-none">
-                        <div className="logout-adm">
-                          <span className="ml-4 mr-3">
-                            {" "}
-                            <FontAwesomeIcon icon={faSignOutAlt} />
-                          </span>
-                          <span>Logout</span>
-                        </div>
-                      </Link>
+
+                      <div className="logout-adm" onClick={this.onLogout}>
+                        <span className="ml-4 mr-3">
+                          {" "}
+                          <FontAwesomeIcon icon={faSignOutAlt} />
+                        </span>
+                        <span>Logout</span>
+                      </div>
+
                       <div className="arrow-drop"></div>
                     </div>
                   ) : (
@@ -203,7 +215,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: data => dispatch(login(data))
+    getUser: () => dispatch(getUser())
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderPrimary);

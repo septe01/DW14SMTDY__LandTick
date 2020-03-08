@@ -10,10 +10,14 @@ import {
 import ModalInvoice from "../../modal/ModalInvoice";
 import ModalEditInvoice from "../../modal/ModalEditInvoice";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 class UserMyTiket extends Component {
   render() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
         <div className="dashAdmin">

@@ -125,10 +125,7 @@ exports.order = async (req, res) => {
 //find all order
 exports.index = async (req, res) => {
   try {
-    const id = req.user.userId;
-    const admin = await User.findOne({
-      where: { [Op.and]: [{ id: id }, { role: "admin" }] }
-    });
+    const admin = await User.findAll();
     if (admin) {
       const result = await Order.findAll({
         attributes: ["id", "qty", "total_price", "status", "attachment"],

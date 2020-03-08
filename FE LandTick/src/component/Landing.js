@@ -11,38 +11,75 @@ import {
   faLongArrowAltRight
 } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
-import { login } from "../_actions/userA";
+import { Link, Redirect } from "react-router-dom";
+import LoginModal from "./modal/LoginModal";
+import { getUser } from "../_actions/userA";
+import { getTiket } from "../_actions/tiketA";
 
 // import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 class Landing extends Component {
   constructor(props) {
     super();
-    this.state = {
-      columnDefs: [
-        { headerName: "Make", field: "make" },
-        { headerName: "Model", field: "model" },
-        { headerName: "Price", field: "price" }
-      ],
-      rowData: [
-        { make: "Toyota", model: "Celica", price: 35000 },
-        { make: "Ford", model: "Mondeo", price: 32000 },
-        { make: "Porsche", model: "Boxter", price: 72000 }
-      ]
-    };
+    this.state = {};
   }
 
   componentDidMount() {
-    this.props.login();
+    this.props.getUser();
+    this.props.getTiket();
   }
 
+  // handleShowTicket = () => {
+  //   if (localStorage.getItem("token") === null) {
+  //     return <LoginModal show={true} />;
+  //   }
+  //   alert(localStorage.getItem("token"));
+  // };
+
   render() {
-    // const { datauserLogin } = this.props.userR;
-    console.log(this.props.userR);
+    const token = localStorage.getItem("token");
+    const ticket = this.props.tiketR.getTiket.ticket;
+    console.log(ticket === undefined);
+    let status;
+    if (token) {
+      if (this.props.userR.getUser[0]) {
+        if (this.props.userR.getUser[0].data) {
+          status = this.props.userR.getUser[0].data.userAut.role;
+        }
+      }
+    }
+
+    //convert time
+    const time = time => time.substr(0, 5);
+    //range day
+    const getTime = (start, end) => {
+      start = start.split(":");
+      end = end.split(":");
+      var startDate = new Date(0, 0, 0, start[0], start[1], 0);
+      var endDate = new Date(0, 0, 0, end[0], end[1], 0);
+      var diff = endDate.getTime() - startDate.getTime();
+      var hours = Math.floor(diff / 1000 / 60 / 60);
+      diff -= hours * 1000 * 60 * 60;
+      var minutes = Math.floor(diff / 1000 / 60);
+
+      if (hours < 0) hours = hours + 24;
+
+      return (
+        (hours <= 9 ? "0" : "") +
+        `${hours}j` +
+        " " +
+        (minutes <= 9 ? "0" : "") +
+        `${minutes}m`
+      );
+    };
+    // console.log(status);
+
+    if (status === "admin") {
+      return <Redirect to="/mydashboard" />;
+    }
 
     return (
       <div>
-        {/* dataUser={data => this.dataUser(data) */}
         <HeaderPrimary />
 
         <Jumbotron />
@@ -185,9 +222,105 @@ class Landing extends Component {
             <div className="col text-center">Durasi</div>
             <div className="col-md-4 text-center">Harga PerOrang</div>
           </div>
-          {/* ================ */}
-          <div className="">
-            <div className="row justify-content-center mt-3 field-list box-shadow-2">
+          {/* tiket */}
+          {ticket
+            ? ticket.map((val, i) => (
+                <div className="" key={i} id={val.id}>
+                  <div
+                    className="row justify-content-center mt-3 field-list box-shadow-2"
+                    onClick={this.handleShowTicket}
+                  >
+                    <div className="col text-center">
+                      <h6 className="bold-8">{val.name_train}</h6>
+                      <p>{val.train.type_train}</p>
+                    </div>
+                    <div className="col text-center">
+                      <h6 className="bold-8">{time(val.start_time)}</h6>
+                      <p>{val.start_station}</p>
+                    </div>
+                    <div className="col text-center">
+                      <span className="clr-orange">
+                        <FontAwesomeIcon
+                          className="clr-orange"
+                          icon={faLongArrowAltRight}
+                          style={{
+                            marginLeft: "20",
+                            marginRight: "20",
+                            fontSize: "36px",
+                            filter:
+                              "drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5))",
+                            boxSizing: "border-box"
+                          }}
+                        />
+                      </span>
+                    </div>
+                    <div className="col text-center">
+                      <h6 className="bold-8">{time(val.arival_time)}</h6>
+                      <p>{val.destination_station}</p>
+                    </div>
+                    <div className="col text-center">
+                      <h6 className="bold-8">
+                        {getTime(val.start_time, val.arival_time)}
+                      </h6>
+                    </div>
+                    <div className="col-md-4 text-center">
+                      <h6 className="bold-8 clr-orange mt-3">{val.price} </h6>
+                    </div>
+                  </div>
+                </div>
+              ))
+            : ""}
+          {ticket === "undefined" ? (
+            <div className="">
+              <div
+                className="row justify-content-center mt-3 field-list box-shadow-2"
+                onClick={this.handleShowTicket}
+              >
+                <div className="col text-center">
+                  <h6 className="bold-8">Argo Mills</h6>
+                  <p>Eksekutif (H)</p>
+                </div>
+                <div className="col text-center">
+                  <h6 className="bold-8">05.00</h6>
+                  <p>Gambir</p>
+                </div>
+                <div className="col text-center">
+                  <span className="clr-orange">
+                    <FontAwesomeIcon
+                      className="clr-orange"
+                      icon={faLongArrowAltRight}
+                      style={{
+                        marginLeft: "20",
+                        marginRight: "20",
+                        fontSize: "36px",
+                        filter: "drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5))",
+                        boxSizing: "border-box"
+                      }}
+                    />
+                  </span>
+                </div>
+                <div className="col text-center">
+                  <h6 className="bold-8">10.05</h6>
+                  <p>Surabaya</p>
+                </div>
+                <div className="col text-center">
+                  <h6 className="bold-8">5j 05m</h6>
+                </div>
+                <div className="col-md-4 text-center">
+                  <h6 className="bold-8 clr-orange mt-3">Rp. 250.000 </h6>
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+
+          {/* end tiket */}
+          {/* <div className="">
+            <div
+              className="row justify-content-center mt-3 field-list box-shadow-2"
+              onClick={this.handleShowTicket}
+            >
               <div className="col text-center">
                 <h6 className="bold-8">Argo Mills</h6>
                 <p>Eksekutif (H)</p>
@@ -222,45 +355,7 @@ class Landing extends Component {
                 <h6 className="bold-8 clr-orange mt-3">Rp. 250.000 </h6>
               </div>
             </div>
-          </div>
-
-          <div className="">
-            <div className="row justify-content-center mt-3 field-list box-shadow-2">
-              <div className="col text-center">
-                <h6 className="bold-8">Argo Mills</h6>
-                <p>Eksekutif (H)</p>
-              </div>
-              <div className="col text-center">
-                <h6 className="bold-8">16.00</h6>
-                <p>Tn. Abang</p>
-              </div>
-              <div className="col text-center">
-                <span className="clr-orange">
-                  <FontAwesomeIcon
-                    className="clr-orange"
-                    icon={faLongArrowAltRight}
-                    style={{
-                      marginLeft: "20",
-                      marginRight: "20",
-                      fontSize: "36px",
-                      filter: "drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5))",
-                      boxSizing: "border-box"
-                    }}
-                  />
-                </span>
-              </div>
-              <div className="col text-center">
-                <h6 className="bold-8">19.05</h6>
-                <p>Bogor</p>
-              </div>
-              <div className="col text-center">
-                <h6 className="bold-8">3j 05m</h6>
-              </div>
-              <div className="col-md-4 text-center">
-                <h6 className="bold-8 clr-orange mt-3">Rp. 50.000 </h6>
-              </div>
-            </div>
-          </div>
+          </div> */}
         </div>
         <Footer />
       </div>
@@ -270,13 +365,15 @@ class Landing extends Component {
 
 const mapStateToProps = state => {
   return {
-    userR: state.userR
+    userR: state.userR,
+    tiketR: state.tiketR
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: data => dispatch(login(data))
+    getUser: () => dispatch(getUser()),
+    getTiket: () => dispatch(getTiket())
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

@@ -5,6 +5,7 @@ import Axios from "axios";
 
 import { login } from "../../_actions/userA";
 import { connect } from "react-redux";
+import RegisterModal from "./RegisterModal";
 
 class LoginModal extends Component {
   constructor() {
@@ -28,9 +29,10 @@ class LoginModal extends Component {
     this.props.login();
   }
 
-  handleClose = () => {
+  handleClose = e => {
     this.setState({ show: false });
   };
+
   handleShow = () => {
     this.setState({ show: true });
   };
@@ -57,46 +59,37 @@ class LoginModal extends Component {
           loader: false
         });
 
-        this.props.login(userLogin);
-        // await Axios.post("http://localhost:5004/api/v1/login", userLogin)
-        //   .then(response => {
-        //     if (typeof response.data.token !== "undefined") {
-        //       localStorage.setItem("token", response.data.token);
-        //       const { status, username } = response.data;
-        //       // console.log(status, username);
+        this.props
+          .login(userLogin)
+          .then(res => {
+            const { status, token, username } = res.action.payload.data;
+            this.setState({ show: false });
+            localStorage.setItem("token", token);
+            if (status === "admin") {
+              document.location.reload(true);
+              return <Redirect to="/mydashboard" />;
+            } else {
+              document.location.reload(true);
+              return <Redirect to="/" />;
+            }
+            // console.log(res.action.payload.data);
+          })
+          .catch(error => {
+            if (error.response) {
+              console.log(error.response);
+              if (error.response.data.message != "Password Not Found") {
+                this.setState({
+                  errmail: error.response.data.message
+                });
+              } else {
+                this.setState({
+                  errpassword: error.response.data.message
+                });
+              }
 
-        //       this.setState({
-        //         resUsername: username,
-        //         resstatus: status,
-        //         redirect: true,
-        //         loader: !this.state.loader
-        //       });
-
-        //       const data = {
-        //         status,
-        //         username
-        //       };
-
-        //       this.props.dataUser(data);
-        //       // window.location.reload(false);
-        //     }
-        //   })
-        //   .catch(error => {
-        //     if (error.response) {
-        //       console.log(error.response);
-        //       if (error.response.data.message != "Password Not Found") {
-        //         this.setState({
-        //           errmail: error.response.data.message
-        //         });
-        //       } else {
-        //         this.setState({
-        //           errpassword: error.response.data.message
-        //         });
-        //       }
-
-        //       // console.log(error.response.data);
-        //     }
-        //   });
+              // console.log(error.response.data);
+            }
+          });
       } else {
         this.setState({
           errpassword: "password required !"
@@ -110,11 +103,9 @@ class LoginModal extends Component {
   };
 
   render() {
-    // const { dataLogin } = this.props.userR;
-    // console.log(this.props.userR.dataLogin);
+    console.log(this.props.show);
     return (
       <>
-        {this.state.redirect ? <Redirect to="/home" /> : ""}
         <Button
           className=" btn-log color-bg"
           onClick={this.handleShow}
@@ -194,7 +185,9 @@ class LoginModal extends Component {
                       }}
                     >
                       Belum Punya Akun ?{" "}
-                      <span className="klik-me">Klik disini</span>
+                      <span className="klik-me">
+                        <RegisterModal klikme="Klik disini" />
+                      </span>
                     </p>
                   </div>
                 </Form>
@@ -209,7 +202,7 @@ class LoginModal extends Component {
 
 const mapStateToProps = state => {
   return {
-    userR: state.userR.dataLogin
+    userR: state.userR
   };
 };
 

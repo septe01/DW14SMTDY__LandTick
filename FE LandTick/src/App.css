@@ -835,6 +835,11 @@ button:focus,
   -moz-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
+
+.info-dialog {
+  font-size: 60px;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+}
 @-moz-keyframes spin {
   100% {
     -moz-transform: rotate(360deg);

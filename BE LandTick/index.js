@@ -28,9 +28,11 @@ app.use(bodyParser.json());
 
 // import controller
 const LoginController = require("./controllers/login");
+const UserController = require("./controllers/user/user");
 const RegistrasiController = require("./controllers/register/register");
 const OrderController = require("./controllers/order/order");
 const TicketController = require("./controllers/ticket/ticket");
+const TrainsController = require("./controllers/type-train/trains");
 
 // -- create groups routes
 // -- Endpoint
@@ -38,13 +40,18 @@ app.group("/api/v1", router => {
   //strukturing folder
   router.post("/login", LoginController.store);
   router.post("/register", RegistrasiController.store);
+  // user
+  router.get("/userAuth", authenticated, UserController.userAuth);
   // Ticket
   router.post("/ticket", authenticated, TicketController.store);
+  router.get("/ticket", TicketController.index);
+  // Trains
+  router.get("/trains", TrainsController.index);
 
   //order
   router.get("/my_tickets", authenticated, OrderController.myticket);
   router.post("/order", authenticated, OrderController.order);
-  router.get("/order", authenticated, OrderController.index);
+  router.get("/order", OrderController.index);
   router.get("/order/:id", authenticated, OrderController.show);
   router.patch("/order/:id", authenticated, OrderController.update);
 });

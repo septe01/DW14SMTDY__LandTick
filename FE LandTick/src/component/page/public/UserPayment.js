@@ -6,12 +6,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../../template/Footer";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import ModalPaymentBtn from "../../modal/ModalPaymentBtn";
 
 class UserPayment extends Component {
   render() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div>
         <div className="dashAdmin">

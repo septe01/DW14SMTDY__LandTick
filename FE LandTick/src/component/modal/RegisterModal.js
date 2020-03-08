@@ -9,7 +9,7 @@ import Axios from "axios";
 import { Redirect } from "react-router-dom";
 
 class RegisterModal extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       show: false,
@@ -45,6 +45,8 @@ class RegisterModal extends Component {
 
   hideModal = () => {
     this.setState({ show: false });
+    document.location.reload(false);
+    return <Redirect to="/" />;
   };
 
   // componentDidMount() {
@@ -210,12 +212,17 @@ class RegisterModal extends Component {
         {/* <button className="btn-reg color-bg" onClick={() => this.handleModal()}>
           Register
         </button> */}
-        <Button
-          className=" color-white mr-2 register"
-          onClick={() => this.handleModal()}
-        >
-          Register
-        </Button>
+
+        {this.props.klikme ? (
+          <span onClick={() => this.handleModal()}>Klik me</span>
+        ) : (
+          <Button
+            className=" color-white mr-2 register"
+            onClick={() => this.handleModal()}
+          >
+            Register
+          </Button>
+        )}
 
         {/* username, name hapus*/}
 
@@ -331,6 +338,7 @@ class RegisterModal extends Component {
 
                     <div className="justify-content-center d-flex mt-2">
                       <Button
+                        onClick={this.hideModal}
                         className=" btn-log color-bg color-white"
                         style={{
                           fontWeight: "1000",
