@@ -2,35 +2,39 @@ import React, { Component } from "react";
 import { Form, Container, Row, Modal, Col, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { connect } from "react-redux";
+import { getOrederById } from "../../_actions/orderA";
 
 class ModalInvoice extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
-      show: false
+      show: false,
+      id: ""
     };
   }
   handleClose = () => {
     this.setState({ show: false });
   };
-  handleShow = () => {
-    this.setState({ show: true });
+  handleShow = e => {
+    this.props.getOrederById(e);
+    this.setState({ show: true, id: e });
   };
+  componentDidMount() {
+    // alert(this.props.data);
+    // this.props.getOrederById(this.props.data)
+  }
+
   render() {
+    console.log(this.state.id);
+
     return (
       <>
-        {/* {this.state.redirect ? <Redirect to="/home" /> : ""}
-        <Button
-          className=" btn-log color-bg"
-          onClick={this.handleShow}
-          style={{ fontWeight: "1000" }}
-        >
-          Login
-        </Button> */}
         <FontAwesomeIcon
           icon={faInfoCircle}
           className="opsi-admin-list"
-          onClick={this.handleShow}
+          // value:{this.props.id}
+          onClick={() => this.handleShow(this.props.id)}
         />
 
         <Modal show={this.state.show} onHide={this.handleClose} size="lg">
@@ -154,11 +158,24 @@ class ModalInvoice extends Component {
               </div>
             </div>
           </Container>
-          {console.log(this.props.userR)}
+          {/* {console.log(this.props.orderR)} */}
         </Modal>
       </>
     );
   }
 }
 
-export default ModalInvoice;
+// console.log(this.props.id);
+
+const mapStateToProp = state => {
+  return {
+    orderR: state.orderR
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    getOrederById: id => dispatch(getOrederById(id))
+  };
+};
+// http://localhost:5004/api/v1/order/1
+export default connect(mapStateToProp, mapDispatchToProps)(ModalInvoice);

@@ -216,7 +216,7 @@ exports.show = async (req, res) => {
     const idOrder = req.params.id;
     // console.log(idOrder);
     const admin = await User.findOne({
-      where: { [Op.and]: [{ id: id }, { role: "admin" }] }
+      where: { id: id }
     });
     if (admin) {
       const result = await Order.findOne({

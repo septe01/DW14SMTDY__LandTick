@@ -12,20 +12,21 @@ import { getOreder } from "../../../_actions/orderA";
 import { connect } from "react-redux";
 
 class DashboardAdm extends Component {
-  // constructor(props) {
-  //   super();
-  //   this.state = {};
-  // }
+  constructor(props) {
+    super();
+    this.state = {};
+  }
 
   componentDidMount() {
     this.props.getOreder();
   }
   render() {
-    console.log(this.props.orderR);
+    const order = this.props.orderR.getOrder.data;
     const token = localStorage.getItem("token");
     if (!token) {
       return <Redirect to="/" />;
     }
+    let no = 1;
     return (
       <div className="dashAdmin">
         <HeaderPrimary />
@@ -45,7 +46,65 @@ class DashboardAdm extends Component {
             </div>
 
             {/* ============== */}
-            <div className="row justify-content-center  field-list field-tr-list">
+            {order
+              ? order.map((val, key) => (
+                  // console.log(val.user.name);
+                  <div
+                    className="row justify-content-center  field-list field-tr-list"
+                    key={key}
+                  >
+                    <div className="col-md-1 text-center">
+                      <h6 className="bold-8">{no++}</h6>
+                    </div>
+                    <div className="col-md-2 text-center">
+                      <h6 className="bold-8">{val.user.name}</h6>
+                    </div>
+                    <div className="col-md-2 text-center">
+                      <h6 className="bold-8">{`${val.ticket.start_station} - ${val.ticket.destination_station}`}</h6>
+                    </div>
+
+                    <div
+                      className="col-md-2 text-center"
+                      style={{ overflow: "hidden" }}
+                    >
+                      {val.attachment ? (
+                        <h6 className="bold-8">{val.attachment}</h6>
+                      ) : (
+                        "-"
+                      )}
+                    </div>
+                    <div className="col-md-2 text-center">
+                      {val.status === "a" ? (
+                        <h6 className="bold-8 clr-green">Approved</h6>
+                      ) : (
+                        ""
+                      )}
+                      {val.status === "c" ? (
+                        <h6 className="bold-8 clr-red">Cancle</h6>
+                      ) : (
+                        ""
+                      )}
+                      {val.status === "p" ? (
+                        <h6 className="bold-8 clr-orange">Pending</h6>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div className="col-md-3 text-center">
+                      <div className="row justify-content-center">
+                        {/* data={} */}
+                        <ModalInvoice id={val.id} />
+                        <ModalEditInvoice />
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          className="opsi-admin-list"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))
+              : ""}
+            {/* <div className="row justify-content-center  field-list field-tr-list">
               <div className="col-md-1 text-center">
                 <h6 className="bold-8">1</h6>
               </div>
@@ -69,8 +128,8 @@ class DashboardAdm extends Component {
                   <FontAwesomeIcon icon={faTrash} className="opsi-admin-list" />
                 </div>
               </div>
-            </div>
-            <div className="row justify-content-center  field-list field-tr-list">
+            </div> */}
+            {/* <div className="row justify-content-center  field-list field-tr-list">
               <div className="col-md-1 text-center">
                 <h6 className="bold-8">1</h6>
               </div>
@@ -94,8 +153,8 @@ class DashboardAdm extends Component {
                   <FontAwesomeIcon icon={faTrash} className="opsi-admin-list" />
                 </div>
               </div>
-            </div>
-            <div className="row justify-content-center  field-list field-tr-list">
+            </div> */}
+            {/* <div className="row justify-content-center  field-list field-tr-list">
               <div className="col-md-1 text-center">
                 <h6 className="bold-8">1</h6>
               </div>
@@ -119,7 +178,7 @@ class DashboardAdm extends Component {
                   <FontAwesomeIcon icon={faTrash} className="opsi-admin-list" />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

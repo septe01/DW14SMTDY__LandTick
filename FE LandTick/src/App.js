@@ -30,15 +30,15 @@ import { getUser } from "./_actions/userA";
 
 class App extends Component {
   render() {
-    const { getUser } = this.props.userR;
-    const token = localStorage.getItem("token");
-    let status = "";
-    if (token) {
-      if (getUser[0]) {
-        status = getUser[0].data.userAut.role;
-      }
-    }
-    console.log(typeof status);
+    // const { getUser } = this.props.userR;
+    // const token = localStorage.getItem("token");
+    // let status = "";
+    // if (token) {
+    //   if (getUser[0]) {
+    //     status = getUser[0].data.userAut.role;
+    //   }
+    // }
+    // console.log(typeof status);
 
     return (
       <Router>

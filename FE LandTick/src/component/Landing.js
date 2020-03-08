@@ -39,7 +39,7 @@ class Landing extends Component {
   render() {
     const token = localStorage.getItem("token");
     const ticket = this.props.tiketR.getTiket.ticket;
-    console.log(ticket === undefined);
+    // console.log(ticket === undefined);
     let status;
     if (token) {
       if (this.props.userR.getUser[0]) {

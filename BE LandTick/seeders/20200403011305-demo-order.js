@@ -20,7 +20,7 @@ module.exports = {
           id_user: 2,
           qty: 2,
           total_price: 10000,
-          status: 1,
+          status: "a",
           attachment: "https://i.imgur.com/Iqlugn5.jpg",
           createdAt: "0000-00-00",
           updatedAt: "0000-00-00"
@@ -32,6 +32,16 @@ module.exports = {
           total_price: 10000,
           status: 1,
           attachment: "https://i.imgur.com/Iqlugn5.jpg",
+          createdAt: "0000-00-00",
+          updatedAt: "0000-00-00"
+        },
+        {
+          id_ticket: 2,
+          id_user: 3,
+          qty: 5,
+          total_price: 20000,
+          status: "p",
+          attachment: "",
           createdAt: "0000-00-00",
           updatedAt: "0000-00-00"
         }

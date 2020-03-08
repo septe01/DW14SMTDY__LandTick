@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
       id_user: DataTypes.INTEGER,
       qty: DataTypes.INTEGER,
       total_price: DataTypes.INTEGER,
-      status: DataTypes.BOOLEAN,
+      status: DataTypes.ENUM({
+        values: ["a", "c", "p"]
+      }),
       attachment: DataTypes.STRING
     },
     {}

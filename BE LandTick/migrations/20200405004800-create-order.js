@@ -35,7 +35,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       status: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.ENUM({
+          values: ["a", "c", "p"]
+        }),
+        allowNull: false
       },
       attachment: {
         type: Sequelize.STRING
