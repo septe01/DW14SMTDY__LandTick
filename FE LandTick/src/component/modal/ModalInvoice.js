@@ -16,25 +16,57 @@ class ModalInvoice extends Component {
   handleClose = () => {
     this.setState({ show: false });
   };
-  handleShow = e => {
-    this.props.getOrederById(e);
-    this.setState({ show: true, id: e });
+  handleShow = () => {
+    this.setState({ show: true });
   };
+
   componentDidMount() {
-    // alert(this.props.data);
-    // this.props.getOrederById(this.props.data)
+    // alert("ok");
+    // this.props.getOrederById(this.props.id);
   }
 
-  render() {
-    console.log(this.state.id);
+  getById = e => {
+    this.props.getOrederById(this.props.id);
+    this.handleShow();
+  };
 
+  // format date
+  formatDate = dateStr => {
+    let dArr = dateStr.split("-"); // ex input "2010-01-18"
+    return dArr[2] + " " + dArr[1] + " " + dArr[0]; //ex out: "18/01/10"
+  };
+  // get day
+  getDaye = day => {
+    let date = new Date(day);
+    var days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+    return days[date.getDay()];
+  };
+
+  render() {
+    let dataTiket, dataUser, dataOrder;
+
+    if (this.props.orderR.getOrderById.data) {
+      dataOrder = this.props.orderR.getOrderById.data;
+      dataTiket = this.props.orderR.getOrderById.data.ticket;
+      dataUser = this.props.orderR.getOrderById.data.user;
+
+      // dataUser = this.props.orderR.getOrderById.data.ticket
+    }
+    let status;
+    if (dataOrder) {
+      status = dataOrder.status;
+    }
+    console.log(status);
+    let date;
+    if (dataTiket) {
+      date = dataTiket.date_start;
+    }
     return (
       <>
         <FontAwesomeIcon
           icon={faInfoCircle}
           className="opsi-admin-list"
-          // value:{this.props.id}
-          onClick={() => this.handleShow(this.props.id)}
+          onClick={this.getById}
         />
 
         <Modal show={this.state.show} onHide={this.handleClose} size="lg">
@@ -70,7 +102,10 @@ class ModalInvoice extends Component {
                         Kereta Api
                       </span>
                       <p>
-                        <span>Saturday</span>, 21 Feb 2020
+                        <span>
+                          {date ? this.getDaye(date.substr(0, 10)) : ""}
+                        </span>
+                        , {date ? this.formatDate(date.substr(0, 10)) : ""}
                       </p>
                     </div>
                     <div className="col-md-6">
@@ -85,36 +120,38 @@ class ModalInvoice extends Component {
                   <div className="row">
                     <div className="col-md-12 invoice-name">
                       <span className="kreta mt-2 color-black-7">
-                        Argo Willis
+                        {dataTiket ? dataTiket.name_train : ""}
                       </span>
-                      <p>Executive (H)</p>
+                      <p>{dataTiket ? dataTiket.train.type_train : ""}</p>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-6 invoice-name">
                       <span className="kreta mt-2 color-black-7">05.00</span>
-                      <p>21 Feb 2020</p>
+                      <p>{date ? this.formatDate(date.substr(0, 10)) : ""}</p>
                     </div>
                     <div className="col-md-6 invoice-name">
                       <div>
                         <span className="kreta mt-2 color-black-7">
-                          Jakarta (GMR)
+                          {dataTiket ? dataTiket.start_station : ""}
                         </span>
-                        <p>Stasiun Gambir</p>
+                        <p>st. {dataTiket ? dataTiket.start_station : ""}</p>
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-6 invoice-name">
                       <span className="kreta mt-2 color-black-7">23.05</span>
-                      <p>21 Feb 2020</p>
+                      <p>{date ? this.formatDate(date.substr(0, 10)) : ""}</p>
                     </div>
                     <div className="col-md-6 invoice-name">
                       <div>
                         <span className="kreta mt-2 color-black-7">
-                          Surabaya
+                          {dataTiket ? dataTiket.destination_station : ""}
                         </span>
-                        <p>21 Feb 2020</p>
+                        <p>
+                          st. {dataTiket ? dataTiket.destination_station : ""}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -122,10 +159,28 @@ class ModalInvoice extends Component {
                 </div>
                 <div className="col-md-5">
                   <div className="struct">
-                    <img
-                      src="http://localhost:3000/assets/images/transfer.jpg"
-                      alt=""
-                    />
+                    <img src={dataOrder ? dataOrder.attachment : "-"} alt="" />
+                    <div className="container mt-2 justify-content-center d-flex">
+                      <div className="col-md-2 text-center">
+                        {status === "a" ? (
+                          <h6 className="bold-8 clr-green">Approved</h6>
+                        ) : (
+                          ""
+                        )}
+
+                        {status === "c" ? (
+                          <h6 className="bold-8 clr-red">Cancle</h6>
+                        ) : (
+                          ""
+                        )}
+
+                        {status === "p" ? (
+                          <h6 className="bold-8 clr-orange">Pending</h6>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -139,26 +194,27 @@ class ModalInvoice extends Component {
                 </div>
                 <div className="col-md-3 i-detail-user">
                   <p>Nama Pemesan</p>
-                  <p>Anto</p>
+                  <p>{dataUser ? dataUser.name : ""}</p>
                 </div>
                 <div className="col-md-3 i-detail-user">
                   <p>No. Handphone</p>
-                  <p>0812123812</p>
+                  <p>{dataUser ? dataUser.phone : ""}</p>
                 </div>
                 <div className="col-md-3 i-detail-user">
                   <p>Email</p>
-                  <p>anto@gmail.com</p>
+                  <p>{dataUser ? dataUser.email : ""}</p>
                 </div>
               </div>
             </div>
             <div className="adm-i-total p-4">
               <div className="row ">
                 <span>Total</span>
-                <span className="color-red">Rp. 250.500</span>
+                <span className="color-red">
+                  Rp. {dataOrder ? dataOrder.total_price : ""}
+                </span>
               </div>
             </div>
           </Container>
-          {/* {console.log(this.props.orderR)} */}
         </Modal>
       </>
     );
@@ -177,5 +233,4 @@ const mapDispatchToProps = dispatch => {
     getOrederById: id => dispatch(getOrederById(id))
   };
 };
-// http://localhost:5004/api/v1/order/1
 export default connect(mapStateToProp, mapDispatchToProps)(ModalInvoice);

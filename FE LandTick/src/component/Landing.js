@@ -223,96 +223,60 @@ class Landing extends Component {
             <div className="col-md-4 text-center">Harga PerOrang</div>
           </div>
           {/* tiket */}
-          {ticket
-            ? ticket.map((val, i) => (
-                <div className="" key={i} id={val.id}>
-                  <div
-                    className="row justify-content-center mt-3 field-list box-shadow-2"
-                    onClick={this.handleShowTicket}
-                  >
-                    <div className="col text-center">
-                      <h6 className="bold-8">{val.name_train}</h6>
-                      <p>{val.train.type_train}</p>
-                    </div>
-                    <div className="col text-center">
-                      <h6 className="bold-8">{time(val.start_time)}</h6>
-                      <p>{val.start_station}</p>
-                    </div>
-                    <div className="col text-center">
-                      <span className="clr-orange">
-                        <FontAwesomeIcon
-                          className="clr-orange"
-                          icon={faLongArrowAltRight}
-                          style={{
-                            marginLeft: "20",
-                            marginRight: "20",
-                            fontSize: "36px",
-                            filter:
-                              "drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5))",
-                            boxSizing: "border-box"
-                          }}
-                        />
-                      </span>
-                    </div>
-                    <div className="col text-center">
-                      <h6 className="bold-8">{time(val.arival_time)}</h6>
-                      <p>{val.destination_station}</p>
-                    </div>
-                    <div className="col text-center">
-                      <h6 className="bold-8">
-                        {getTime(val.start_time, val.arival_time)}
-                      </h6>
-                    </div>
-                    <div className="col-md-4 text-center">
-                      <h6 className="bold-8 clr-orange mt-3">{val.price} </h6>
-                    </div>
+          {ticket ? (
+            ticket.map((val, i) => (
+              <div className="" key={i} id={val.id}>
+                <div
+                  className="row justify-content-center mt-3 field-list box-shadow-2"
+                  onClick={this.handleShowTicket}
+                >
+                  <div className="col text-center">
+                    <h6 className="bold-8">{val.name_train}</h6>
+                    <p>{val.train.type_train}</p>
+                  </div>
+                  <div className="col text-center">
+                    <h6 className="bold-8">{time(val.start_time)}</h6>
+                    <p>{val.start_station}</p>
+                  </div>
+                  <div className="col text-center">
+                    <span className="clr-orange">
+                      <FontAwesomeIcon
+                        className="clr-orange"
+                        icon={faLongArrowAltRight}
+                        style={{
+                          marginLeft: "20",
+                          marginRight: "20",
+                          fontSize: "36px",
+                          filter: "drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5))",
+                          boxSizing: "border-box"
+                        }}
+                      />
+                    </span>
+                  </div>
+                  <div className="col text-center">
+                    <h6 className="bold-8">{time(val.arival_time)}</h6>
+                    <p>{val.destination_station}</p>
+                  </div>
+                  <div className="col text-center">
+                    <h6 className="bold-8">
+                      {getTime(val.start_time, val.arival_time)}
+                    </h6>
+                  </div>
+                  <div className="col-md-4 text-center">
+                    <h6 className="bold-8 clr-orange mt-3">Rp. {val.price} </h6>
                   </div>
                 </div>
-              ))
-            : ""}
-          {ticket === "undefined" ? (
+              </div>
+            ))
+          ) : (
             <div className="">
               <div
                 className="row justify-content-center mt-3 field-list box-shadow-2"
                 onClick={this.handleShowTicket}
               >
-                <div className="col text-center">
-                  <h6 className="bold-8">Argo Mills</h6>
-                  <p>Eksekutif (H)</p>
-                </div>
-                <div className="col text-center">
-                  <h6 className="bold-8">05.00</h6>
-                  <p>Gambir</p>
-                </div>
-                <div className="col text-center">
-                  <span className="clr-orange">
-                    <FontAwesomeIcon
-                      className="clr-orange"
-                      icon={faLongArrowAltRight}
-                      style={{
-                        marginLeft: "20",
-                        marginRight: "20",
-                        fontSize: "36px",
-                        filter: "drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5))",
-                        boxSizing: "border-box"
-                      }}
-                    />
-                  </span>
-                </div>
-                <div className="col text-center">
-                  <h6 className="bold-8">10.05</h6>
-                  <p>Surabaya</p>
-                </div>
-                <div className="col text-center">
-                  <h6 className="bold-8">5j 05m</h6>
-                </div>
-                <div className="col-md-4 text-center">
-                  <h6 className="bold-8 clr-orange mt-3">Rp. 250.000 </h6>
-                </div>
+                No data
               </div>
             </div>
-          ) : (
-            ""
           )}
 
           {/* end tiket */}

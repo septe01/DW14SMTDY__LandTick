@@ -35,7 +35,7 @@ module.exports = {
           gender: "male",
           phone: "0812 1322 1235",
           address: "Parung No.26 Rt.03 Rw.953",
-          role: null,
+          role: "public",
           createdAt: "0000-00-00",
           updatedAt: "0000-00-00"
         },
@@ -47,7 +47,7 @@ module.exports = {
           gender: "male",
           phone: "0812 0000 5634",
           address: "Ciseeng No.26 Rt.03 Rw.953",
-          role: null,
+          role: "public",
           createdAt: "0000-00-00",
           updatedAt: "0000-00-00"
         }

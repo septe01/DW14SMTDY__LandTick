@@ -39,6 +39,7 @@ exports.store = async (req, res) => {
             status: 200,
             message: "success",
             username: user.user_name,
+            status: user.role,
             token
           });
         });

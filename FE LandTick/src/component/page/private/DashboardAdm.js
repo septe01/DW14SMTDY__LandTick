@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 
 class DashboardAdm extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {};
   }
 
@@ -94,7 +94,7 @@ class DashboardAdm extends Component {
                       <div className="row justify-content-center">
                         {/* data={} */}
                         <ModalInvoice id={val.id} />
-                        <ModalEditInvoice />
+                        <ModalEditInvoice id={val.id} />
                         <FontAwesomeIcon
                           icon={faTrash}
                           className="opsi-admin-list"
@@ -104,84 +104,8 @@ class DashboardAdm extends Component {
                   </div>
                 ))
               : ""}
-            {/* <div className="row justify-content-center  field-list field-tr-list">
-              <div className="col-md-1 text-center">
-                <h6 className="bold-8">1</h6>
-              </div>
-              <div className="col-md-2 text-center">
-                <h6 className="bold-8">Anto</h6>
-              </div>
-              <div className="col-md-2 text-center">
-                <h6 className="bold-8">Surabaya - Jakarta</h6>
-              </div>
-
-              <div className="col-md-2 text-center">
-                <h6 className="bold-8">BCA.png</h6>
-              </div>
-              <div className="col-md-2 text-center">
-                <h6 className="bold-8 clr-orange">Pending</h6>
-              </div>
-              <div className="col-md-3 text-center">
-                <div className="row justify-content-center">
-                  <ModalInvoice />
-                  <ModalEditInvoice />
-                  <FontAwesomeIcon icon={faTrash} className="opsi-admin-list" />
-                </div>
-              </div>
-            </div> */}
-            {/* <div className="row justify-content-center  field-list field-tr-list">
-              <div className="col-md-1 text-center">
-                <h6 className="bold-8">1</h6>
-              </div>
-              <div className="col-md-2 text-center">
-                <h6 className="bold-8">Anto</h6>
-              </div>
-              <div className="col-md-2 text-center">
-                <h6 className="bold-8">Surabaya - Jakarta</h6>
-              </div>
-
-              <div className="col-md-2 text-center">
-                <h6 className="bold-8">BCA.png</h6>
-              </div>
-              <div className="col-md-2 text-center">
-                <h6 className="bold-8 clr-red">Cancel</h6>
-              </div>
-              <div className="col-md-3 text-center">
-                <div className="row justify-content-center">
-                  <ModalInvoice />
-                  <FontAwesomeIcon icon={faEdit} className="opsi-admin-list" />
-                  <FontAwesomeIcon icon={faTrash} className="opsi-admin-list" />
-                </div>
-              </div>
-            </div> */}
-            {/* <div className="row justify-content-center  field-list field-tr-list">
-              <div className="col-md-1 text-center">
-                <h6 className="bold-8">1</h6>
-              </div>
-              <div className="col-md-2 text-center">
-                <h6 className="bold-8">Anto</h6>
-              </div>
-              <div className="col-md-2 text-center">
-                <h6 className="bold-8">Surabaya - Jakarta</h6>
-              </div>
-
-              <div className="col-md-2 text-center">
-                <h6 className="bold-8">BCA.png</h6>
-              </div>
-              <div className="col-md-2 text-center">
-                <h6 className="bold-8 clr-green">Approved</h6>
-              </div>
-              <div className="col-md-3 text-center">
-                <div className="row justify-content-center">
-                  <ModalInvoice />
-                  <FontAwesomeIcon icon={faEdit} className="opsi-admin-list" />
-                  <FontAwesomeIcon icon={faTrash} className="opsi-admin-list" />
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
-
         <Footer />
       </div>
     );

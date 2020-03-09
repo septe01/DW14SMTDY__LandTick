@@ -233,7 +233,6 @@ class AdminAddTicket extends Component {
                     </Button>
 
                     <Button
-                      onClick={e => e.preventDefault()}
                       type="submit"
                       className=" btn-log color-bg color-white"
                       style={{

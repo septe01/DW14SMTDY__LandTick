@@ -13,29 +13,23 @@ class RegisterModal extends Component {
     super();
     this.state = {
       show: false,
-      breeder: "",
-      email: "",
-      password: "",
-      phone: "",
       address: "",
-      name: "",
+      phone: "",
       gender: "",
-      about: "",
-      idSpecies: "",
-      idAge: "",
+      password: "",
+      email: "",
+      username: "",
+      nama_lengkap: "",
 
       redirect: false,
 
-      errbreeder: "",
-      erremail: "",
-      errpassword: "",
-      errphone: "",
       erraddress: "",
-      errname: "",
+      errphone: "",
       errgender: "",
-      errabout: "",
-      errspecies: "",
-      errage: ""
+      errpassword: "",
+      erremail: "",
+      errusername: "",
+      errbreeder: ""
     };
   }
 
@@ -54,153 +48,133 @@ class RegisterModal extends Component {
   // }
 
   handleChange = e => {
+    console.log({ [e.target.name]: [e.target.value] });
     this.setState({ [e.target.name]: [e.target.value] });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-
     // valildate
     //validate email
     const validEmailRegex = RegExp(
       /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
     );
-    if (this.state.breeder != "") {
+    if (this.state.nama_lengkap != "") {
       this.setState({
         errbreeder: ""
       });
-      if (this.state.email != "") {
+      if (this.state.username != "") {
         this.setState({
-          erremail: ""
+          errusername: ""
         });
-        if (validEmailRegex.test(this.state.email)) {
+
+        if (this.state.email != "") {
           this.setState({
             erremail: ""
           });
-          if (this.state.password != "") {
+          if (validEmailRegex.test(this.state.email)) {
             this.setState({
-              errpassword: ""
+              erremail: ""
             });
-            if (this.state.password.length < 6) {
+            if (this.state.password != "") {
               this.setState({
                 errpassword: ""
               });
-              if (this.state.address != "") {
+              if (this.state.password.length < 6) {
                 this.setState({
-                  erraddress: ""
+                  errpassword: ""
                 });
-                if (this.state.name != "") {
+
+                if (this.state.gender != "") {
                   this.setState({
-                    errname: ""
+                    errgender: ""
                   });
-                  if (this.state.gender != "") {
+                  if (this.state.phone != "") {
                     this.setState({
-                      errgender: ""
+                      errphone: ""
                     });
-                    if (this.state.about != "") {
+                    if (this.state.address != "") {
                       this.setState({
-                        errabout: ""
+                        erraddress: ""
                       });
-                      if (this.state.idSpecies != "") {
-                        this.setState({
-                          errspecies: ""
-                        });
-                        if (this.state.idAge) {
-                          this.setState({
-                            errage: ""
-                          });
-                          // --- send data to server
-                          const regData = {
-                            breeder: this.state.breeder[0],
-                            email: this.state.email[0],
-                            password: this.state.password[0],
-                            phone: this.state.phone[0],
-                            address: this.state.address[0],
-                            pet: {
-                              name: this.state.name[0],
-                              gender: this.state.gender[0],
-                              about_pet: this.state.about[0],
-                              spesies: {
-                                id: this.state.idSpecies[0]
-                              },
-                              age: {
-                                id: this.state.idAge[0]
-                              }
-                            }
-                          };
-                          // http://localhost:5001/api/v1/register
-                          // https://breednder-api.herokuapp.com/api/v1/register
-                          Axios.post(
-                            "https://breednder-api.herokuapp.com/api/v1/register",
-                            regData
-                          ).then(response => {
-                            if (typeof response.data.token !== "undefined") {
-                              localStorage.setItem(
-                                "token",
-                                response.data.token
-                              );
-                              this.setState({
-                                redirect: true
-                              });
-                              window.location.reload(false);
-                            }
-                            this.setState({
-                              erremail: response.data.message
-                            });
-                          });
-                        } else {
-                          this.setState({
-                            errage: "age required !"
-                          });
+
+                      // --- send data to server
+                      const regData = {
+                        name: this.state.nama_lengkap[0],
+                        username: this.state.username[0],
+                        email: this.state.email[0],
+                        password: this.state.password[0],
+                        gender: this.state.gender[0],
+                        phone: this.state.phone[0],
+                        address: this.state.address[0]
+                      };
+                      console.log(regData);
+                      // http://localhost:5001/api/v1/register
+                      // https://breednder-api.herokuapp.com/api/v1/register
+                      Axios.post(
+                        "http://localhost:5004/api/v1/register",
+                        regData
+                      ).then(response => {
+                        console.log(response.data);
+                        if (typeof response.data.token !== "undefined") {
+                          localStorage.setItem("token", response.data.token);
+                          if (response.data.status === "admin") {
+                            document.location.reload(true);
+                            this.hideModal();
+                            return <Redirect to="/mydashboard" />;
+                          } else {
+                            document.location.reload(true);
+                            this.hideModal();
+                            return <Redirect to="/" />;
+                          }
                         }
-                      } else {
                         this.setState({
-                          errspecies: "species required !"
+                          errusername: response.data.message
                         });
-                      }
+                      });
                     } else {
                       this.setState({
-                        errabout: "about required !"
+                        erraddress: "address required !"
                       });
                     }
                   } else {
                     this.setState({
-                      errgender: "gender required !"
+                      errphone: "no hp required !"
                     });
                   }
                 } else {
                   this.setState({
-                    errname: "name pet required !"
+                    errgender: "jenis kelamin required !"
                   });
                 }
               } else {
                 this.setState({
-                  erraddress: "address required !"
+                  errpassword: "password minimum 6 charackter !"
                 });
               }
             } else {
               this.setState({
-                errpassword: "password minimum 6 charackter !"
+                errpassword: "password required !"
               });
             }
           } else {
             this.setState({
-              errpassword: "password required !"
+              erremail: "email not valid"
             });
           }
         } else {
           this.setState({
-            erremail: "email not valid"
+            erremail: "email required !"
           });
         }
       } else {
         this.setState({
-          erremail: "email required !"
+          errusername: "username required !"
         });
       }
     } else {
       this.setState({
-        errbreeder: "breeder required !"
+        errbreeder: "nama lengkap required !"
       });
     }
   };
@@ -208,7 +182,6 @@ class RegisterModal extends Component {
   render() {
     return (
       <>
-        {this.state.redirect ? <Redirect to="/home" /> : ""}
         {/* <button className="btn-reg color-bg" onClick={() => this.handleModal()}>
           Register
         </button> */}
@@ -247,7 +220,7 @@ class RegisterModal extends Component {
                       <Form.Control
                         className="input"
                         type="text"
-                        name="breeder"
+                        name="nama_lengkap"
                         placeholder="Nama Lengkap"
                         onChange={this.handleChange}
                       />
@@ -265,7 +238,7 @@ class RegisterModal extends Component {
                       />
 
                       <Form.Text className="text-danger">
-                        {this.state.errbreeder ? this.state.errbreeder : ""}
+                        {this.state.errusername ? this.state.errusername : ""}
                       </Form.Text>
                     </Form.Group>
                     <Form.Group controlId="formBasicEmail">
@@ -338,7 +311,7 @@ class RegisterModal extends Component {
 
                     <div className="justify-content-center d-flex mt-2">
                       <Button
-                        onClick={this.hideModal}
+                        type="submit"
                         className=" btn-log color-bg color-white"
                         style={{
                           fontWeight: "1000",

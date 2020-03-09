@@ -41,16 +41,15 @@ class HeaderPrimary extends Component {
 
   render() {
     const token = localStorage.getItem("token");
-    let status;
+    let status, name;
     if (token) {
       if (this.props.userR.getUser[0]) {
         if (this.props.userR.getUser[0].data) {
           status = this.props.userR.getUser[0].data.userAut.role;
+          name = this.props.userR.getUser[0].data.userAut.user_name;
         }
       }
     }
-
-    console.log(status);
 
     // const { datauserLogin } = this.props.userR;
     // if (datauserLogin.data) {
@@ -77,7 +76,9 @@ class HeaderPrimary extends Component {
                     this.setState({ showAdmin: !this.state.showAdmin })
                   }
                 >
-                  <span className="name-icon-user-admin">Admin</span>
+                  <span className="name-icon-user-admin">
+                    {name ? name : ""}
+                  </span>
                   <div className="nav-mbl-mt-2 text-center">
                     <div className="icon-admin"></div>
                   </div>
@@ -134,7 +135,9 @@ class HeaderPrimary extends Component {
                     this.setState({ showUser: !this.state.showUser })
                   }
                 >
-                  <span className="name-icon-user-admin">Anton</span>
+                  <span className="name-icon-user-admin">
+                    {name ? name : ""}
+                  </span>
                   <div className="nav-mbl-mt-2 text-center">
                     <div className="icon-user"></div>
                   </div>

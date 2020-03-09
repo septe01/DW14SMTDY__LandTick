@@ -16,6 +16,24 @@ export const getOreder = () => {
     console.log(error);
   }
 };
+
+export const updateOreder = (id, data) => {
+  console.log("dari action ::" + id, data);
+  try {
+    return {
+      type: appContants.UPDATE_ORDER,
+      payload: Axios({
+        type: "PATCH",
+        url: `${API.baseURL}/order/${id}`,
+        headers: API.headers,
+        data: data
+      })
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getOrederById = id => {
   try {
     return {
