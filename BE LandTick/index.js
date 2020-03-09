@@ -45,6 +45,7 @@ app.group("/api/v1", router => {
   // Ticket
   router.post("/ticket", authenticated, TicketController.store);
   router.get("/ticket", TicketController.index);
+  router.get("/ticket/:id", authenticated, TicketController.show);
   // Trains
   router.get("/trains", TrainsController.index);
 

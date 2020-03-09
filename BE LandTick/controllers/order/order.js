@@ -71,54 +71,128 @@ exports.myticket = async (req, res) => {
 // 6. Payment
 exports.order = async (req, res) => {
   try {
+    const idTrain = req.body.ticket;
+    const train = await Ticket.findOne({ where: { id: idTrain } });
+    // // res.send(train.qty);
     const id = req.user.userId;
-    const { train, qty, total_price, attachment } = req.body;
+    const { qty, attachment } = req.body;
 
-    const result = await Order.create({
-      id_ticket: train,
-      id_user: id,
-      qty: qty,
-      total_price: total_price,
-      status: 0,
-      attachment: attachment
-    });
-    if (result) {
-      const resultOrder = await Order.findOne({
-        where: { id: result.id },
-        attributes: ["id", "qty", "total_price", "status", "attachment"],
-        include: [
-          {
-            model: User,
-            attributes: [
-              "name",
-              "user_name",
-              "email",
-              "gender",
-              "phone",
-              "address"
-            ]
-          },
-          {
-            model: Ticket,
-            attributes: [
-              "id",
-              "name_train",
-              "date_start",
-              "start_station",
-              "start_time",
-              "destination_station",
-              "arival_time"
-            ],
-            include: { model: Train, attributes: ["type_train"] }
-          }
-        ]
+    const subPrice = train.price * qty; //get sub total price
+    const remainsQty = train.qty - qty;
+    const data = {
+      qty: remainsQty
+    };
+    if (train.qty) {
+      // if (train.qty < qty) {
+      const updateTicket = await Ticket.update(data, {
+        where: { id: idTrain }
       });
-      res.status(200).send({
-        status: 200,
-        message: "success",
-        resultOrder
+      const resultRemains = await Ticket.findOne({ where: { id: idTrain } });
+
+      const result = await Order.create({
+        id_ticket: idTrain,
+        id_user: id,
+        qty: qty,
+        total_price: subPrice,
+        status: "p",
+        attachment: attachment
+      });
+      if (result) {
+        const resultOrder = await Order.findOne({
+          where: { id: result.id },
+          attributes: ["id", "qty", "total_price", "status", "attachment"],
+          include: [
+            {
+              model: User,
+              attributes: [
+                "name",
+                "user_name",
+                "email",
+                "gender",
+                "phone",
+                "address"
+              ]
+            },
+            {
+              model: Ticket,
+              attributes: [
+                "id",
+                "name_train",
+                "date_start",
+                "start_station",
+                "start_time",
+                "destination_station",
+                "arival_time"
+              ],
+              include: { model: Train, attributes: ["type_train"] }
+            }
+          ]
+        });
+        res.status(200).send({
+          status: 200,
+          message: "success",
+          // resultOrder,
+          resultRemains
+        });
+      }
+      // ====
+      // } else {
+      //   res.status(404).send({
+      //     status: 404,
+      //     message: "Ticket less / used up"
+      //   });
+      // }
+    } else {
+      res.status(404).send({
+        status: 404,
+        message: "no ticket"
       });
     }
+    // const result = await Order.create({
+    //   id_ticket: idTrain,
+    //   id_user: id,
+    //   qty: qty,
+    //   total_price: subPrice,
+    //   status: "p",
+    //   attachment: attachment
+    // });
+    // if (result) {
+    //   const resultOrder = await Order.findOne({
+    //     where: { id: result.id },
+    //     attributes: ["id", "qty", "total_price", "status", "attachment"],
+    //     include: [
+    //       {
+    //         model: User,
+    //         attributes: [
+    //           "name",
+    //           "user_name",
+    //           "email",
+    //           "gender",
+    //           "phone",
+    //           "address"
+    //         ]
+    //       },
+    //       {
+    //         model: Ticket,
+    //         attributes: [
+    //           "id",
+    //           "name_train",
+    //           "date_start",
+    //           "start_station",
+    //           "start_time",
+    //           "destination_station",
+    //           "arival_time"
+    //         ],
+    //         include: { model: Train, attributes: ["type_train"] }
+    //       }
+    //     ]
+    //   });
+    //   res.status(200).send({
+    //     status: 200,
+    //     message: "success",
+    //     resultOrder
+    //   });
+    // }
   } catch (error) {}
 };
 

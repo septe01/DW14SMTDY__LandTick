@@ -11,7 +11,7 @@ class Jumbotron extends Component {
           <div className="container">
             <div className="row">
               <div className="col-md-6 mt-4 slug">
-                <h3 className="">Selamat Pagi, Ticket Seekers !</h3>
+                <h3 className="">{this.props.greeting}, Ticket Seekers !</h3>
                 <div className="slug-p">
                   <p className="lead">Masuk atau Daftar Sekarang !!</p>
                   <p className="lead">Ingin Pulkam dengan Good Deal ?</p>

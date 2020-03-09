@@ -16,12 +16,17 @@ import LoginModal from "./modal/LoginModal";
 import { getUser } from "../_actions/userA";
 import { getTiket } from "../_actions/tiketA";
 
+import ModalBuyTicket from "./modal/ModalBuyTicket";
+
 // import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 class Landing extends Component {
   constructor(props) {
     super();
-    this.state = {};
+    this.state = {
+      showMOdalBuy: false,
+      id: ""
+    };
   }
 
   componentDidMount() {
@@ -29,12 +34,15 @@ class Landing extends Component {
     this.props.getTiket();
   }
 
-  // handleShowTicket = () => {
-  //   if (localStorage.getItem("token") === null) {
-  //     return <LoginModal show={true} />;
-  //   }
-  //   alert(localStorage.getItem("token"));
-  // };
+  handleModalBuyTicket = id => {
+    this.setState(
+      {
+        showMOdalBuy: !this.state.showMOdalBuy,
+        id: id
+      },
+      () => console.log(this.state.showMOdalBuy)
+    );
+  };
 
   render() {
     const token = localStorage.getItem("token");
@@ -49,18 +57,30 @@ class Landing extends Component {
       }
     }
 
+    //greeting
+    let myDate = new Date();
+    let hrs = myDate.getHours();
+
+    let greet;
+
+    if (hrs < 10) greet = "Selamat Pagi";
+    else if (hrs >= 10 && hrs <= 15) greet = "Selamat Siang";
+    else if (hrs >= 15 && hrs <= 18) greet = "Selamat Sore";
+    else if (hrs >= 18 && hrs <= 24) greet = "Selamat Malam";
+    //end greeting
+
     //convert time
     const time = time => time.substr(0, 5);
     //range day
     const getTime = (start, end) => {
       start = start.split(":");
       end = end.split(":");
-      var startDate = new Date(0, 0, 0, start[0], start[1], 0);
-      var endDate = new Date(0, 0, 0, end[0], end[1], 0);
-      var diff = endDate.getTime() - startDate.getTime();
-      var hours = Math.floor(diff / 1000 / 60 / 60);
+      let startDate = new Date(0, 0, 0, start[0], start[1], 0);
+      let endDate = new Date(0, 0, 0, end[0], end[1], 0);
+      let diff = endDate.getTime() - startDate.getTime();
+      let hours = Math.floor(diff / 1000 / 60 / 60);
       diff -= hours * 1000 * 60 * 60;
-      var minutes = Math.floor(diff / 1000 / 60);
+      let minutes = Math.floor(diff / 1000 / 60);
 
       if (hours < 0) hours = hours + 24;
 
@@ -77,12 +97,17 @@ class Landing extends Component {
     if (status === "admin") {
       return <Redirect to="/mydashboard" />;
     }
-
+    console.log(this.handleModalBuyTicket);
     return (
       <div>
+        <ModalBuyTicket //show modal buy
+          showModalBuy={this.state.showMOdalBuy}
+          handleModalBuyTicket={this.handleModalBuyTicket}
+          id={this.state.id}
+        />
         <HeaderPrimary />
 
-        <Jumbotron />
+        <Jumbotron greeting={greet} />
 
         <div className="">
           <div className="container order-panel">
@@ -225,7 +250,14 @@ class Landing extends Component {
           {/* tiket */}
           {ticket ? (
             ticket.map((val, i) => (
-              <div className="" key={i} id={val.id}>
+              <div
+                className=""
+                key={i}
+                id={val.id}
+                // onClick={() => this.buyTicket(val.id)}
+                // onClick={() => this.handleModalBuyTicket(val.id)}
+                onClick={() => this.handleModalBuyTicket(val)}
+              >
                 <div
                   className="row justify-content-center mt-3 field-list box-shadow-2"
                   onClick={this.handleShowTicket}

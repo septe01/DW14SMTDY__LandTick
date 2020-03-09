@@ -19,12 +19,28 @@ export const storeTiket = data => {
 };
 
 export const getTiket = () => {
+  console.log("getALL");
   try {
     return {
       type: appContants.GET_TICKET,
       payload: Axios({
         method: "GET",
         url: `${API.baseURL}/ticket`
+      })
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getTiketByID = id => {
+  console.log(id);
+  try {
+    return {
+      type: appContants.GETTIKET,
+      payload: Axios({
+        method: "GET",
+        url: `${API.baseURL}/ticket${id}`
       })
     };
   } catch (error) {

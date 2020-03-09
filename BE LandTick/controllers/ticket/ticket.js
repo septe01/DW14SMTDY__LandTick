@@ -56,6 +56,40 @@ exports.index = async (req, res) => {
   }
 };
 
+exports.show = async (req, res) => {
+  try {
+    const idTicket = req.params.id;
+    const ticket = await Ticket.findOne({
+      attributes: [
+        "id",
+        "name_train",
+        "date_start",
+        "start_station",
+        "start_time",
+        "destination_station",
+        "arival_time",
+        "price",
+        "qty"
+      ],
+      include: { model: Train, attributes: ["type_train"] }
+    });
+    if (ticket) {
+      res.status(200).send({
+        status: 200,
+        message: "success",
+        ticket
+      });
+    } else {
+      res.status(404).send({
+        status: 404,
+        message: "no data"
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // ============================================
 // find all
 // -GET /tickets?start_time=2020-03-03
