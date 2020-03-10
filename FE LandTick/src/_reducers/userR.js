@@ -7,7 +7,7 @@ const initialState = {
   getUser: []
 };
 
-const userLogin = (state = initialState, action) => {
+export const userLogin = (state = initialState, action) => {
   switch (action.type) {
     case appContants.POST_USER_LOGIN_PENDING:
       return {
@@ -26,6 +26,13 @@ const userLogin = (state = initialState, action) => {
         datauserLogin: action.payload.data,
         loginError: true
       };
+    default:
+      return state;
+  }
+};
+
+export const get_User = (state = initialState, action) => {
+  switch (action.type) {
     // get
     case appContants.GET_USER_PENDING:
       return {
@@ -48,5 +55,3 @@ const userLogin = (state = initialState, action) => {
       return state;
   }
 };
-
-export default userLogin;

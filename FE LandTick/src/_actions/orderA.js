@@ -7,7 +7,7 @@ export const getOreder = () => {
     return {
       type: appContants.GET_ORDER,
       payload: Axios({
-        type: "GET",
+        method: "GET",
         url: `${API.baseURL}/order`,
         headers: API.headers
       })
@@ -23,7 +23,7 @@ export const updateOreder = (id, data) => {
     return {
       type: appContants.UPDATE_ORDER,
       payload: Axios({
-        type: "PATCH",
+        method: "PATCH",
         url: `${API.baseURL}/order/${id}`,
         headers: API.headers,
         data: data
@@ -39,9 +39,25 @@ export const getOrederById = id => {
     return {
       type: appContants.GET_ORDER_BY,
       payload: Axios({
-        type: "GET",
+        method: "GET",
         url: `${API.baseURL}/order/${id}`,
         headers: API.headers
+      })
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createOrder = data => {
+  try {
+    return {
+      type: appContants.POST_ORDER,
+      payload: Axios({
+        method: "POST",
+        url: `${API.baseURL}/order`,
+        headers: API.headers,
+        data: data
       })
     };
   } catch (error) {

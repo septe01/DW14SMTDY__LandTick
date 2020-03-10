@@ -12,6 +12,7 @@ import ModalPaymentBtn from "../../modal/ModalPaymentBtn";
 
 class UserPayment extends Component {
   render() {
+    // console.log("id Order", this.props.location.state.id);
     const token = localStorage.getItem("token");
     if (!token) {
       return <Redirect to="/" />;

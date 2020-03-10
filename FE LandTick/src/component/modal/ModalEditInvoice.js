@@ -7,13 +7,15 @@ import { connect } from "react-redux";
 
 import { getOrederById } from "../../_actions/orderA";
 import { updateOreder } from "../../_actions/orderA";
+import { Link, Redirect } from "react-router-dom";
 class ModalInvoice extends Component {
   constructor(props) {
     super();
     this.state = {
       show: false,
       status: "",
-      error: false
+      error: false,
+      showMdlInfo: false
     };
   }
 
@@ -27,8 +29,12 @@ class ModalInvoice extends Component {
     e.preventDefault();
     if (this.state.status !== "") {
       const id = this.props.id;
-
       this.props.updateOreder(id, { status: this.state.status });
+      this.setState({
+        show: !this.state.show
+      });
+      document.location.reload(false);
+      return <Redirect to="/mydashboard" />;
     } else {
       this.setState({
         error: true
@@ -50,13 +56,13 @@ class ModalInvoice extends Component {
   };
 
   render() {
-    console.log(this.props.id);
+    // console.log(this.props.id);
     let order;
-    if (this.props.orderR.getOrderById.data) {
-      order = this.props.orderR.getOrderById.data;
+    if (this.props.getOrder.getOrderById.data) {
+      order = this.props.getOrder.getOrderById.data;
     }
 
-    // console.log(order);
+    console.log(order);
     return (
       <>
         <FontAwesomeIcon
@@ -78,11 +84,8 @@ class ModalInvoice extends Component {
               <Col md="12" className="head-modal head-invoice edit-inv-title">
                 <h1 className="invoice  drop-shadow-2">Edit Invoice</h1>
                 <p className="color-black-7 drop-shadow-2">
-                  {/* Kode Invoice : INV0101 */}
+                  Kode Invoice : INV0101
                 </p>
-                {/* <span className="close" onClick={this.handleClose}>
-                  X
-                </span> */}
               </Col>
             </Row>
           </Container>
@@ -135,12 +138,11 @@ class ModalInvoice extends Component {
                       <option value="c">Cancel</option>
                     </select>
                     <Form.Text className="text-danger">
-                      {this.state.error ? "required" : ""}
+                      {this.state.error ? "bagian ini tidak boleh kosong" : ""}
                     </Form.Text>
                   </Form.Group>
 
                   <div className="justify-content-center d-flex text-right">
-                    {/* <Link to="index"> */}
                     <Button
                       type="submit"
                       className=" btn-log color-bg color-white mt-4"
@@ -157,7 +159,7 @@ class ModalInvoice extends Component {
               </Col>
             </Row>
           </Container>
-          {console.log(this.props.userR)}
+          {/* {console.log(this.props.userR)} */}
         </Modal>
       </>
     );
@@ -166,12 +168,13 @@ class ModalInvoice extends Component {
 
 const mapStateToProp = state => {
   return {
-    orderR: state.orderR
+    getOrder: state.getOrder,
+    updateOrder: state.updateOrder
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getOrederById: id => dispatch(getOrederById(id)),
+    getOrederById: getOrder => dispatch(getOrederById(getOrder)),
     updateOreder: (id, data) => dispatch(updateOreder(id, data))
   };
 };

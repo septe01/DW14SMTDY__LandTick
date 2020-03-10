@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { Button, Row, Col, Container, Form, Modal } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheckCircle,
+  faTimesCircle
+} from "@fortawesome/free-solid-svg-icons";
 
 class InfoModal extends Component {
   constructor() {
@@ -21,15 +24,20 @@ class InfoModal extends Component {
   };
 
   render() {
-    console.log(this.props.show);
+    // console.log(this.props.status);
     return (
       <>
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        {/* <Modal show={this.state.show} onHide={this.handleClose}> */}
+        <Modal show={this.props.show} onHide={this.props.hidemodal}>
           <Container fluid>
             <Row className="justify-content-md-center">
               <Col md="12" className="head-modal">
                 <h1 className="color-pink info-dialog">
-                  <FontAwesomeIcon icon={faCheckCircle} />
+                  {this.props.status === "204" ? (
+                    <FontAwesomeIcon icon={faTimesCircle} />
+                  ) : (
+                    <FontAwesomeIcon icon={faCheckCircle} />
+                  )}
                 </h1>
               </Col>
             </Row>
@@ -42,7 +50,8 @@ class InfoModal extends Component {
             <Row className="justify-content-md-center ml-2 mr-2 mt-2 mb-3">
               <Button
                 className=" btn-log color-bg"
-                onClick={this.handleClose}
+                // onClick={this.handleClose}
+                onClick={this.props.hidemodal}
                 style={{ fontWeight: "1000" }}
               >
                 Tutup

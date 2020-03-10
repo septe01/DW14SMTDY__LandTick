@@ -370,12 +370,10 @@ button.register:hover {
 }
 
 .field-list {
+  position: relative;
   border-radius: 4px;
   padding: 20px 10px 10px 10px;
   border: 2px solid rgba(0, 0, 0, 0.4);
-}
-.field-list:hover {
-  cursor: pointer;
 }
 
 .klik-me {
@@ -777,6 +775,72 @@ button.register:hover {
   font-weight: 800;
 }
 
+/* opsi list tiket  */
+/* .opsi-list-tiket {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+} */
+.opsi-list-tiket {
+  position: absolute;
+  width: 200px;
+  right: -3px;
+  top: 0;
+}
+.opsi-list-bottom {
+  position: absolute;
+  width: 200px;
+  right: -3px;
+  bottom: 0 !important;
+}
+
+/* opsi-list-tiket */
+
+.top {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 35px;
+  width: 100%;
+  right: 0;
+}
+.bottom {
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 35px;
+  width: 100%;
+  right: 0;
+}
+.bottom:hover {
+  cursor: pointer;
+}
+
+.top h6 {
+  font-weight: 800;
+  color: #282c34;
+  margin-top: 4px;
+  line-height: inherit !important;
+}
+.bottom h6 {
+  font-weight: 800;
+  color: #282c34;
+  margin-top: 4px;
+  line-height: inherit !important;
+}
+
+/* buy tiket  */
+.body-buy-tiket {
+  margin-top: -2px !important;
+}
+.btn-modal-tiket {
+  font-size: 100% !important;
+}
+
+.box-counter {
+  position: relative;
+}
+.counter {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 /* disable blue when click image  */
 /* *::selection {
   background-color: transparent;

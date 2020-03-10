@@ -10,7 +10,7 @@ import {
 import { Link, Redirect } from "react-router-dom";
 import AdmAddTiket from "../modal/AdmAddTiket";
 import { connect } from "react-redux";
-import { login, getUser } from "../../_actions/userA";
+import { getUser } from "../../_actions/userA";
 
 class HeaderPrimary extends Component {
   constructor(props) {
@@ -43,15 +43,18 @@ class HeaderPrimary extends Component {
     const token = localStorage.getItem("token");
     let status, name;
     if (token) {
-      if (this.props.userR.getUser[0]) {
-        if (this.props.userR.getUser[0].data) {
-          status = this.props.userR.getUser[0].data.userAut.role;
-          name = this.props.userR.getUser[0].data.userAut.user_name;
+      if (this.props.get_User.getUser[0]) {
+        if (this.props.get_User.getUser[0].data) {
+          status = this.props.get_User.getUser[0].data.userAut.role;
+          name = this.props.get_User.getUser[0].data.userAut.user_name;
         }
       }
     }
+    // getUser
 
-    // const { datauserLogin } = this.props.userR;
+    console.log(this.props.get_User);
+
+    // const { datauserLogin } = this.props.getUser;
     // if (datauserLogin.data) {
     //   statusLog = datauserLogin.data.status;
     //   userLog = datauserLogin.data.username;
@@ -121,13 +124,15 @@ class HeaderPrimary extends Component {
         <div>
           <nav className="navbar  navbar-expand-lg navbar-light color-bg-white ">
             <div className="container container-nav-pedding-0">
-              <a className="navbar-brand" href="">
+              {/* <a className="navbar-brand" href=""> */}
+              <Link to="/">
                 <img
                   alt="logo"
                   className="front-logo"
                   src="http://localhost:3000/assets/images/logolandtick.png"
                 />
-              </a>
+              </Link>
+              {/* </a> */}
               <div className="navbar-collapse nav-desc" id="navbarNavAltMarkup">
                 <div
                   className="navbar-nav  ml-auto admin-tools"
@@ -212,7 +217,7 @@ class HeaderPrimary extends Component {
 
 const mapStateToProps = state => {
   return {
-    userR: state.userR
+    get_User: state.get_User
   };
 };
 

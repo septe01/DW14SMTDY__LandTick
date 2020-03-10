@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { getOrederById } from "../../_actions/orderA";
+import { getDaye, formatDate } from "../../config/apputils";
 
 class ModalInvoice extends Component {
   constructor(props) {
@@ -30,33 +31,20 @@ class ModalInvoice extends Component {
     this.handleShow();
   };
 
-  // format date
-  formatDate = dateStr => {
-    let dArr = dateStr.split("-"); // ex input "2010-01-18"
-    return dArr[2] + " " + dArr[1] + " " + dArr[0]; //ex out: "18/01/10"
-  };
-  // get day
-  getDaye = day => {
-    let date = new Date(day);
-    var days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-    return days[date.getDay()];
-  };
-
   render() {
     let dataTiket, dataUser, dataOrder;
 
-    if (this.props.orderR.getOrderById.data) {
-      dataOrder = this.props.orderR.getOrderById.data;
-      dataTiket = this.props.orderR.getOrderById.data.ticket;
-      dataUser = this.props.orderR.getOrderById.data.user;
+    if (this.props.getOrder.getOrderById.data) {
+      dataOrder = this.props.getOrder.getOrderById.data;
 
-      // dataUser = this.props.orderR.getOrderById.data.ticket
+      dataTiket = this.props.getOrder.getOrderById.data.ticket;
+      dataUser = this.props.getOrder.getOrderById.data.user;
     }
     let status;
     if (dataOrder) {
       status = dataOrder.status;
     }
-    console.log(status);
+
     let date;
     if (dataTiket) {
       date = dataTiket.date_start;
@@ -102,10 +90,8 @@ class ModalInvoice extends Component {
                         Kereta Api
                       </span>
                       <p>
-                        <span>
-                          {date ? this.getDaye(date.substr(0, 10)) : ""}
-                        </span>
-                        , {date ? this.formatDate(date.substr(0, 10)) : ""}
+                        <span>{date ? getDaye(date.substr(0, 10)) : ""}</span>,{" "}
+                        {date ? formatDate(date.substr(0, 10)) : ""}
                       </p>
                     </div>
                     <div className="col-md-6">
@@ -128,7 +114,7 @@ class ModalInvoice extends Component {
                   <div className="row">
                     <div className="col-md-6 invoice-name">
                       <span className="kreta mt-2 color-black-7">05.00</span>
-                      <p>{date ? this.formatDate(date.substr(0, 10)) : ""}</p>
+                      <p>{date ? formatDate(date.substr(0, 10)) : ""}</p>
                     </div>
                     <div className="col-md-6 invoice-name">
                       <div>
@@ -142,7 +128,7 @@ class ModalInvoice extends Component {
                   <div className="row">
                     <div className="col-md-6 invoice-name">
                       <span className="kreta mt-2 color-black-7">23.05</span>
-                      <p>{date ? this.formatDate(date.substr(0, 10)) : ""}</p>
+                      <p>{date ? formatDate(date.substr(0, 10)) : ""}</p>
                     </div>
                     <div className="col-md-6 invoice-name">
                       <div>
@@ -225,7 +211,7 @@ class ModalInvoice extends Component {
 
 const mapStateToProp = state => {
   return {
-    orderR: state.orderR
+    getOrder: state.getOrder
   };
 };
 const mapDispatchToProps = dispatch => {

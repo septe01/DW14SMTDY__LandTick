@@ -14,6 +14,7 @@ class AdminAddTicket extends Component {
   constructor(props) {
     super();
     this.state = {
+      showModalInfo: false,
       nm_kereta: "",
       type_kereta: "",
       start_date: "",
@@ -22,8 +23,7 @@ class AdminAddTicket extends Component {
       st_tujuan: "",
       jam_tiba: "",
       harga_tiket: "",
-      qty: "",
-      getStatusModal: false
+      qty: ""
     };
   }
   handleChange = e => {
@@ -46,13 +46,31 @@ class AdminAddTicket extends Component {
       qty: this.state.qty[0]
     };
 
+    this.setState({
+      showModalInfo: !this.state.showModalInfo,
+      nm_kereta: "",
+      type_kereta: "",
+      start_date: "",
+      st_keberangkatan: "",
+      waktu_start: "",
+      st_tujuan: "",
+      jam_tiba: "",
+      harga_tiket: "",
+      qty: ""
+    });
+
     this.props.storeTiket(data);
-    this.setState({ getStatusModal: true });
   };
 
   componentDidMount() {
     this.props.getTrain();
   }
+
+  handleModal = () => {
+    this.setState({
+      showModalInfo: !this.state.showModalInfo
+    });
+  };
 
   // onBack = e => {
   //   e.preventDefault();
@@ -74,11 +92,12 @@ class AdminAddTicket extends Component {
     return (
       <div>
         <HeaderPrimary />
-        {this.state.getStatusModal ? (
-          <InfoModal pesan="Data tiket berhasil di tambah !" />
-        ) : (
-          ""
-        )}
+
+        <InfoModal
+          show={this.state.showModalInfo}
+          hidemodal={this.handleModal}
+          pesan="Data tiket berhasil di tambah !"
+        />
         <div className="container adm-add-ticket">
           <div>
             <h2 className="title-list-transaksi mt-4">Tambah Tiket</h2>
@@ -89,12 +108,14 @@ class AdminAddTicket extends Component {
                 <Form onSubmit={this.handleSubmit}>
                   <Form.Group controlId="formBasicNama">
                     <Form.Control
+                      value={this.statenm_kereta}
                       className="input"
                       type="text"
                       name="nm_kereta"
                       placeholder="Nama Kereta"
                       onChange={this.handleChange}
                     />
+
                     <Form.Text className="text-danger">
                       {/* {this.state.errbreeder ? this.state.errbreeder : ""} */}
                     </Form.Text>
@@ -103,6 +124,7 @@ class AdminAddTicket extends Component {
                   <Form.Group controlId="formBasicJenis">
                     <div className="form-group">
                       <select
+                        value={this.state.type_kereta}
                         className="form-control input"
                         name="type_kereta"
                         id="jenis"
@@ -125,6 +147,7 @@ class AdminAddTicket extends Component {
 
                   <Form.Group controlId="formBasicStartDate">
                     <Form.Control
+                      value={this.state.start_date}
                       className="input"
                       type="date"
                       name="start_date"
@@ -139,6 +162,7 @@ class AdminAddTicket extends Component {
 
                   <Form.Group controlId="formBasicStKeberangakatan">
                     <Form.Control
+                      value={this.state.st_keberangkatan}
                       className="input"
                       name="st_keberangkatan"
                       type="text"
@@ -152,6 +176,7 @@ class AdminAddTicket extends Component {
 
                   <Form.Group controlId="formBasicJamStart">
                     <Form.Control
+                      value={this.state.waktu_start}
                       className="input"
                       name="waktu_start"
                       type="time"
@@ -165,6 +190,7 @@ class AdminAddTicket extends Component {
 
                   <Form.Group controlId="formBasicStTujuan">
                     <Form.Control
+                      value={this.state.st_tujuan}
                       className="input"
                       name="st_tujuan"
                       type="text"
@@ -178,6 +204,7 @@ class AdminAddTicket extends Component {
 
                   <Form.Group controlId="formBasicJamTiba">
                     <Form.Control
+                      value={this.state.jam_tiba}
                       className="input"
                       name="jam_tiba"
                       type="time"
@@ -191,6 +218,7 @@ class AdminAddTicket extends Component {
 
                   <Form.Group controlId="formBasicHargaTiket">
                     <Form.Control
+                      value={this.state.harga_tiket}
                       className="input"
                       name="harga_tiket"
                       type="text"
@@ -204,6 +232,7 @@ class AdminAddTicket extends Component {
 
                   <Form.Group controlId="formBasicQTY">
                     <Form.Control
+                      value={this.state.qty}
                       className="input"
                       name="qty"
                       type="text"

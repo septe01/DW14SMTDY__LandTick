@@ -202,7 +202,7 @@ class LoginModal extends Component {
 
 const mapStateToProps = state => {
   return {
-    userR: state.userR
+    userLogin: state.userLogin
   };
 };
 

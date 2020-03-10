@@ -68,7 +68,7 @@ exports.myticket = async (req, res) => {
   }
 };
 
-// 6. Payment
+// 6. buy tiket
 exports.order = async (req, res) => {
   try {
     const idTrain = req.body.ticket;
@@ -131,7 +131,7 @@ exports.order = async (req, res) => {
         res.status(200).send({
           status: 200,
           message: "success",
-          // resultOrder,
+          resultOrder,
           resultRemains
         });
       }
@@ -148,51 +148,6 @@ exports.order = async (req, res) => {
         message: "no ticket"
       });
     }
-    // const result = await Order.create({
-    //   id_ticket: idTrain,
-    //   id_user: id,
-    //   qty: qty,
-    //   total_price: subPrice,
-    //   status: "p",
-    //   attachment: attachment
-    // });
-    // if (result) {
-    //   const resultOrder = await Order.findOne({
-    //     where: { id: result.id },
-    //     attributes: ["id", "qty", "total_price", "status", "attachment"],
-    //     include: [
-    //       {
-    //         model: User,
-    //         attributes: [
-    //           "name",
-    //           "user_name",
-    //           "email",
-    //           "gender",
-    //           "phone",
-    //           "address"
-    //         ]
-    //       },
-    //       {
-    //         model: Ticket,
-    //         attributes: [
-    //           "id",
-    //           "name_train",
-    //           "date_start",
-    //           "start_station",
-    //           "start_time",
-    //           "destination_station",
-    //           "arival_time"
-    //         ],
-    //         include: { model: Train, attributes: ["type_train"] }
-    //       }
-    //     ]
-    //   });
-    //   res.status(200).send({
-    //     status: 200,
-    //     message: "success",
-    //     resultOrder
-    //   });
-    // }
   } catch (error) {}
 };
 

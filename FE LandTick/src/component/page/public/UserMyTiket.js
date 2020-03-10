@@ -27,6 +27,7 @@ class UserMyTiket extends Component {
             <div>
               <h2 className="title-list-transaksi">Tiket Saya</h2>
             </div>
+
             <div className="container box-pay box-shadow-2">
               <div className="box-logo-invoice bg-primary-90 logopay">
                 <img

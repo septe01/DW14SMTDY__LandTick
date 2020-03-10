@@ -21,7 +21,8 @@ class DashboardAdm extends Component {
     this.props.getOreder();
   }
   render() {
-    const order = this.props.orderR.getOrder.data;
+    const order = this.props.order.getOrder.data;
+    // console.log(order);
     const token = localStorage.getItem("token");
     if (!token) {
       return <Redirect to="/" />;
@@ -62,7 +63,6 @@ class DashboardAdm extends Component {
                     <div className="col-md-2 text-center">
                       <h6 className="bold-8">{`${val.ticket.start_station} - ${val.ticket.destination_station}`}</h6>
                     </div>
-
                     <div
                       className="col-md-2 text-center"
                       style={{ overflow: "hidden" }}
@@ -114,7 +114,7 @@ class DashboardAdm extends Component {
 
 const mapStateToProps = state => {
   return {
-    orderR: state.orderR
+    order: state.Order
   };
 };
 const mapDispatchToProps = dispatch => {
