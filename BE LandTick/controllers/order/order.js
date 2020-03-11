@@ -18,6 +18,7 @@ exports.myticket = async (req, res) => {
       where: {
         id_user: id
       },
+      order: [["id", "DESC"]],
       attributes: [
         "id",
         "qty",
@@ -52,7 +53,8 @@ exports.myticket = async (req, res) => {
             "destination_station",
             "arival_time",
             "price"
-          ]
+          ],
+          include: [{ model: Train, attributes: ["type_train"] }]
         }
       ]
     });
@@ -157,6 +159,7 @@ exports.index = async (req, res) => {
     const admin = await User.findAll();
     if (admin) {
       const result = await Order.findAll({
+        order: [["id", "DESC"]],
         attributes: ["id", "qty", "total_price", "status", "attachment"],
         include: [
           {

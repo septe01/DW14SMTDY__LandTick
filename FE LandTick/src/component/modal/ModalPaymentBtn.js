@@ -16,6 +16,7 @@ class ModalPaymentBtn extends Component {
     this.setState({ showAdd: true });
   };
   render() {
+    console.log(this.props.data);
     return (
       <div>
         <Button

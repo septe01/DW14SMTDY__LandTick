@@ -14,6 +14,8 @@ import { createOrder } from "../../_actions/orderA";
 class ModalBuyTicket extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
+
     this.state = {
       redirect: false,
       price: 0,
@@ -21,7 +23,7 @@ class ModalBuyTicket extends Component {
       redirect: false,
       resstatus: "",
       loader: true,
-      qty: 0,
+      qty: 1,
       price: ""
     };
   }
@@ -42,9 +44,7 @@ class ModalBuyTicket extends Component {
     }
   };
 
-  // componentDidMount() {
-  //   console.log(this.props.price);
-  // }
+  componentDidMount() {}
 
   handleClose = e => {
     this.setState({ show: false });
@@ -76,10 +76,7 @@ class ModalBuyTicket extends Component {
       destination = this.props.dataFromLanding.data.destination_station;
 
       tipeTrain = this.props.dataFromLanding.data.train.type_train;
-      // nameTrain = this.props.dataFromLanding.data.name_train;
     }
-
-    // console.log(this.props.dataFromLanding.data.name_train);
 
     return (
       <>
@@ -169,36 +166,44 @@ class ModalBuyTicket extends Component {
               <div>
                 <div className="row">
                   <div className="col-md-10 detail-invoice-adm foot-pay container">
-                    <div className="pr-3 pl-3  justify-content-right box-counter">
-                      <div className="counter">
-                        <FontAwesomeIcon
-                          icon={faPlusSquare}
-                          onClick={this.handlePlus}
-                        />
-                        <span>{this.state.qty}</span>
-                        <FontAwesomeIcon
-                          icon={faMinusSquare}
-                          onClick={this.handleMinus}
-                        />
+                    <div className="pr-3 pl-3  justify-content-right ">
+                      <div className="row box-counter">
+                        <div className="col-md-9">
+                          {this.state.price ? (
+                            <h4 className="text-right mt-price">
+                              <span className="bold-8 drop-shadow-2">
+                                Total Price: Rp. {this.state.price}
+                              </span>
+                            </h4>
+                          ) : (
+                            <h4 className="text-right mt-price ">
+                              <span className="bold-8 drop-shadow-2">
+                                Total Price: Rp. {this.props.price}
+                              </span>
+                            </h4>
+                          )}
+                        </div>
+                        <div className="col-md-3">
+                          <div className="counter">
+                            <FontAwesomeIcon
+                              className="plus"
+                              icon={faPlusSquare}
+                              onClick={this.handlePlus}
+                            />
+                            <span className="count-qty bold-8 drop-shadow-2">
+                              {this.state.qty}
+                            </span>
+                            <FontAwesomeIcon
+                              className="minus"
+                              icon={faMinusSquare}
+                              onClick={this.handleMinus}
+                            />
+                          </div>
+                        </div>
                       </div>
-                      {this.state.price ? (
-                        <p className="text-right">
-                          Price:{" "}
-                          <span className="bold-8 drop-shadow-2">
-                            {this.state.price}
-                          </span>
-                        </p>
-                      ) : (
-                        <p className="text-right ">
-                          Price:{" "}
-                          <span className="bold-8 drop-shadow-2">
-                            {this.props.price}
-                          </span>
-                        </p>
-                      )}
                     </div>
                   </div>
-                  <div className="col-md-2 click-pay mb-4">
+                  <div className="col-md-2 click-pay mb-2">
                     {/* <Link to="/payment" className="click-pay-btn"> */}
                     <Button
                       onClick={this.handleSaveOrder}

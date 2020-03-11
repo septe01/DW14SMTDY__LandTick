@@ -1,9 +1,11 @@
 // get day
 export const getDaye = date => {
-  //yyyy-mm-dd
-  let day = new Date(date);
+  // console.log(date);
+  var a = new Date(date);
   var days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-  return days[day.getDay() - 1];
+
+  var r = days[a.getDay()];
+  return r;
 };
 
 // format date

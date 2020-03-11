@@ -17,6 +17,21 @@ export const getOreder = () => {
   }
 };
 
+export const myOrder = () => {
+  try {
+    return {
+      type: appContants.MY_ORDER,
+      payload: Axios({
+        method: "GET",
+        url: `${API.baseURL}/my_tickets`,
+        headers: API.headers
+      })
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const updateOreder = (id, data) => {
   console.log("dari action ::" + id, data);
   try {

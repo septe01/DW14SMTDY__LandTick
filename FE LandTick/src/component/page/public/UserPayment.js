@@ -1,18 +1,60 @@
 import React, { Component } from "react";
-// import { Button, Container, Row, Col } from "react-bootstrap";
-// import { Link } from "react-router-dom";
-import HeaderPrimary from "../../template/HeaderPrimary";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import Footer from "../../template/Footer";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import HeaderPrimary from "../../template/HeaderPrimary";
+
+import Footer from "../../template/Footer";
 import ModalPaymentBtn from "../../modal/ModalPaymentBtn";
+import { getOrederById } from "../../../_actions/orderA";
+import { formatRupiah, getDaye, formatDate } from "../../../config/apputils";
 
 class UserPayment extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputfile: true,
+      file: "http://localhost:3000/assets/images/transfer.jpg",
+      upload: ""
+    };
+  }
+  componentDidMount() {
+    if (this.props.location.state) {
+      this.props.getOrederById(this.props.location.state.id);
+    } else {
+      this.props.history.goBack();
+    }
+  }
+
+  handleChange = event => {
+    console.log(event);
+    this.setState({
+      [event.target.name]: event.target.value,
+      data: this.state.upload,
+      inputfile: !this.state.inputfile,
+      file: URL.createObjectURL(event.target.files[0])
+    });
+  };
+
   render() {
-    // console.log("id Order", this.props.location.state.id);
+    let nik = new Number(Math.random() * 10000000000000 + 1);
+    nik = nik.toString().replace(".", "");
+    // console.log(this.props.getOrder.getOrderById.data);
+    let qty, total_price, name_train, user, ticket, timeStart;
+    if (this.props.getOrder.getOrderById.data) {
+      ticket = this.props.getOrder.getOrderById.data;
+      timeStart = this.props.getOrder.getOrderById.data;
+      if (timeStart) {
+        timeStart = this.props.getOrder.getOrderById.data.ticket;
+      }
+      total_price = this.props.getOrder.getOrderById.data.total_price;
+      user = this.props.getOrder.getOrderById.data.user;
+      name_train = this.props.getOrder.getOrderById.data.ticket.name_train;
+    }
+
     const token = localStorage.getItem("token");
     if (!token) {
       return <Redirect to="/" />;
@@ -70,7 +112,7 @@ class UserPayment extends Component {
                           src="http://localhost:3000/assets/images/logo.png"
                         />
                       </div>
-
+                      <div></div>
                       <Container>
                         <div className="mt-3">
                           <div className="row">
@@ -85,10 +127,10 @@ class UserPayment extends Component {
                               </thead>
                               <tbody>
                                 <tr>
-                                  <td>3214123123112</td>
-                                  <td>Anto</td>
-                                  <td>0812123812</td>
-                                  <td>anto@gmail.com</td>
+                                  <td>{nik}</td>
+                                  <td>{user ? user.name : ""}</td>
+                                  <td>{user ? user.phone : ""}</td>
+                                  <td>{user ? user.email : ""}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -111,31 +153,49 @@ class UserPayment extends Component {
                             <table className="tbl-paynow-detail total-paynow">
                               <thead>
                                 <tr className="drop-shadow-2 color-black-7">
-                                  <th>Argo Wilis (Dewasa) x1</th>
-                                  <th>Rp.250.000</th>
+                                  <th>{`${name_train} x ${qty}`}</th>
+                                  <th>Rp. {total_price}</th>
                                 </tr>
                               </thead>
                               <tbody className="clr-bg-grey">
                                 <tr className="drop-shadow-2 color-black-7">
                                   <td>Total</td>
                                   <td>
-                                    <h5 className="bold-7">Rp.250.000</h5>
+                                    <h5 className="bold-7">
+                                      Rp. {total_price}
+                                    </h5>
                                   </td>
                                 </tr>
                               </tbody>
                             </table>
                           </div>
                         </div>
-
-                        <ModalPaymentBtn />
+                        {/* ========= Button ========== */}
+                        <ModalPaymentBtn data={this.state.data} />
                       </div>
                       <div className="col-md-4 text-right prof-img-click-now">
                         <div className="struct payment-prof-img">
                           <img
                             className="box-shadow-2"
-                            src="http://localhost:3000/assets/images/transfer.jpg"
+                            src={this.state.file}
                             alt=""
                           />
+                          {this.state.inputfile ? (
+                            <form
+                              method="post"
+                              encType="multipart/form-data"
+                              action=""
+                              className="input-file"
+                            >
+                              <input
+                                type="file"
+                                name="upload"
+                                onChange={this.handleChange}
+                              />
+                            </form>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
                     </div>
@@ -146,7 +206,17 @@ class UserPayment extends Component {
                     <div className="col-md-8 color-bg-grey-8 pt-2 pb-2">
                       <h4 className=" drop-shadow-2 bold-8 mt-2">Kereta Api</h4>
                       <p className="color-black-7 drop-shadow-2">
-                        <span className="bold-7">Saturday</span>, 21 Feb 2020
+                        <span className="bold-7">
+                          {ticket
+                            ? `${getDaye(ticket.ticket.date_start)}, `
+                            : ""}{" "}
+                        </span>
+
+                        <span>
+                          {ticket
+                            ? formatDate(ticket.ticket.date_start.substr(0, 10))
+                            : ""}
+                        </span>
                       </p>
                     </div>
                     <div className="col-md-4 color-bg-grey-8 pt-2 pb-2">
@@ -159,35 +229,46 @@ class UserPayment extends Component {
                     </div>
                     <div className="col-md-12 clr-bg-grey">
                       <span className="kreta mt-2 color-black-8 drop-shadow-2">
-                        Argo Willis
+                        {name_train}
                       </span>
-                      <p>Executive (H)</p>
+                      <p>{ticket ? ticket.ticket.train.type_train : ""}</p>
                     </div>
                     {/* ====================== */}
                     <div className="col-md-6 clr-bg-grey">
                       <span className="kreta mt-2 color-black-7 color-black-8 drop-shadow-2">
-                        05.00
+                        {timeStart ? timeStart.start_time.substr(0, 5) : ""}
                       </span>
-                      <p>21 Feb 2020</p>
+
+                      <p>
+                        {timeStart
+                          ? formatDate(timeStart.date_start.substr(0, 10))
+                          : ""}
+                      </p>
 
                       <div>
                         <span className="kreta mt-2 color-black-7 color-black-8 drop-shadow-2">
-                          23.05
+                          {timeStart ? timeStart.arival_time.substr(0, 5) : ""}
                         </span>
-                        <p>21 Feb 2020</p>
+                        <p>
+                          {timeStart
+                            ? formatDate(timeStart.date_start.substr(0, 10))
+                            : ""}
+                        </p>
                       </div>
                     </div>
 
                     <div className="col-md-6 clr-bg-grey">
                       <span className="kreta mt-2 color-black-7 color-black-8 drop-shadow-2">
-                        Jakarta (GMR)
+                        {timeStart ? timeStart.start_station : ""}
                       </span>
-                      <p>Stasiun Gambir</p>
+                      <p>St. {timeStart ? timeStart.start_station : ""}</p>
                       <div>
                         <span className="kreta mt-2 color-black-7 color-black-8 drop-shadow-2">
-                          Surabaya
+                          {timeStart ? timeStart.destination_station : ""}
                         </span>
-                        <p>Stasiun Surabaya</p>
+                        <p>
+                          St. {timeStart ? timeStart.destination_station : ""}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -195,20 +276,6 @@ class UserPayment extends Component {
               </div>
             </div>
           </div>
-
-          {/* <div className="img-code">
-                        <img
-                          src="http://localhost:3000/assets/images/barcode.png"
-                          alt="code"
-                        />
-                      </div> */}
-
-          {/* <div className="struct">
-                    <img
-                      src="http://localhost:3000/assets/images/transfer.jpg"
-                      alt=""
-                    />
-                  </div> */}
           <Footer />
         </div>
       </div>
@@ -216,4 +283,15 @@ class UserPayment extends Component {
   }
 }
 
-export default UserPayment;
+const mapStateToProps = state => {
+  return {
+    getOrder: state.getOrder
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    getOrederById: getOrder => dispatch(getOrederById(getOrder))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserPayment);

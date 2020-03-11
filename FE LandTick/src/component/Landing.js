@@ -201,17 +201,6 @@ class Landing extends Component {
       ticket = ticket;
     }
 
-    let status;
-    // if (token) {
-    //   if (this.props.getUser.getUser[0]) {
-    //     if (this.props.getUser.getUser[0].data) {
-    //       status = this.props.getUser.getUser[0].data.userAut.role;
-    //     }
-    //   }
-    // }
-
-    console.log(this.props.getUser);
-
     //greeting
     let myDate = new Date();
     let hrs = myDate.getHours();
@@ -247,6 +236,15 @@ class Landing extends Component {
       );
     };
 
+    let status;
+    // console.log(this.props.get_User);
+    if (token) {
+      if (this.props.get_User.getUser[0]) {
+        if (this.props.get_User.getUser[0].data) {
+          status = this.props.get_User.getUser[0].data.userAut.role;
+        }
+      }
+    }
     if (status === "admin") {
       return <Redirect to="/mydashboard" />;
     }
@@ -563,7 +561,7 @@ class Landing extends Component {
 
 const mapStateToProps = state => {
   return {
-    getUser: state.getUser,
+    get_User: state.get_User,
     tiketR: state.tiketR
   };
 };

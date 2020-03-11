@@ -122,7 +122,7 @@ class HeaderPrimary extends Component {
     } else if (status == "public") {
       return (
         <div>
-          <nav className="navbar  navbar-expand-lg navbar-light color-bg-white ">
+          <nav className="navbar  navbar-expand-lg navbar-light color-bg-white nav-admin">
             <div className="container container-nav-pedding-0">
               {/* <a className="navbar-brand" href=""> */}
               <Link to="/">

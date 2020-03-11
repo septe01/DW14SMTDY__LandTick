@@ -26,6 +26,7 @@ exports.store = async (req, res) => {
 exports.index = async (req, res) => {
   try {
     const ticket = await Ticket.findAll({
+      order: [["id", "DESC"]],
       attributes: [
         "id",
         "name_train",

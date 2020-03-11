@@ -7,7 +7,13 @@ import { promise, logger } from "./middleware";
 import { userLogin, get_User } from "../_reducers/userR";
 import tiketR from "../_reducers/tiketR";
 import trainsR from "../_reducers/trainsR";
-import { Order, getOrder, addOrder, updateOrder } from "../_reducers/orderR";
+import {
+  Order,
+  getOrder,
+  addOrder,
+  updateOrder,
+  orderKu
+} from "../_reducers/orderR";
 
 const reducers = combineReducers({
   userLogin,
@@ -17,6 +23,7 @@ const reducers = combineReducers({
   Order,
   addOrder,
   getOrder,
+  orderKu,
   updateOrder
 });
 

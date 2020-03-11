@@ -5,6 +5,7 @@ const initialState = {
   getOrderById: [],
   updateOrder: [],
   postOrder: [],
+  myOrder: [],
   isLoading: false,
   isError: false
 };
@@ -23,6 +24,30 @@ export const Order = (state = initialState, action) => {
         isLoading: false
       };
     case appContants.GET_ORDER_REJECTED:
+      return {
+        ...state,
+        isError: true
+      };
+    default:
+      return state;
+  }
+};
+
+// myOrder
+export const orderKu = (state = initialState, action) => {
+  switch (action.type) {
+    case appContants.MY_ORDER_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case appContants.MY_ORDER_FULFILLED:
+      return {
+        ...state,
+        myOrder: action.payload.data,
+        isLoading: false
+      };
+    case appContants.MY_ORDER_REJECTED:
       return {
         ...state,
         isError: true
@@ -59,10 +84,9 @@ export const addOrder = (state = initialState, action) => {
   }
 };
 
-// get Order
+// get byId
 export const getOrder = (state = initialState, action) => {
   switch (action.type) {
-    // byId
     case appContants.GET_ORDER_BY_PENDING:
       return {
         ...state,
