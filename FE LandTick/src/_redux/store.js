@@ -11,7 +11,7 @@ import {
   Order,
   getOrder,
   addOrder,
-  updateOrder,
+  // updateOrder,
   orderKu
 } from "../_reducers/orderR";
 
@@ -23,8 +23,8 @@ const reducers = combineReducers({
   Order,
   addOrder,
   getOrder,
-  orderKu,
-  updateOrder
+  orderKu
+  // updateOrder
 });
 
 const store = createStore(reducers, applyMiddleware(promise, logger));

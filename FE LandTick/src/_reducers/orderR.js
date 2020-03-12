@@ -66,7 +66,6 @@ export const addOrder = (state = initialState, action) => {
         isLoading: true
       };
     case appContants.POST_ORDER_FULFILLED:
-      console.log(action.payload);
       return {
         ...state,
         postOrder: action.payload,
@@ -110,27 +109,29 @@ export const getOrder = (state = initialState, action) => {
 };
 
 // patch
-export const updateOrder = (state = initialState, action) => {
-  switch (action.type) {
-    // update
-    case appContants.UPDATE_ORDER_PENDING:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case appContants.UPDATE_ORDER_FULFILLED:
-      return {
-        ...state,
-        updateOrder: action.payload,
-        isLoading: false
-      };
-    case appContants.UPDATE_ORDER_REJECTED:
-      return {
-        ...state,
-        isError: true
-      };
 
-    default:
-      return state;
-  }
-};
+// export const updateOrder = (state = initialState, action) => {
+//   switch (action.type) {
+//     // update
+//     case appContants.UPDATE_ORDER_PENDING:
+//       return {
+//         ...state,
+//         isLoading: true
+//       };
+//     case appContants.UPDATE_ORDER_FULFILLED:
+//       console.log("order :", action.payload.data);
+//       return {
+//         ...state,
+//         updateOrder: action.payload,
+//         isLoading: false
+//       };
+//     case appContants.UPDATE_ORDER_REJECTED:
+//       return {
+//         ...state,
+//         isError: true
+//       };
+
+//     default:
+//       return state;
+//   }
+// };

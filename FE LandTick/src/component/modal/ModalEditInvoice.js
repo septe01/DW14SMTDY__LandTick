@@ -6,8 +6,9 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 
 import { getOrederById } from "../../_actions/orderA";
-import { updateOreder } from "../../_actions/orderA";
+// import { updateOreder } from "../../_actions/orderA";
 import { Link, Redirect } from "react-router-dom";
+import Axios from "axios";
 class ModalInvoice extends Component {
   constructor(props) {
     super();
@@ -29,12 +30,38 @@ class ModalInvoice extends Component {
     e.preventDefault();
     if (this.state.status !== "") {
       const id = this.props.id;
-      this.props.updateOreder(id, { status: this.state.status });
-      this.setState({
-        show: !this.state.show
-      });
-      document.location.reload(false);
-      return <Redirect to="/mydashboard" />;
+      const data = { status: this.state.status };
+
+      console.log("data", data);
+
+      //Consum API
+      const token = localStorage.getItem("token");
+      Axios({
+        method: "PATCH",
+        data: {
+          status: this.state.status
+        },
+        url: "http://localhost:5004/api/v1/order/" + id,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(res => {
+          document.location.reload(false);
+          return <Redirect to="/mydashboard" />;
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+
+      // ================================
+
+      // this.props.updateOreder(id, data);
+      // this.setState({
+      //   show: !this.state.show
+      // });
+      // document.location.reload(false);
+      // return <Redirect to="/mydashboard" />;
     } else {
       this.setState({
         error: true
@@ -57,12 +84,13 @@ class ModalInvoice extends Component {
 
   render() {
     // console.log(this.props.id);
+    // console.log(this.props.updateOrder);
     let order;
     if (this.props.getOrder.getOrderById.data) {
       order = this.props.getOrder.getOrderById.data;
     }
 
-    console.log(order);
+    // console.log(order);
     return (
       <>
         <FontAwesomeIcon
@@ -159,7 +187,7 @@ class ModalInvoice extends Component {
               </Col>
             </Row>
           </Container>
-          {/* {console.log(this.props.userR)} */}
+          {/* {console.log("update", this.props.updateOrder)} */}
         </Modal>
       </>
     );
@@ -168,14 +196,14 @@ class ModalInvoice extends Component {
 
 const mapStateToProp = state => {
   return {
-    getOrder: state.getOrder,
-    updateOrder: state.updateOrder
+    getOrder: state.getOrder
+    // updateOrder: state.updateOrder
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getOrederById: getOrder => dispatch(getOrederById(getOrder)),
-    updateOreder: (id, data) => dispatch(updateOreder(id, data))
+    getOrederById: getOrder => dispatch(getOrederById(getOrder))
+    // updateOreder: (id, data) => dispatch(updateOreder(id, data))
   };
 };
 export default connect(mapStateToProp, mapDispatchToProps)(ModalInvoice);

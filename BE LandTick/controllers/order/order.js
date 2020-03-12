@@ -389,45 +389,45 @@ exports.update = async (req, res) => {
     const idOrder = req.params.id;
     // ======================================
 
-    const resultUpdate = await Order.update(req.body, {
+    const update = await Order.update(req.body, {
       where: { id: idOrder }
     });
-    if (resultUpdate) {
-      const resultOrder = await Order.findOne({
-        where: { id: idOrder },
-        attributes: ["id", "qty", "total_price", "status", "attachment"],
-        include: [
-          {
-            model: User,
-            attributes: [
-              "name",
-              "user_name",
-              "email",
-              "gender",
-              "phone",
-              "address"
-            ]
-          },
-          {
-            model: Ticket,
-            attributes: [
-              "id",
-              "name_train",
-              "date_start",
-              "start_station",
-              "start_time",
-              "destination_station",
-              "arival_time"
-            ],
-            include: { model: Train, attributes: ["type_train"] }
-          }
-        ]
-      });
-      res.status(200).send({
-        status: 200,
-        message: "success",
-        resultOrder
-      });
-    }
+    // if (resultUpdate) {
+    //   const resultUpdate = await Order.findOne({
+    //     where: { id: idOrder },
+    //     attributes: ["id", "qty", "total_price", "status", "attachment"],
+    //     include: [
+    //       {
+    //         model: User,
+    //         attributes: [
+    //           "name",
+    //           "user_name",
+    //           "email",
+    //           "gender",
+    //           "phone",
+    //           "address"
+    //         ]
+    //       },
+    //       {
+    //         model: Ticket,
+    //         attributes: [
+    //           "id",
+    //           "name_train",
+    //           "date_start",
+    //           "start_station",
+    //           "start_time",
+    //           "destination_station",
+    //           "arival_time"
+    //         ],
+    //         include: { model: Train, attributes: ["type_train"] }
+    //       }
+    //     ]
+    //   });
+    res.status(200).send({
+      status: 200,
+      message: "success",
+      update
+      // });
+    });
   } catch (error) {}
 };

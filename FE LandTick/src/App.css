@@ -878,6 +878,32 @@ button.register:hover {
   margin-top: 39px;
 }
 
+/* .divs {
+  position: relative;
+  display: inline-block;
+  background-color: #fcc;
+} */
+
+.upload-btn-wrapper {
+  position: relative;
+  z-index: 2;
+  font-size: 110px !important;
+  font-size: 200px;
+  position: relative;
+  left: 20px;
+  top: 10px;
+  opacity: 0;
+}
+
+.icon-upload-file {
+  position: absolute;
+  left: 30px;
+  top: 38px;
+  font-size: 160px;
+}
+.icon-upload-file:hover {
+  cursor: progress;
+}
 /* disable blue when click image  */
 /* *::selection {
   background-color: transparent;

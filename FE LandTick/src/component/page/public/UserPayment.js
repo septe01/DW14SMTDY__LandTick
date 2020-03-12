@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faExclamationTriangle,
+  faUpload
+} from "@fortawesome/free-solid-svg-icons";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import { Button } from "react-bootstrap";
@@ -20,7 +23,9 @@ class UserPayment extends Component {
     this.state = {
       inputfile: true,
       file: "http://localhost:3000/assets/images/transfer.jpg",
-      picture: ""
+      img: "",
+      picture: "",
+      icon: true
     };
   }
 
@@ -42,7 +47,7 @@ class UserPayment extends Component {
       const id = this.props.getOrder.getOrderById.data.id;
       Axios.patch(`http://localhost:5004/api/v1/upload/${id}`, formData, config)
         .then(response => {
-          alert("The file is successfully uploaded");
+          // alert("The file is successfully uploaded");
         })
         .catch(error => {
           console.log(error.message);
@@ -51,13 +56,11 @@ class UserPayment extends Component {
   };
 
   handleChange = event => {
-    this.setState({ file: event.target.files[0] });
-    // this.setState({
-    //   [event.target.name]: event.target.value,
-    //   data: this.state.picture,
-    //   inputfile: !this.state.inputfile,
-    //   file: URL.createObjectURL(event.target.files[0])
-    // });
+    this.setState({
+      file: event.target.files[0],
+      img: URL.createObjectURL(event.target.files[0]),
+      icon: !this.state.icon
+    });
   };
 
   render() {
@@ -202,7 +205,7 @@ class UserPayment extends Component {
                         <div className="struct payment-prof-img">
                           <img
                             className="box-shadow-2"
-                            src={this.state.file}
+                            src={this.state.img}
                             alt=""
                           />
                           {this.state.inputfile ? (
@@ -213,14 +216,23 @@ class UserPayment extends Component {
                               enctype="multipart/form-data"
                               className="input-file"
                             >
-                              {/* http://localhost:5004/api/v1/order/:id */}
                               <input
-                                name="picture"
-                                accept="image/*"
                                 type="file"
                                 id="picture"
+                                name="picture"
+                                accept="image/*"
+                                className="upload-btn-wrapper"
                                 onChange={this.handleChange}
-                              ></input>
+                              />
+                              <i class="fa fa-id-card fa-3x icons"></i>
+                              {this.state.icon ? (
+                                <FontAwesomeIcon
+                                  icon={faUpload}
+                                  className="icon-upload-file"
+                                />
+                              ) : (
+                                ""
+                              )}
                             </Form>
                           ) : (
                             ""

@@ -32,22 +32,27 @@ export const myOrder = () => {
   }
 };
 
-export const updateOreder = (id, data) => {
-  console.log("dari action ::" + id, data);
-  try {
-    return {
-      type: appContants.UPDATE_ORDER,
-      payload: Axios({
-        method: "PATCH",
-        url: `${API.baseURL}/order/${id}`,
-        headers: API.headers,
-        data: data
-      })
-    };
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const updateOreder = (id, data) => {
+//   console.log("dari action ::", id);
+//   console.log("asdasd", data);
+
+//   try {
+//     return {
+//       type: appContants.UPDATE_ORDER,
+//       payload: Axios({
+//         method: "PATCH",
+//         // url: `${API.baseURL}/order/${id}`,
+//         url: `http://localhost:5004/api/v1/order/${id}`,
+//         headers: API.headers,
+//         data: {
+//           status: "c"
+//         }
+//       })
+//     };
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 export const getOrederById = id => {
   try {
