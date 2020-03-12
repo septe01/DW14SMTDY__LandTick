@@ -6,6 +6,54 @@ const User = models.user;
 const Ticket = models.ticket;
 const Train = models.train;
 
+// multer input file
+const multer = require("multer");
+// const upload = multer({ dest: 'uploads/'})
+var path = require("path");
+
+const storage = multer.diskStorage({
+  destination: path.join(`${__dirname}./../public/images/`),
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  }
+});
+
+// init upload
+const upload = multer({
+  storage: storage
+}).single("picture");
+
+// upload file
+exports.upload = async (req, res) => {
+  try {
+    upload(req, res, err => {
+      const id = req.params.id;
+      /*Now do where ever you want to do*/
+      const fileName = {
+        attachment: req.file.filename
+      };
+      if (!err) {
+        Order.update(fileName, { where: { id: id } }).then(ress => {
+          if (ress) {
+            Order.findOne({ where: { id: id } }).then(result => {
+              res.status(200).send({
+                status: 200,
+                message: "success",
+                result
+              });
+            });
+          }
+        });
+      } else console.log(err.message);
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 // 5. Ticket MYTICKET
 exports.myticket = async (req, res) => {
   try {

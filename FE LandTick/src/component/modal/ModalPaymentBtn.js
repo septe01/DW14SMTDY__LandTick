@@ -9,13 +9,16 @@ class ModalPaymentBtn extends Component {
       showAdd: false
     };
   }
+
   handleClose = () => {
     this.setState({ showAdd: false });
   };
   handleShow = () => {
+    this.props.submit();
     this.setState({ showAdd: true });
   };
   render() {
+    console.log();
     console.log(this.props.data);
     return (
       <div>

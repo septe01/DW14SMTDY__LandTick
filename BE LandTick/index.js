@@ -4,6 +4,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 require("express-group-routes");
 
+// // multer input file
+// const multer = require("multer");
+// // const upload = multer({ dest: 'uploads/'})
+// var path = require("path");
+
 // -- authenticated
 const { authenticated } = require("./middleware/auth");
 // -- end authenticated
@@ -19,12 +24,33 @@ app.use(function(req, res, next) {
   next();
 });
 
+const path = require("path");
+//config get file image
+app.use(express.static("controllers/public/images/")); // result http://localhost:5004/picture-1583943302009.jpg
+
 // define the server port
 const port = 5004;
 // const port = process.env.PORT || 4000;
 
 // allow this app to receive incoming json request
 app.use(bodyParser.json());
+
+// multer
+// set storage
+// const storage = multer.diskStorage({
+//   destination: path.join(`${__dirname}./../public/images/`),
+//   filename: (req, file, cb) => {
+//     cb(
+//       null,
+//       file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+//     );
+//   }
+// });
+
+// // init upload
+// const upload = multer({
+//   storage: storage
+// }).single("picture");
 
 // import controller
 const LoginController = require("./controllers/login");
@@ -55,6 +81,8 @@ app.group("/api/v1", router => {
   router.get("/order", OrderController.index);
   router.get("/order/:id", authenticated, OrderController.show);
   router.patch("/order/:id", authenticated, OrderController.update);
+  // upload file
+  router.patch("/upload/:id", authenticated, OrderController.upload);
 });
 
 // app.group("/api/v1", router => { //using group routes

@@ -3,6 +3,7 @@ const token = localStorage.getItem("token");
 export const API = {
   baseURL: "http://localhost:5004/api/v1",
   headers: {
+    "content-type": "multipart/form-data",
     "Content-Type": "application/json",
     Accept: "application/json",
     Authorization: `Bearer ${token}`

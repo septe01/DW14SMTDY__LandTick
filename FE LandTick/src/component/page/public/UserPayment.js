@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -11,6 +11,8 @@ import Footer from "../../template/Footer";
 import ModalPaymentBtn from "../../modal/ModalPaymentBtn";
 import { getOrederById } from "../../../_actions/orderA";
 import { formatRupiah, getDaye, formatDate } from "../../../config/apputils";
+import Axios from "axios";
+import { API } from "../../../config/api";
 
 class UserPayment extends Component {
   constructor(props) {
@@ -18,9 +20,10 @@ class UserPayment extends Component {
     this.state = {
       inputfile: true,
       file: "http://localhost:3000/assets/images/transfer.jpg",
-      upload: ""
+      picture: ""
     };
   }
+
   componentDidMount() {
     if (this.props.location.state) {
       this.props.getOrederById(this.props.location.state.id);
@@ -29,14 +32,32 @@ class UserPayment extends Component {
     }
   }
 
+  handleSubmit = () => {
+    const formData = new FormData();
+    formData.append("picture", this.state.file);
+    const config = {
+      headers: API.headers
+    };
+    if (this.props.getOrder.getOrderById.data) {
+      const id = this.props.getOrder.getOrderById.data.id;
+      Axios.patch(`http://localhost:5004/api/v1/upload/${id}`, formData, config)
+        .then(response => {
+          alert("The file is successfully uploaded");
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    }
+  };
+
   handleChange = event => {
-    console.log(event);
-    this.setState({
-      [event.target.name]: event.target.value,
-      data: this.state.upload,
-      inputfile: !this.state.inputfile,
-      file: URL.createObjectURL(event.target.files[0])
-    });
+    this.setState({ file: event.target.files[0] });
+    // this.setState({
+    //   [event.target.name]: event.target.value,
+    //   data: this.state.picture,
+    //   inputfile: !this.state.inputfile,
+    //   file: URL.createObjectURL(event.target.files[0])
+    // });
   };
 
   render() {
@@ -44,6 +65,7 @@ class UserPayment extends Component {
     nik = nik.toString().replace(".", "");
     // console.log(this.props.getOrder.getOrderById.data);
     let qty, total_price, name_train, user, ticket, timeStart;
+
     if (this.props.getOrder.getOrderById.data) {
       ticket = this.props.getOrder.getOrderById.data;
       timeStart = this.props.getOrder.getOrderById.data;
@@ -171,7 +193,10 @@ class UserPayment extends Component {
                           </div>
                         </div>
                         {/* ========= Button ========== */}
-                        <ModalPaymentBtn data={this.state.data} />
+                        <ModalPaymentBtn
+                          data={this.state.data}
+                          submit={this.handleSubmit}
+                        />
                       </div>
                       <div className="col-md-4 text-right prof-img-click-now">
                         <div className="struct payment-prof-img">
@@ -181,18 +206,22 @@ class UserPayment extends Component {
                             alt=""
                           />
                           {this.state.inputfile ? (
-                            <form
+                            // <Form>
+                            <Form
+                              action="/profile"
                               method="post"
-                              encType="multipart/form-data"
-                              action=""
+                              enctype="multipart/form-data"
                               className="input-file"
                             >
+                              {/* http://localhost:5004/api/v1/order/:id */}
                               <input
+                                name="picture"
+                                accept="image/*"
                                 type="file"
-                                name="upload"
+                                id="picture"
                                 onChange={this.handleChange}
-                              />
-                            </form>
+                              ></input>
+                            </Form>
                           ) : (
                             ""
                           )}
