@@ -549,6 +549,13 @@ button.register:hover {
   padding-bottom: 5px;
   border-bottom-right-radius: 45px;
 }
+
+.box-logo-mytiket {
+  margin-left: 591px !important;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 25px;
+}
+
 .box-logo-invoice-edit {
   width: 38%;
 }
@@ -601,6 +608,10 @@ button.register:hover {
 .detail-invoice-adm {
   border-top: 2px solid rgba(0, 0, 0, 0.8);
   border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+}
+.detail-invoice-mytiket {
+  border-top: 2px solid rgba(255, 255, 255, 0.8);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.8);
 }
 
 .i-detail-user p:nth-child(2) {
@@ -901,8 +912,19 @@ button.register:hover {
   top: 38px;
   font-size: 160px;
 }
-.icon-upload-file:hover {
-  cursor: progress;
+.payment-prof-img:hover {
+  cursor: pointer !important;
+}
+
+.desc p {
+  word-spacing: 3px;
+  font-size: 14px;
+  line-height: 20px;
+}
+.icons-status p {
+  margin-top: 14px;
+  font-size: 40px;
+  line-height: 20px;
 }
 /* disable blue when click image  */
 /* *::selection {

@@ -20,12 +20,15 @@ export const login = data => {
 
 export const getUser = () => {
   try {
+    const token = window.localStorage.getItem("token");
     return {
-      type: appContants.GET_USER,
+      type: "GET_USER",
       payload: Axios({
         method: "GET",
         url: `${API.baseURL}/userAuth`,
-        headers: API.headers
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
     };
   } catch (error) {

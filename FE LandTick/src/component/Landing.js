@@ -29,6 +29,7 @@ class Landing extends Component {
       showMOdalBuy: false,
       checked: false,
       formateDate: "",
+      formatDay: "",
       startTime: "",
       endTime: "",
       price: "",
@@ -58,12 +59,13 @@ class Landing extends Component {
     this.props.getTiket();
   }
 
-  handleModalBuyTicket = (data, id, date, start, end, pre) => {
+  handleModalBuyTicket = (data, id, date, day, start, end, pre) => {
     this.setState(
       {
         showMOdalBuy: !this.state.showMOdalBuy,
         data: data,
         formateDate: date,
+        formatDay: day,
         startTime: start,
         endTime: end,
         price: pre,
@@ -98,7 +100,7 @@ class Landing extends Component {
     });
   };
 
-  handleSubmit = e => {
+  handleSubmitSearch = e => {
     e.preventDefault();
     const ticket = this.props.tiketR.getTiket.ticket;
     let dataSearch = [];
@@ -110,46 +112,31 @@ class Landing extends Component {
         this.setState({
           errtujuan: ""
         });
-        if (this.state.adult) {
-          this.setState({
-            erradult: ""
-          });
-          if (this.state.child) {
-            this.setState({
-              errchild: ""
-            });
 
-            if (ticket.length > 0) {
-              ticket.map((val, key) => {
-                let date = val.date_start;
-                if (
-                  date.substr(0, 10) === this.state.dataStart ||
-                  (val.start_station.toLowerCase() ===
-                    this.state.asal.toLowerCase() &&
-                    val.destination_station.toLowerCase() ===
-                      this.state.tujuan.toLowerCase())
-                ) {
-                  dataSearch = [...dataSearch, val];
-                }
-              });
+        if (ticket.length > 0) {
+          ticket.map((val, key) => {
+            let date = val.date_start;
+            const dateNow = new Date().toISOString().slice(0, 10);
+
+            if (
+              date.substr(0, 10) === this.state.dataStart ||
+              (val.start_station.toLowerCase() ===
+                this.state.asal.toLowerCase() &&
+                val.destination_station.toLowerCase() ===
+                  this.state.tujuan.toLowerCase() &&
+                date >= dateNow)
+            ) {
+              dataSearch = [...dataSearch, val];
             }
-            this.setState({
-              ticket: dataSearch
-            });
-            if (!dataSearch.length) {
-              this.setState({
-                showModalInfo: !this.state.showModalInfo,
-                status: "no tiket !"
-              });
-            }
-          } else {
-            this.setState({
-              errchild: "required !"
-            });
-          }
-        } else {
+          });
+        }
+        this.setState({
+          ticket: dataSearch
+        });
+        if (!dataSearch.length) {
           this.setState({
-            erradult: "required !"
+            showModalInfo: !this.state.showModalInfo,
+            status: "no tiket !"
           });
         }
       } else {
@@ -195,6 +182,7 @@ class Landing extends Component {
     let ticket = this.props.tiketR.getTiket.ticket;
 
     let ticketSearch = this.state.ticket;
+
     if (ticketSearch.length > 0) {
       ticket = ticketSearch;
     } else {
@@ -263,6 +251,7 @@ class Landing extends Component {
           dataFromLanding={this.state}
           data={this.state.data}
           date={this.state.formateDate}
+          day={this.state.formatDay}
           start={this.state.startTime}
           end={this.state.endTime}
           price={this.state.price}
@@ -274,7 +263,7 @@ class Landing extends Component {
 
         <div className="">
           <div className="container order-panel">
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmitSearch}>
               <div className="row ">
                 <div className="col-md-3">
                   <div className="mt-3 faSubway-orange">
@@ -509,6 +498,7 @@ class Landing extends Component {
                           val,
                           val.id,
                           formatDate(val.date_start.substr(0, 10)),
+                          val.date_start,
                           time(val.start_time),
                           time(val.arival_time),
                           val.price

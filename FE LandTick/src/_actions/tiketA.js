@@ -4,13 +4,16 @@ import { API } from "../config/api";
 
 export const storeTiket = data => {
   try {
+    const token = window.localStorage.getItem("token");
     return {
-      type: appContants.POST_TICKET,
+      type: "POST_TICKET",
       payload: Axios({
         method: "POST",
         url: `${API.baseURL}/ticket`,
         data: data,
-        headers: API.headers
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
     };
   } catch (error) {

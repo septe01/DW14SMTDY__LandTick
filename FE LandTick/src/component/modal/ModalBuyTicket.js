@@ -57,7 +57,8 @@ class ModalBuyTicket extends Component {
         qty: this.state.qty,
         attachment: ""
       };
-      this.props.createOrder1(data).then(res => {
+      console.log(data);
+      this.props.createOrder(data).then(res => {
         console.log(res);
         this.setState({
           redirect: true
@@ -116,7 +117,8 @@ class ModalBuyTicket extends Component {
                 >
                   <h1 className="invoice drop-shadow-2">Kereta Api</h1>
                   <p className="color-black-7 drop-shadow-2">
-                    <span className="bold-7">{getDaye(this.props.date)}</span>,
+                    {console.log("date", this.props.date)}
+                    <span className="bold-7">{getDaye(this.props.day)}</span>,
                     {this.props.date}
                   </p>
                 </Col>
@@ -226,13 +228,13 @@ class ModalBuyTicket extends Component {
 
 const mapStateToProps = state => {
   return {
-    create: state.addOrder
+    addOrder: state.addOrder
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    createOrder1: create => dispatch(createOrder(create))
+    createOrder: data => dispatch(createOrder(data))
   };
 };
 

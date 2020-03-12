@@ -19,12 +19,15 @@ export const getOreder = () => {
 
 export const myOrder = () => {
   try {
+    const token = window.localStorage.getItem("token");
     return {
       type: appContants.MY_ORDER,
       payload: Axios({
         method: "GET",
         url: `${API.baseURL}/my_tickets`,
-        headers: API.headers
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
     };
   } catch (error) {
@@ -32,27 +35,24 @@ export const myOrder = () => {
   }
 };
 
-// export const updateOreder = (id, data) => {
-//   console.log("dari action ::", id);
-//   console.log("asdasd", data);
-
-//   try {
-//     return {
-//       type: appContants.UPDATE_ORDER,
-//       payload: Axios({
-//         method: "PATCH",
-//         // url: `${API.baseURL}/order/${id}`,
-//         url: `http://localhost:5004/api/v1/order/${id}`,
-//         headers: API.headers,
-//         data: {
-//           status: "c"
-//         }
-//       })
-//     };
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+export const updateOreder = (id, data) => {
+  try {
+    const token = window.localStorage.getItem("token");
+    return {
+      type: appContants.UPDATE_ORDER,
+      payload: Axios({
+        method: "PATCH",
+        url: `${API.baseURL}/order/${id}`,
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        data: data
+      })
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const getOrederById = id => {
   try {
@@ -70,17 +70,16 @@ export const getOrederById = id => {
 };
 
 export const createOrder = data => {
-  try {
-    return {
-      type: appContants.POST_ORDER,
-      payload: Axios({
-        method: "POST",
-        url: `${API.baseURL}/order`,
-        headers: API.headers,
-        data: data
-      })
-    };
-  } catch (error) {
-    console.log(error);
-  }
+  const token = window.localStorage.getItem("token");
+  return {
+    type: "POST_ORDER",
+    payload: Axios({
+      method: "POST",
+      url: `${API.baseURL}/order`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      data: data
+    })
+  };
 };

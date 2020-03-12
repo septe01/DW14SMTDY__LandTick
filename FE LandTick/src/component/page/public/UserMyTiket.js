@@ -14,6 +14,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { myOrder } from "../../../_actions/orderA";
 import { formatDate, getDaye } from "../../../config/apputils";
+import ModalMyTiket from "../../modal/ModalMyTiket";
 
 class UserMyTiket extends Component {
   constructor(props) {
@@ -156,7 +157,7 @@ class UserMyTiket extends Component {
                             )}
                             {val.status === "c" ? (
                               <h6 className="bold-8 clr-red status-mytiket">
-                                Cancle
+                                Rijected
                               </h6>
                             ) : (
                               ""
@@ -208,13 +209,14 @@ class UserMyTiket extends Component {
                             ""
                           )}
                           {val.status === "a" ? (
-                            <Button
-                              className=" btn-log color-bg"
-                              // onClick={() => this.handlePayment(1)}
-                              style={{ fontWeight: "1000" }}
-                            >
-                              Liat Tiket
-                            </Button>
+                            // <Button
+                            //   className=" btn-log color-bg"
+                            //   // onClick={() => this.handlePayment(1)}
+                            //   style={{ fontWeight: "1000" }}
+                            // >
+                            //   Liat Tiket
+                            // </Button>
+                            <ModalMyTiket id={val.id} />
                           ) : (
                             ""
                           )}

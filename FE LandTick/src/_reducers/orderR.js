@@ -66,6 +66,7 @@ export const addOrder = (state = initialState, action) => {
         isLoading: true
       };
     case appContants.POST_ORDER_FULFILLED:
+      console.log("asas", action.payload);
       return {
         ...state,
         postOrder: action.payload,
