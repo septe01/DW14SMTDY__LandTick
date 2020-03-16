@@ -54,6 +54,13 @@ class Landing extends Component {
     };
   }
 
+  changLocation = () => {
+    this.setState({
+      tujuan: this.state.asal,
+      asal: this.state.tujuan
+    });
+  };
+
   componentDidMount() {
     this.props.getUser();
     this.props.getTiket();
@@ -287,7 +294,7 @@ class Landing extends Component {
                   <span className="kreta mt-2">Tiket Kereta Api</span>
                   <div className="form-group">
                     <label htmlFor="inputAsal">Asal</label>
-                    <input
+                    {/* <input
                       value={this.state.asal}
                       name="asal"
                       type="text"
@@ -297,7 +304,24 @@ class Landing extends Component {
                     />
                     <Form.Text className="text-danger">
                       {this.state.errasal ? this.state.errasal : ""}
-                    </Form.Text>
+                    </Form.Text> */}
+                    <select
+                      value={this.state.asal}
+                      name="asal"
+                      type="text"
+                      className="form-control input"
+                      id="inputAsal"
+                      onChange={this.handleChange}
+                      // console.log(ticket);
+                    >
+                      {ticket
+                        ? ticket.map((val, key) => (
+                            <option value={val.start_station} key={key}>
+                              {val.start_station}
+                            </option>
+                          ))
+                        : ""}
+                    </select>
                   </div>
                   <div className="row">
                     <div className="col-md-6">
@@ -339,6 +363,7 @@ class Landing extends Component {
                     <span className="clr-orange">
                       <FontAwesomeIcon
                         className="clr-orange mbl-arrow-icon "
+                        onClick={this.changLocation}
                         icon={faExchangeAlt}
                         style={{
                           marginLeft: "20",
@@ -358,7 +383,7 @@ class Landing extends Component {
                   <div className="form-group mt-2">
                     <label htmlFor="inputTujuan">Tujuan</label>
 
-                    <input
+                    {/* <input
                       value={this.state.tujuan}
                       type="type"
                       name="tujuan"
@@ -368,7 +393,25 @@ class Landing extends Component {
                     />
                     <Form.Text className="text-danger">
                       {this.state.errtujuan ? this.state.errtujuan : ""}
-                    </Form.Text>
+                    </Form.Text> */}
+
+                    <select
+                      value={this.state.tujuan}
+                      type="type"
+                      name="tujuan"
+                      className="form-control input"
+                      id="inputTujuan"
+                      onChange={this.handleChange}
+                    >
+                      {console.log(ticket)}
+                      {ticket
+                        ? ticket.map((val, key) => (
+                            <option value={val.destination_station} key={key}>
+                              {val.destination_station}
+                            </option>
+                          ))
+                        : ""}
+                    </select>
                   </div>
                   <div className="row">
                     <div className="col-md-4">
