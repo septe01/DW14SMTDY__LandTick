@@ -242,7 +242,7 @@ exports.index = async (req, res) => {
         res.status(200).send({
           status: 200,
           message: "success",
-          resultOrder
+          result
         });
       }
     } else {
