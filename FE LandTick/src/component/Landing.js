@@ -18,7 +18,7 @@ import { getTiket } from "../_actions/tiketA";
 
 import ModalBuyTicket from "./modal/ModalBuyTicket";
 import InfoModal from "./modal/InfoModal ";
-import { formatDate } from "../config/apputils";
+import { formatDate, time, getTime } from "../config/apputils";
 
 // import { BrowserRouter as Router, Link } from 'react-router-dom';
 
@@ -48,6 +48,7 @@ class Landing extends Component {
       errtujuan: "",
       erradult: "",
       errchild: "",
+      errdate: "",
 
       // getStatusModal: false
       showModalInfo: false
@@ -109,6 +110,7 @@ class Landing extends Component {
 
   handleSubmitSearch = e => {
     e.preventDefault();
+
     const ticket = this.props.tiketR.getTiket.ticket;
     let dataSearch = [];
     if (this.state.asal) {
@@ -119,31 +121,47 @@ class Landing extends Component {
         this.setState({
           errtujuan: ""
         });
-
-        if (ticket.length > 0) {
-          ticket.map((val, key) => {
-            let date = val.date_start;
-            const dateNow = new Date().toISOString().slice(0, 10);
-
-            if (
-              date.substr(0, 10) === this.state.dataStart ||
-              (val.start_station.toLowerCase() ===
-                this.state.asal.toLowerCase() &&
-                val.destination_station.toLowerCase() ===
-                  this.state.tujuan.toLowerCase() &&
-                date >= dateNow)
-            ) {
-              dataSearch = [...dataSearch, val];
-            }
-          });
-        }
-        this.setState({
-          ticket: dataSearch
-        });
-        if (!dataSearch.length) {
+        if (this.state.dataStart) {
           this.setState({
-            showModalInfo: !this.state.showModalInfo,
-            status: "no tiket !"
+            errdate: ""
+          });
+          if (ticket.length > 0) {
+            ticket.map((val, key) => {
+              let date = val.date_start;
+              const dateNow = new Date().toISOString().slice(0, 10);
+
+              if (
+                date.substr(0, 10) === this.state.dataStart ||
+                (val.start_station.toLowerCase() ===
+                  this.state.asal.toLowerCase() &&
+                  val.destination_station.toLowerCase() ===
+                    this.state.tujuan.toLowerCase() &&
+                  date >= dateNow)
+              ) {
+                dataSearch = [...dataSearch, val];
+              }
+              if (!dataSearch.length) {
+                this.setState({
+                  showModalInfo: !this.state.showModalInfo,
+                  status: "no tiket !"
+                });
+              }
+            });
+          }
+          this.setState({
+            ticket: dataSearch
+          });
+          console.log(dataSearch);
+          console.log(this.state.pesan);
+          if (!dataSearch.length) {
+            this.setState({
+              showModalInfo: !this.state.showModalInfo,
+              pesan: "no tiket !"
+            });
+          }
+        } else {
+          this.setState({
+            errdate: "pilih tanggal !"
           });
         }
       } else {
@@ -196,41 +214,6 @@ class Landing extends Component {
       ticket = ticket;
     }
 
-    //greeting
-    let myDate = new Date();
-    let hrs = myDate.getHours();
-
-    let greet;
-    if (hrs < 10) greet = "Selamat Pagi";
-    else if (hrs >= 10 && hrs <= 15) greet = "Selamat Siang";
-    else if (hrs >= 15 && hrs <= 18) greet = "Selamat Sore";
-    else if (hrs >= 18 && hrs <= 24) greet = "Selamat Malam";
-    //end greeting
-
-    //convert time
-    const time = time => time.substr(0, 5);
-    //range day
-    const getTime = (start, end) => {
-      start = start.split(":");
-      end = end.split(":");
-      let startDate = new Date(0, 0, 0, start[0], start[1], 0);
-      let endDate = new Date(0, 0, 0, end[0], end[1], 0);
-      let diff = endDate.getTime() - startDate.getTime();
-      let hours = Math.floor(diff / 1000 / 60 / 60);
-      diff -= hours * 1000 * 60 * 60;
-      let minutes = Math.floor(diff / 1000 / 60);
-
-      if (hours < 0) hours = hours + 24;
-
-      return (
-        (hours <= 9 ? "0" : "") +
-        `${hours}j` +
-        " " +
-        (minutes <= 9 ? "0" : "") +
-        `${minutes}m`
-      );
-    };
-
     let status;
     // console.log(this.props.get_User);
     if (token) {
@@ -243,7 +226,7 @@ class Landing extends Component {
     if (status === "admin") {
       return <Redirect to="/mydashboard" />;
     }
-    // console.log(this.handleModalBuyTicket);
+    // console.log(this.state.pesan);
     return (
       <div>
         <InfoModal
@@ -266,7 +249,7 @@ class Landing extends Component {
         />
         <HeaderPrimary />
 
-        <Jumbotron greeting={greet} />
+        <Jumbotron />
 
         <div className="">
           <div className="container order-panel">
@@ -294,7 +277,7 @@ class Landing extends Component {
                   <span className="kreta mt-2">Tiket Kereta Api</span>
                   <div className="form-group">
                     <label htmlFor="inputAsal">Asal</label>
-                    {/* <input
+                    <input
                       value={this.state.asal}
                       name="asal"
                       type="text"
@@ -304,8 +287,9 @@ class Landing extends Component {
                     />
                     <Form.Text className="text-danger">
                       {this.state.errasal ? this.state.errasal : ""}
-                    </Form.Text> */}
-                    <select
+                    </Form.Text>
+                    {/* using select */}
+                    {/* <select
                       value={this.state.asal}
                       name="asal"
                       type="text"
@@ -321,7 +305,7 @@ class Landing extends Component {
                             </option>
                           ))
                         : ""}
-                    </select>
+                    </select> */}
                   </div>
                   <div className="row">
                     <div className="col-md-6">
@@ -336,6 +320,9 @@ class Landing extends Component {
                           id="inputTglOtw"
                           onChange={this.handleChange}
                         />
+                        <Form.Text className="text-danger">
+                          {this.state.errdate ? this.state.errdate : ""}
+                        </Form.Text>
                       </div>
                     </div>
                     <div
@@ -361,6 +348,7 @@ class Landing extends Component {
                 <div className="col-md-1 mbl-arrow">
                   <div>
                     <span className="clr-orange">
+                      {" "}
                       <FontAwesomeIcon
                         className="clr-orange mbl-arrow-icon "
                         onClick={this.changLocation}
@@ -383,7 +371,7 @@ class Landing extends Component {
                   <div className="form-group mt-2">
                     <label htmlFor="inputTujuan">Tujuan</label>
 
-                    {/* <input
+                    <input
                       value={this.state.tujuan}
                       type="type"
                       name="tujuan"
@@ -393,9 +381,9 @@ class Landing extends Component {
                     />
                     <Form.Text className="text-danger">
                       {this.state.errtujuan ? this.state.errtujuan : ""}
-                    </Form.Text> */}
-
-                    <select
+                    </Form.Text>
+                    {/* using select */}
+                    {/* <select
                       value={this.state.tujuan}
                       type="type"
                       name="tujuan"
@@ -411,7 +399,7 @@ class Landing extends Component {
                             </option>
                           ))
                         : ""}
-                    </select>
+                    </select> */}
                   </div>
                   <div className="row">
                     <div className="col-md-4">

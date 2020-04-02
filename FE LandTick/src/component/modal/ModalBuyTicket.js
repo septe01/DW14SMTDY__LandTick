@@ -117,7 +117,6 @@ class ModalBuyTicket extends Component {
                 >
                   <h1 className="invoice drop-shadow-2">Kereta Api</h1>
                   <p className="color-black-7 drop-shadow-2">
-                    {console.log("date", this.props.date)}
                     <span className="bold-7">{getDaye(this.props.day)}</span>,
                     {this.props.date}
                   </p>

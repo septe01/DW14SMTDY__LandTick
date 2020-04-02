@@ -95,10 +95,10 @@ class DashboardAdm extends Component {
                         {/* data={} */}
                         <ModalInvoice id={val.id} />
                         <ModalEditInvoice id={val.id} />
-                        <FontAwesomeIcon
+                        {/* <FontAwesomeIcon
                           icon={faTrash}
                           className="opsi-admin-list"
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>
