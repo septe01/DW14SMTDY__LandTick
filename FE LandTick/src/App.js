@@ -4,13 +4,7 @@ import Landing from "./component/Landing";
 import "./App.css";
 import "./mobile.css";
 //Router
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-  Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //
 // action user
 // admin
@@ -52,15 +46,15 @@ class App extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    userR: state.userR
+    userR: state.userR,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getUser: () => dispatch(getUser())
+    getUser: () => dispatch(getUser()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

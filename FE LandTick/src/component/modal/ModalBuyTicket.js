@@ -24,14 +24,15 @@ class ModalBuyTicket extends Component {
       resstatus: "",
       loader: true,
       qty: 1,
-      price: ""
+      price: "",
+      idOrder: "",
     };
   }
 
   handlePlus = () => {
     this.setState({
       price: this.props.price * (this.state.qty + 1),
-      qty: this.state.qty + 1
+      qty: this.state.qty + 1,
     });
   };
 
@@ -39,29 +40,29 @@ class ModalBuyTicket extends Component {
     if (this.state.qty > 0) {
       this.setState({
         price: this.state.price - this.props.price,
-        qty: this.state.qty - 1
+        qty: this.state.qty - 1,
       });
     }
   };
 
   componentDidMount() {}
 
-  handleClose = e => {
+  handleClose = (e) => {
     this.setState({ show: false });
   };
 
-  handleSaveOrder = e => {
+  handleSaveOrder = (e) => {
     if (this.state.qty > 0) {
       let data = {
         ticket: this.props.id,
         qty: this.state.qty,
-        attachment: ""
+        attachment: "",
       };
-      console.log(data);
-      this.props.createOrder(data).then(res => {
-        console.log(res);
+      this.props.createOrder(data).then((res) => {
+        // console.log("createOrder", res.value.data.resultOrder.id);
         this.setState({
-          redirect: true
+          redirect: true,
+          idOrder: res.value.data.resultOrder.id,
         });
       });
     } else {
@@ -70,20 +71,21 @@ class ModalBuyTicket extends Component {
   };
 
   render() {
-    let nameTrain, startStation, destination, price, tipeTrain;
+    let nameTrain, startStation, destination, tipeTrain;
+
     if (this.props.dataFromLanding.data) {
       nameTrain = this.props.dataFromLanding.data.name_train;
       startStation = this.props.dataFromLanding.data.start_station;
       destination = this.props.dataFromLanding.data.destination_station;
-
       tipeTrain = this.props.dataFromLanding.data.train.type_train;
     }
 
+    console.log("buyTicke", this.props.id);
     return (
       <>
         {this.state.redirect ? (
           <Redirect
-            to={{ pathname: "/payment", state: { id: this.props.id } }}
+            to={{ pathname: "/payment", state: { id: this.state.idOrder } }}
           />
         ) : (
           " "
@@ -225,15 +227,15 @@ class ModalBuyTicket extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    addOrder: state.addOrder
+    addOrder: state.addOrder,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    createOrder: data => dispatch(createOrder(data))
+    createOrder: (data) => dispatch(createOrder(data)),
   };
 };
 

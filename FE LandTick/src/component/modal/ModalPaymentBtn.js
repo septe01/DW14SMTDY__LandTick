@@ -6,7 +6,7 @@ class ModalPaymentBtn extends Component {
   constructor(props) {
     super();
     this.state = {
-      showAdd: false
+      showAdd: false,
     };
   }
 
@@ -18,8 +18,6 @@ class ModalPaymentBtn extends Component {
     this.setState({ showAdd: true });
   };
   render() {
-    console.log();
-    console.log(this.props.data);
     return (
       <div>
         <Button

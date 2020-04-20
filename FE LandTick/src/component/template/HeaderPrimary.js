@@ -5,10 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTicketAlt,
   faSignOutAlt,
-  faMoneyCheckAlt
+  faMoneyCheckAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, Redirect } from "react-router-dom";
-import AdmAddTiket from "../modal/AdmAddTiket";
 import { connect } from "react-redux";
 import { getUser } from "../../_actions/userA";
 
@@ -18,7 +17,7 @@ class HeaderPrimary extends Component {
     this.state = {
       show: false,
       showAdmin: true,
-      showUser: true
+      showUser: true,
     };
   }
   // navbar-toggler
@@ -215,15 +214,15 @@ class HeaderPrimary extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    get_User: state.get_User
+    get_User: state.get_User,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getUser: () => dispatch(getUser())
+    getUser: () => dispatch(getUser()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderPrimary);

@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 import { getOrederById } from "../../_actions/orderA";
 // import { updateOreder } from "../../_actions/orderA";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Axios from "axios";
 class ModalInvoice extends Component {
   constructor(props) {
@@ -16,17 +16,17 @@ class ModalInvoice extends Component {
       show: false,
       status: "",
       error: false,
-      showMdlInfo: false
+      showMdlInfo: false,
     };
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
-      status: e.target.value
+      status: e.target.value,
     });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.status !== "") {
       const id = this.props.id;
@@ -39,18 +39,18 @@ class ModalInvoice extends Component {
       Axios({
         method: "PATCH",
         data: {
-          status: this.state.status
+          status: this.state.status,
         },
         url: "http://localhost:5004/api/v1/order/" + id,
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       })
-        .then(res => {
+        .then((res) => {
           document.location.reload(false);
           return <Redirect to="/mydashboard" />;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err.message);
         });
 
@@ -64,7 +64,7 @@ class ModalInvoice extends Component {
       // return <Redirect to="/mydashboard" />;
     } else {
       this.setState({
-        error: true
+        error: true,
       });
     }
     // alert(this.state.status);
@@ -177,7 +177,7 @@ class ModalInvoice extends Component {
                       style={{
                         fontWeight: "1000",
                         width: "30%",
-                        borderRadius: "25px"
+                        borderRadius: "25px",
                       }}
                     >
                       Simpan
@@ -194,15 +194,15 @@ class ModalInvoice extends Component {
   }
 }
 
-const mapStateToProp = state => {
+const mapStateToProp = (state) => {
   return {
-    getOrder: state.getOrder
+    getOrder: state.getOrder,
     // updateOrder: state.updateOrder
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getOrederById: getOrder => dispatch(getOrederById(getOrder))
+    getOrederById: (getOrder) => dispatch(getOrederById(getOrder)),
     // updateOreder: (id, data) => dispatch(updateOreder(id, data))
   };
 };

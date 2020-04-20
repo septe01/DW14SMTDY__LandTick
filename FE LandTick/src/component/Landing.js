@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import Container from "react-bootstrap/Container";
-import { Row, Button, Col, Navbar, Nav, Form } from "react-bootstrap"; //import component bootstaps
+import { Button, Form } from "react-bootstrap"; //import component bootstaps
 import HeaderPrimary from "./template/HeaderPrimary";
 import Jumbotron from "./template/Jumbotron";
 import Footer from "./template/Footer";
@@ -8,11 +8,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSubway,
   faExchangeAlt,
-  faLongArrowAltRight
+  faLongArrowAltRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
-import LoginModal from "./modal/LoginModal";
+import { Redirect } from "react-router-dom";
 import { getUser } from "../_actions/userA";
 import { getTiket } from "../_actions/tiketA";
 
@@ -51,14 +50,14 @@ class Landing extends Component {
       errdate: "",
 
       // getStatusModal: false
-      showModalInfo: false
+      showModalInfo: false,
     };
   }
 
   changLocation = () => {
     this.setState({
       tujuan: this.state.asal,
-      asal: this.state.tujuan
+      asal: this.state.tujuan,
     });
   };
 
@@ -84,46 +83,46 @@ class Landing extends Component {
         tujuan: "",
         adult: "",
         child: "",
-        pesan: ""
+        pesan: "",
       }
       // () => console.log(this.state.showMOdalBuy)
     );
   };
 
-  handleChange = e => {
-    if (e.target.name == "pp") {
+  handleChange = (e) => {
+    if (e.target.name === "pp") {
       if (this.state.checked) {
         this.setState({
-          pulangpegi: 0
+          pulangpegi: 0,
         });
       } else {
         this.setState({
-          pulangpegi: 1
+          pulangpegi: 1,
         });
       }
     }
     this.setState({
       checked: !this.state.checked,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  handleSubmitSearch = e => {
+  handleSubmitSearch = (e) => {
     e.preventDefault();
 
     const ticket = this.props.tiketR.getTiket.ticket;
     let dataSearch = [];
     if (this.state.asal) {
       this.setState({
-        errasal: ""
+        errasal: "",
       });
       if (this.state.tujuan) {
         this.setState({
-          errtujuan: ""
+          errtujuan: "",
         });
         if (this.state.dataStart) {
           this.setState({
-            errdate: ""
+            errdate: "",
           });
           if (ticket.length > 0) {
             ticket.map((val, key) => {
@@ -143,35 +142,33 @@ class Landing extends Component {
               if (!dataSearch.length) {
                 this.setState({
                   showModalInfo: !this.state.showModalInfo,
-                  status: "no tiket !"
+                  status: "no tiket !",
                 });
               }
             });
           }
           this.setState({
-            ticket: dataSearch
+            ticket: dataSearch,
           });
-          console.log(dataSearch);
-          console.log(this.state.pesan);
           if (!dataSearch.length) {
             this.setState({
               showModalInfo: !this.state.showModalInfo,
-              pesan: "no tiket !"
+              pesan: "no tiket !",
             });
           }
         } else {
           this.setState({
-            errdate: "pilih tanggal !"
+            errdate: "pilih tanggal !",
           });
         }
       } else {
         this.setState({
-          errtujuan: "bagian ini harus di isi !"
+          errtujuan: "bagian ini harus di isi !",
         });
       }
     } else {
       this.setState({
-        errasal: "bagian ini harus di isi !"
+        errasal: "bagian ini harus di isi !",
       });
     }
   };
@@ -183,21 +180,21 @@ class Landing extends Component {
       dataStart: "",
       tujuan: "",
       adult: "",
-      child: ""
+      child: "",
     });
   };
 
   showHandleBtnBuy = () => {
     this.setState({
       showModalInfo: !this.state.showModalInfo,
-      pesan: "harap isi pencarian !"
+      pesan: "harap isi pencarian !",
     });
   };
 
   handleWarningLogin = () => {
     this.setState({
       showModalInfo: !this.state.showModalInfo,
-      pesan: "harap Login ya !"
+      pesan: "harap Login ya !",
     });
   };
 
@@ -266,7 +263,7 @@ class Landing extends Component {
                           marginRight: "20",
                           fontSize: "36px",
                           filter: "drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5))",
-                          boxSizing: "border-box"
+                          boxSizing: "border-box",
                         }}
                       />
                     </span>
@@ -328,7 +325,7 @@ class Landing extends Component {
                     <div
                       className="col-md-6"
                       style={{
-                        position: "relative"
+                        position: "relative",
                       }}
                     >
                       <Form.Group>
@@ -359,7 +356,7 @@ class Landing extends Component {
                           fontSize: "36px",
                           marginTop: "70",
                           filter: "drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5))",
-                          boxSizing: "border-box"
+                          boxSizing: "border-box",
                         }}
                       />
                     </span>
@@ -493,7 +490,7 @@ class Landing extends Component {
                           marginRight: "20",
                           fontSize: "36px",
                           filter: "drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5))",
-                          boxSizing: "border-box"
+                          boxSizing: "border-box",
                         }}
                       />
                     </span>
@@ -580,17 +577,17 @@ class Landing extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     get_User: state.get_User,
-    tiketR: state.tiketR
+    tiketR: state.tiketR,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getUser: () => dispatch(getUser()),
-    getTiket: () => dispatch(getTiket())
+    getTiket: () => dispatch(getTiket()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

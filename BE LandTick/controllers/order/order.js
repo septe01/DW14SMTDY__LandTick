@@ -14,35 +14,37 @@ var path = require("path");
 const storage = multer.diskStorage({
   destination: path.join(`${__dirname}./../public/images/`),
   filename: (req, file, cb) => {
+    console.log(file, cb);
     cb(
       null,
       file.fieldname + "-" + Date.now() + path.extname(file.originalname)
     );
-  }
+  },
 });
 
 // init upload
 const upload = multer({
-  storage: storage
+  storage: storage,
 }).single("picture");
 
 // upload file
 exports.upload = async (req, res) => {
   try {
-    upload(req, res, err => {
+    upload(req, res, (err) => {
       const id = req.params.id;
       /*Now do where ever you want to do*/
       const fileName = {
-        attachment: req.file.filename
+        attachment: req.file.filename,
       };
+
       if (!err) {
-        Order.update(fileName, { where: { id: id } }).then(ress => {
+        Order.update(fileName, { where: { id: id } }).then((ress) => {
           if (ress) {
-            Order.findOne({ where: { id: id } }).then(result => {
+            Order.findOne({ where: { id: id } }).then((result) => {
               res.status(200).send({
                 status: 200,
                 message: "success",
-                result
+                result,
               });
             });
           }
@@ -64,7 +66,7 @@ exports.myticket = async (req, res) => {
     // [Op.like]:
     const myticket = await Order.findAll({
       where: {
-        id_user: id
+        id_user: id,
       },
       order: [["id", "DESC"]],
       attributes: [
@@ -74,7 +76,7 @@ exports.myticket = async (req, res) => {
         "status",
         "attachment",
         "createdAt",
-        "updatedAt"
+        "updatedAt",
       ],
       include: [
         {
@@ -87,8 +89,8 @@ exports.myticket = async (req, res) => {
             "password",
             "gender",
             "phone",
-            "address"
-          ]
+            "address",
+          ],
         },
         {
           model: Ticket,
@@ -100,17 +102,17 @@ exports.myticket = async (req, res) => {
             "start_time",
             "destination_station",
             "arival_time",
-            "price"
+            "price",
           ],
-          include: [{ model: Train, attributes: ["type_train"] }]
-        }
-      ]
+          include: [{ model: Train, attributes: ["type_train"] }],
+        },
+      ],
     });
 
     res.status(200).send({
       status: 200,
       message: "success",
-      myticket
+      myticket,
     });
     // }
   } catch (error) {
@@ -130,12 +132,12 @@ exports.order = async (req, res) => {
     const subPrice = train.price * qty; //get sub total price
     const remainsQty = train.qty - qty;
     const data = {
-      qty: remainsQty
+      qty: remainsQty,
     };
     if (train.qty) {
       // if (train.qty < qty) {
       const updateTicket = await Ticket.update(data, {
-        where: { id: idTrain }
+        where: { id: idTrain },
       });
       const resultRemains = await Ticket.findOne({ where: { id: idTrain } });
 
@@ -145,7 +147,7 @@ exports.order = async (req, res) => {
         qty: qty,
         total_price: subPrice,
         status: "p",
-        attachment: attachment
+        attachment: attachment,
       });
       if (result) {
         const resultOrder = await Order.findOne({
@@ -160,8 +162,8 @@ exports.order = async (req, res) => {
                 "email",
                 "gender",
                 "phone",
-                "address"
-              ]
+                "address",
+              ],
             },
             {
               model: Ticket,
@@ -172,17 +174,17 @@ exports.order = async (req, res) => {
                 "start_station",
                 "start_time",
                 "destination_station",
-                "arival_time"
+                "arival_time",
               ],
-              include: { model: Train, attributes: ["type_train"] }
-            }
-          ]
+              include: { model: Train, attributes: ["type_train"] },
+            },
+          ],
         });
         res.status(200).send({
           status: 200,
           message: "success",
           resultOrder,
-          resultRemains
+          resultRemains,
         });
       }
       // ====
@@ -195,7 +197,7 @@ exports.order = async (req, res) => {
     } else {
       res.status(404).send({
         status: 404,
-        message: "no ticket"
+        message: "no ticket",
       });
     }
   } catch (error) {}
@@ -219,8 +221,8 @@ exports.index = async (req, res) => {
               "email",
               "gender",
               "phone",
-              "address"
-            ]
+              "address",
+            ],
           },
           {
             model: Ticket,
@@ -231,18 +233,18 @@ exports.index = async (req, res) => {
               "start_station",
               "start_time",
               "destination_station",
-              "arival_time"
+              "arival_time",
             ],
-            include: { model: Train, attributes: ["type_train"] }
-          }
-        ]
+            include: { model: Train, attributes: ["type_train"] },
+          },
+        ],
       });
       res.send(result);
       if (result) {
         res.status(200).send({
           status: 200,
           message: "success",
-          result
+          result,
         });
       }
     } else {
@@ -259,8 +261,8 @@ exports.index = async (req, res) => {
               "email",
               "gender",
               "phone",
-              "address"
-            ]
+              "address",
+            ],
           },
           {
             model: Ticket,
@@ -271,18 +273,18 @@ exports.index = async (req, res) => {
               "start_station",
               "start_time",
               "destination_station",
-              "arival_time"
+              "arival_time",
             ],
-            include: { model: Train, attributes: ["type_train"] }
-          }
-        ]
+            include: { model: Train, attributes: ["type_train"] },
+          },
+        ],
       });
       res.send(result);
       if (result) {
         res.status(200).send({
           status: 200,
           message: "success",
-          resultOrder
+          resultOrder,
         });
       }
     }
@@ -296,7 +298,7 @@ exports.show = async (req, res) => {
     const idOrder = req.params.id;
     // console.log(idOrder);
     const admin = await User.findOne({
-      where: { id: id }
+      where: { id: id },
     });
     if (admin) {
       const result = await Order.findOne({
@@ -312,8 +314,8 @@ exports.show = async (req, res) => {
               "email",
               "gender",
               "phone",
-              "address"
-            ]
+              "address",
+            ],
           },
           {
             model: Ticket,
@@ -324,18 +326,18 @@ exports.show = async (req, res) => {
               "start_station",
               "start_time",
               "destination_station",
-              "arival_time"
+              "arival_time",
             ],
-            include: { model: Train, attributes: ["type_train"] }
-          }
-        ]
+            include: { model: Train, attributes: ["type_train"] },
+          },
+        ],
       });
       res.send(result);
       if (result) {
         res.status(200).send({
           status: 200,
           message: "success",
-          resultOrder
+          resultOrder,
         });
       }
     } else {
@@ -353,8 +355,8 @@ exports.show = async (req, res) => {
               "email",
               "gender",
               "phone",
-              "address"
-            ]
+              "address",
+            ],
           },
           {
             model: Ticket,
@@ -365,18 +367,18 @@ exports.show = async (req, res) => {
               "start_station",
               "start_time",
               "destination_station",
-              "arival_time"
+              "arival_time",
             ],
-            include: { model: Train, attributes: ["type_train"] }
-          }
-        ]
+            include: { model: Train, attributes: ["type_train"] },
+          },
+        ],
       });
       res.send(result);
       if (result) {
         res.status(200).send({
           status: 200,
           message: "success",
-          resultOrder
+          resultOrder,
         });
       }
     }
@@ -390,7 +392,7 @@ exports.update = async (req, res) => {
     // ======================================
 
     const update = await Order.update(req.body, {
-      where: { id: idOrder }
+      where: { id: idOrder },
     });
     if (update) {
       const resultUpdate = await Order.findOne({
@@ -405,8 +407,8 @@ exports.update = async (req, res) => {
               "email",
               "gender",
               "phone",
-              "address"
-            ]
+              "address",
+            ],
           },
           {
             model: Ticket,
@@ -417,16 +419,16 @@ exports.update = async (req, res) => {
               "start_station",
               "start_time",
               "destination_station",
-              "arival_time"
+              "arival_time",
             ],
-            include: { model: Train, attributes: ["type_train"] }
-          }
-        ]
+            include: { model: Train, attributes: ["type_train"] },
+          },
+        ],
       });
       res.status(200).send({
         status: 200,
         message: "success",
-        resultUpdate
+        resultUpdate,
       });
     }
   } catch (error) {}

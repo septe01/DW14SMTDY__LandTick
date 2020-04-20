@@ -49,7 +49,6 @@ class DashboardAdm extends Component {
             {/* ============== */}
             {order
               ? order.map((val, key) => (
-                  // console.log(val.user.name);
                   <div
                     className="row justify-content-center  field-list field-tr-list"
                     key={key}
@@ -112,14 +111,14 @@ class DashboardAdm extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    order: state.Order
+    order: state.Order,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getOreder: () => dispatch(getOreder())
+    getOreder: () => dispatch(getOreder()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardAdm);

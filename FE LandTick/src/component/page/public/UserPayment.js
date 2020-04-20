@@ -2,18 +2,17 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationTriangle,
-  faUpload
+  faUpload,
 } from "@fortawesome/free-solid-svg-icons";
-import { Container, Row, Col, Form } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import HeaderPrimary from "../../template/HeaderPrimary";
 
 import Footer from "../../template/Footer";
 import ModalPaymentBtn from "../../modal/ModalPaymentBtn";
 import { getOrederById } from "../../../_actions/orderA";
-import { formatRupiah, getDaye, formatDate } from "../../../config/apputils";
+import { getDaye, formatDate } from "../../../config/apputils";
 import Axios from "axios";
 import { API } from "../../../config/api";
 
@@ -25,7 +24,7 @@ class UserPayment extends Component {
       file: "http://localhost:3000/assets/images/transfer.jpg",
       img: "",
       picture: "",
-      icon: true
+      icon: true,
     };
   }
 
@@ -40,26 +39,30 @@ class UserPayment extends Component {
   handleSubmit = () => {
     const formData = new FormData();
     formData.append("picture", this.state.file);
+
     const config = {
-      headers: API.headers
+      headers: API.headers,
     };
     if (this.props.getOrder.getOrderById.data) {
       const id = this.props.getOrder.getOrderById.data.id;
       Axios.patch(`http://localhost:5004/api/v1/upload/${id}`, formData, config)
-        .then(response => {
-          // alert("The file is successfully uploaded");
+        .then((response) => {
+          console.log(JSON.stringify(response));
         })
-        .catch(error => {
+        .then((data) => {
+          console.log("data", JSON.stringify(data));
+        })
+        .catch((error) => {
           console.log(error.message);
         });
     }
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
       file: event.target.files[0],
       img: URL.createObjectURL(event.target.files[0]),
-      icon: !this.state.icon
+      icon: !this.state.icon,
     });
   };
 
@@ -68,6 +71,8 @@ class UserPayment extends Component {
     nik = nik.toString().replace(".", "");
     // console.log(this.props.getOrder.getOrderById.data);
     let qty, total_price, name_train, user, ticket, timeStart;
+
+    console.log("order", this.props.getOrder);
 
     if (this.props.getOrder.getOrderById.data) {
       ticket = this.props.getOrder.getOrderById.data;
@@ -93,7 +98,7 @@ class UserPayment extends Component {
           <div
             className="container box-heigth-pay-now paynow mt-3"
             style={{
-              paddingRight: "0"
+              paddingRight: "0",
             }}
           >
             <div>
@@ -113,7 +118,7 @@ class UserPayment extends Component {
                               fontSize: "46px",
                               filter:
                                 "drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5))",
-                              boxSizing: "border-box"
+                              boxSizing: "border-box",
                             }}
                           />
                         </div>
@@ -213,7 +218,7 @@ class UserPayment extends Component {
                             <Form
                               action="/profile"
                               method="post"
-                              enctype="multipart/form-data"
+                              encType="multipart/form-data"
                               className="input-file"
                             >
                               <input
@@ -324,14 +329,14 @@ class UserPayment extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    getOrder: state.getOrder
+    getOrder: state.getOrder,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getOrederById: getOrder => dispatch(getOrederById(getOrder))
+    getOrederById: (getOrder) => dispatch(getOrederById(getOrder)),
   };
 };
 
