@@ -110,7 +110,7 @@ class Landing extends Component {
   handleSubmitSearch = (e) => {
     e.preventDefault();
 
-    const ticket = this.props.tiketR.getTiket.ticket;
+    const ticket = this.props.tiketR?.getTiket?.ticket;
     let dataSearch = [];
     if (this.state.asal) {
       this.setState({
@@ -124,7 +124,7 @@ class Landing extends Component {
           this.setState({
             errdate: "",
           });
-          if (ticket.length > 0) {
+          if (ticket?.length > 0) {
             ticket.map((val, key) => {
               let date = val.date_start;
               const dateNow = new Date().toISOString().slice(0, 10);
@@ -201,11 +201,11 @@ class Landing extends Component {
   render() {
     const token = localStorage.getItem("token");
 
-    let ticket = this.props.tiketR.getTiket.ticket;
+    let ticket = this.props.tiketR?.getTiket?.ticket;
 
     let ticketSearch = this.state.ticket;
 
-    if (ticketSearch.length > 0) {
+    if (ticketSearch?.length > 0) {
       ticket = ticketSearch;
     } else {
       ticket = ticket;
@@ -224,6 +224,8 @@ class Landing extends Component {
       return <Redirect to="/mydashboard" />;
     }
     // console.log(this.state.pesan);
+    // console.log(this.props.tiketR,'this.props.tiketR');
+
     return (
       <div>
         <InfoModal
